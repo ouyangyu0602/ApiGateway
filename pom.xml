@@ -52,10 +52,17 @@
         <httpclient.version>4.5.1</httpclient.version>
     </properties>
 
+    <!--<repositories>-->
+    <!--<repository>-->
+    <!--<id>local-central</id>-->
+    <!--<url>http://10.128.6.39:8081/nexus/content/groups/public/</url>-->
+    <!--</repository>-->
+    <!--</repositories>-->
+
     <repositories>
         <repository>
             <id>local-central</id>
-            <url>http://10.128.6.39:8081/nexus/content/groups/public/</url>
+            <url>http://maven.oschina.net/content/groups/public/</url>
         </repository>
     </repositories>
 
