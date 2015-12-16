@@ -27,6 +27,10 @@ public class DateEditor extends PropertyEditorSupport {
     private DateFormat dateFormat;
     private boolean allowEmpty = true;
 
+    public DateEditor() {
+        // Nothing to do
+    }
+
     public DateEditor(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
     }
