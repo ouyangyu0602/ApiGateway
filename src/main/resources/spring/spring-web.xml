@@ -31,6 +31,8 @@
         <bean class="com.blueocn.api.support.csrf.CSRFHandlerInterceptor"/>
     </mvc:interceptors>
 
+    <bean id="csrfTool" class="com.blueocn.api.support.csrf.CSRFTool"/>
+
     <bean id="velocityConfig"
           class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="configLocation" value="/WEB-INF/views/velocity.properties"/>
@@ -45,5 +47,10 @@
         <property name="exposeSpringMacroHelpers" value="true"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
+        <property name="attributesMap">
+            <map>
+                <entry key="csrfTool" value-ref="csrfTool"/>
+            </map>
+        </property>
     </bean>
 </beans>

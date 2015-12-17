@@ -19,17 +19,7 @@
                 <configuration>
                     <path>/</path>
                     <port>9999</port>
-                    <server>tomcat</server>
-                    <warFile>apisystem.war</warFile>
                     <uriEncoding>utf-8</uriEncoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -51,13 +41,6 @@
         <guava.version>18.0</guava.version>
         <httpclient.version>4.5.1</httpclient.version>
     </properties>
-
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<id>local-central</id>-->
-    <!--<url>http://10.128.6.39:8081/nexus/content/groups/public/</url>-->
-    <!--</repository>-->
-    <!--</repositories>-->
 
     <repositories>
         <repository>
