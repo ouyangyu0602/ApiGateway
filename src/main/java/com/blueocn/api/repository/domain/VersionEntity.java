@@ -13,7 +13,7 @@ import java.util.Date;
  * @version 1.0.0
  * @since 2015-12-17 04:03
  */
-public class VersionEntity extends PersistenceEntity {
+public abstract class VersionEntity extends PersistenceEntity {
     private static final long serialVersionUID = 1263311144253791913L;
 
     private Long version = 0L;

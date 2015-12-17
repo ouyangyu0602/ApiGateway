@@ -38,11 +38,11 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
         if (AjaxUtils.isAjaxRequest(request)) {
             PrintWriter writer = null;
             try {
+                LOGGER.warn("", ex);
                 writer = response.getWriter();
                 RestfulResponse restfulResponse = new RestfulResponse();
                 restfulResponse.setSuccess(false);
                 StringWriter sw = new StringWriter();
-                ex.printStackTrace(new PrintWriter(sw));
                 restfulResponse.setMsg(sw.toString());
                 writer.write(JSON.toJSONString(restfulResponse));
                 writer.flush();

@@ -3,6 +3,9 @@
  */
 package com.blueocn.api.support.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +25,8 @@ import java.util.regex.Pattern;
  * @since 2015-12-15 16:38
  */
 public class DateUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
 
     public static final String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
 
@@ -109,7 +114,7 @@ public class DateUtils {
         try {
             return getDateFormat(fmt).parse(date);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warn("", e);
         }
         return null;
     }
@@ -132,7 +137,7 @@ public class DateUtils {
         try {
             return getDateFormat(YMD).parse(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            LOGGER.warn("", e);
         }
         return null;
     }
