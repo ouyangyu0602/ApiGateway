@@ -4,6 +4,7 @@
 package com.blueocn.api.controller.ui;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Title: UIController
@@ -16,5 +17,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class UIController extends BaseController {
 
-
+    @RequestMapping("index")
+    public String index() {
+        return "index";
+    }
 }

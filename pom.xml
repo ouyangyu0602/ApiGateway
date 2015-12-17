@@ -17,7 +17,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/api</path>
+                    <path>/</path>
                     <port>9999</port>
                     <server>tomcat</server>
                     <warFile>apisystem.war</warFile>

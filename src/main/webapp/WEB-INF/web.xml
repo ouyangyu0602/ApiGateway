@@ -7,6 +7,10 @@
 
     <display-name>API Admin</display-name>
 
+    <welcome-file-list>
+        <welcome-file>index.htm</welcome-file>
+    </welcome-file-list>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring/spring-core.xml</param-value>
@@ -22,6 +26,11 @@
         <filter-class>com.blueocn.api.support.xss.XssFilter</filter-class>
     </filter>
 
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/assets/*</url-pattern>
+    </servlet-mapping>
+    
     <filter-mapping>
         <filter-name>xssFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -47,9 +56,6 @@
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>index.htm</welcome-file>
-    </welcome-file-list>
     <listener>
         <listener-class>com.blueocn.api.initialization.SystemInitListener</listener-class>
     </listener>

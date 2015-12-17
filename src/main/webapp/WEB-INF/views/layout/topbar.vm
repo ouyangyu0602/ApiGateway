@@ -7,10 +7,7 @@
 
         <ul class="nav navbar-top-links navbar-right">
             <li class="welcome-message">
-                <span class="m-r-sm text-muted">
-                    <a href="https://github.com/qq254963746/light-task-scheduler" target="_blank"><span class="label label-info"><i class="fa fa-github"></i> github</span></a>
-                    <a href="http://git.oschina.net/hugui/light-task-scheduler" target="_blank"><span class="label label-info"><i class="fa fa-users"></i> oschina</span></a>
-                </span>
+                <span class="m-r-sm text-muted"><!-- 还没想好 --></span>
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"

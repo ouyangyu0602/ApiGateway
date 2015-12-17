@@ -4,7 +4,7 @@
 
 <mapper namespace="com.blueocn.api.repository.mapper.CommonRepository">
 
-    <insert id="executeSQL" parameterType="java.lang.String">
+    <insert id="executeSQL" parameterType="string">
         <![CDATA[ ${sql} ]]>
     </insert>
 </mapper>

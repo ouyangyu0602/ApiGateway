@@ -3,9 +3,9 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <div class="env-element" id="current-env" env="daily">LTS管理后台</div>
+                    <div class="env-element" id="current-env" env="daily">API管理后台</div>
                 </div>
-                <div class="logo-element">LTS</div>
+                <div class="logo-element"><img style="margin: 10px;" src="/assets/img/logo.svg"></div>
             </li>
             <li>
                 <a href="index.htm">
