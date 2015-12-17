@@ -3,6 +3,8 @@
  */
 package com.blueocn.api.repository.domain;
 
+import com.blueocn.api.enums.UserTypeEnum;
+
 /**
  * Title: UserEntity
  * Description: 用户表领域对象
@@ -19,6 +21,8 @@ public class UserEntity extends IdEntity {
     private String userIdentity;
 
     private String userPassword;
+
+    private UserTypeEnum userType;
 
     public String getUserName() {
         return userName;
@@ -42,5 +46,13 @@ public class UserEntity extends IdEntity {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public UserTypeEnum getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserTypeEnum userType) {
+        this.userType = userType;
     }
 }

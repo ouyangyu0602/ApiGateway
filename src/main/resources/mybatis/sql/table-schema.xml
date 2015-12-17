@@ -6,7 +6,8 @@
             CREATE TABLE IF NOT EXISTS `USER` (
                 `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `USER_NAME` VARCHAR(16) NOT NULL,
-                `USER_IDENTITY` VARCHAR(16) NOT NULL,
+                `USER_IDENTITY` VARCHAR(32) NOT NULL,
+                `USER_TYPE` VARCHAR(32) NOT NULL,
                 `USER_PASSWORD` VARCHAR(64) NOT NULL,
                 PRIMARY KEY (`ID`)
             );
