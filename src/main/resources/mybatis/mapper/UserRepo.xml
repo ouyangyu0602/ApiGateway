@@ -4,4 +4,112 @@
 
 <mapper namespace="com.blueocn.api.repository.mapper.UserRepository">
 
+    <insert id="add" parameterType="UserEntity" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+            INSERT INTO `USER` (
+                `USER_NAME`,
+                `USER_IDENTITY`,
+                `USER_PASSWORD`,
+                `USER_TYPE`
+            ) VALUES (
+                #{userName},
+                #{userIdentity},
+                #{userPassword},
+                #{userType}
+            )
+        ]]>
+    </insert>
+
+    <insert id="insert" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+            INSERT INTO `USER` (
+                `USER_NAME`,
+                `USER_IDENTITY`,
+                `USER_PASSWORD`,
+                `USER_TYPE`
+            ) VALUES
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+            <![CDATA[
+            (
+                #{item.userName},
+                #{item.userIdentity},
+                #{item.userPassword},
+                #{item.userType}
+            )
+        ]]>
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM `USER` WHERE `ID` = #{id}
+    </delete>
+
+    <update id="update" parameterType="UserEntity">
+        UPDATE `USER`
+        <include refid="setCondition"/>
+        WHERE `ID` = #{id}
+    </update>
+
+    <select id="query" parameterType="UserEntity" resultMap="userResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM `USER`
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="queryOne" parameterType="long" resultMap="userResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM `USER` WHERE `ID` = #{id}
+    </select>
+
+    <sql id="setCondition">
+        <set>
+            <if test="userName != null">
+                <![CDATA[ `USER_NAME` = #{userName}, ]]>
+            </if>
+            <if test="userIdentity != null">
+                <![CDATA[ `USER_IDENTITY` = #{userIdentity}, ]]>
+            </if>
+            <if test="userType != null">
+                <![CDATA[ `USER_TYPE` = #{userType}, ]]>
+            </if>
+            <if test="userPassword != null">
+                <![CDATA[ `USER_PASSWORD` = #{userPassword}, ]]>
+            </if>
+        </set>
+    </sql>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="id != null and id != ''">
+                <![CDATA[  AND `ID` = #{id} ]]>
+            </if>
+            <if test="userName != null">
+                <![CDATA[  AND `USER_NAME` = #{userName} ]]>
+            </if>
+            <if test="userIdentity != null">
+                <![CDATA[  AND `USER_IDENTITY` = #{userIdentity} ]]>
+            </if>
+            <if test="userType != null">
+                <![CDATA[  AND `USER_TYPE` = #{userType} ]]>
+            </if>
+            <if test="userPassword != null">
+                <![CDATA[  AND `USER_PASSWORD` = #{userPassword} ]]>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectColumns">
+        `ID` ,`USER_NAME`, `USER_IDENTITY`, `USER_TYPE`, `USER_PASSWORD`
+    </sql>
+
+    <resultMap id="userResultMap" type="UserEntity">
+        <id property="id" column="ID"/>
+        <result property="userName" column="USER_NAME"/>
+        <result property="userIdentity" column="USER_IDENTITY"/>
+        <result property="userType" column="USER_TYPE"/>
+        <result property="userPassword" column="USER_PASSWORD"/>
+    </resultMap>
 </mapper>

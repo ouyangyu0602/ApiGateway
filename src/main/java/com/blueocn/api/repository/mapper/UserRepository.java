@@ -21,6 +21,8 @@ public interface UserRepository {
 
     Long add(UserEntity entity);
 
+    void insert(List<UserEntity> list);
+
     void delete(Long id);
 
     void update(UserEntity entity);

@@ -3,6 +3,8 @@
  */
 package com.blueocn.api.repository.domain;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * Title: KeyStoreEntity
  * Description:
@@ -11,6 +13,7 @@ package com.blueocn.api.repository.domain;
  * @version 1.0.0
  * @since 2015-12-17 03:57
  */
+@Alias("KeyStoreEntity")
 public class KeyStoreEntity extends PersistenceEntity {
     private static final long serialVersionUID = 5412799030856027766L;
 

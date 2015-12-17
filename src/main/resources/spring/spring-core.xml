@@ -8,8 +8,6 @@
         <context:exclude-filter type="regex" expression="com.blueocn.api.controller.*"/>
     </context:component-scan>
 
-    <context:annotation-config/>
-
     <bean id="dataSource" class="com.blueocn.api.support.spring.DataSourceFactoryBean"/>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

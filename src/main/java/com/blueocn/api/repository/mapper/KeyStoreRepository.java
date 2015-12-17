@@ -21,6 +21,8 @@ public interface KeyStoreRepository {
 
     Long add(KeyStoreEntity entity);
 
+    void insert(List<KeyStoreEntity> list);
+
     void delete(Long id);
 
     void update(KeyStoreEntity entity);

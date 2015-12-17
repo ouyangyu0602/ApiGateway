@@ -4,6 +4,7 @@
 package com.blueocn.api.repository.domain;
 
 import com.blueocn.api.enums.UserTypeEnum;
+import org.apache.ibatis.type.Alias;
 
 /**
  * Title: UserEntity
@@ -13,6 +14,7 @@ import com.blueocn.api.enums.UserTypeEnum;
  * @version 1.0.0
  * @since 2015-12-17 03:27
  */
+@Alias("UserEntity")
 public class UserEntity extends IdEntity {
     private static final long serialVersionUID = 6044707143718263105L;
 
