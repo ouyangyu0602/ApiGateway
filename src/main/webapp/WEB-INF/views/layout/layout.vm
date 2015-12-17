@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    #parse('/layout/head.vm')
+</head>
+<body class="gray-bg">
+
+    $screen_content
+
+    #parse('/layout/footer.vm')
+</body>
+</html>

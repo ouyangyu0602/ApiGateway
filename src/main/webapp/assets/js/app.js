@@ -1,9 +1,4 @@
 /**
- * 这里封装一些公共的JS
- * @author Robert HG (254963746@qq.com)
- */
-
-/**
  * @type {{}}
  */
 var LTS = {
