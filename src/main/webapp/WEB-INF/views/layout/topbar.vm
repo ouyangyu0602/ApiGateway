@@ -12,14 +12,14 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"
                    href="#">
-                    <img class="img-circle" style="width:30px;" src="assets/img/avatar.jpeg">
+                    <img class="img-circle" style="width:30px;" src="/assets/img/avatar.jpeg">
                     <span>管理员</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#">个人信息</a></li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#">退出</a>
+                        <a href="/logout">退出</a>
                     </li>
                 </ul>
             </li>

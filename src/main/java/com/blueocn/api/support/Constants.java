@@ -21,6 +21,9 @@ public interface Constants {
     // 用户Session信息标识
     String LOGIN_USER_IN_SESSION = "current_login_user";
 
+    // 用户页面实体标识
+    String LOGIN_USER = "loginUser";
+
     // 登录页URI
     String LOGIN_URI = "/login";
 

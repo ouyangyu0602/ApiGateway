@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
 
+    @Override
     public boolean login(String username, String password) {
         // TODO 加密, 换Spring Security
         UserEntity entity = new UserEntity();

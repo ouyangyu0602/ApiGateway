@@ -5,6 +5,7 @@ package com.blueocn.api.controller.api;
 
 import com.blueocn.api.controller.AbstractController;
 import com.blueocn.api.service.UserService;
+import com.blueocn.api.support.session.SessionManager;
 import com.blueocn.api.vo.RestfulResponse;
 import com.blueocn.api.vo.UserVo;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,10 +36,11 @@ public class UserController extends AbstractController {
     private UserService userService;
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public RestfulResponse login(UserVo userVo) {
+    public RestfulResponse login(UserVo userVo, HttpServletRequest request) {
         try {
             if (userService.login(checkNotNull(userVo.getUserIdentity(), "用户登录名"),
                 checkNotNull(userVo.getUserPassword(), "用户密码"))) {
+                SessionManager.INSTANCE.login(userVo, request.getSession());
                 return new RestfulResponse();
             }
         } catch (Exception e) {

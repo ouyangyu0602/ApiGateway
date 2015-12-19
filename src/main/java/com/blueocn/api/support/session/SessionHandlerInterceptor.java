@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.blueocn.api.support.Constants.LOGIN_URI;
+import static com.blueocn.api.support.Constants.LOGIN_USER;
 
 /**
  * Title: SessionHandlerInterceptor
@@ -26,6 +27,9 @@ public class SessionHandlerInterceptor extends HandlerInterceptorAdapter {
         if (!LOGIN_URI.equals(request.getRequestURI())) {
             if (SessionManager.INSTANCE.isNotLogin(request.getSession())) {
                 response.sendRedirect(LOGIN_URI);
+                return false;
+            } else {
+                request.setAttribute(LOGIN_USER, SessionManager.INSTANCE.getLoginUser(request.getSession()));
             }
         }
         return true;

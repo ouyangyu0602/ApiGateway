@@ -3,7 +3,11 @@
  */
 package com.blueocn.api.controller.ui;
 
+import com.blueocn.api.support.session.SessionManager;
+import com.blueocn.api.vo.UserVo;
 import org.springframework.ui.Model;
+
+import javax.servlet.http.HttpServletRequest;
 
 import static com.blueocn.api.support.Constants.PAGE_TITLE;
 
@@ -25,5 +29,9 @@ public abstract class BaseController {
      */
     protected void setPageTitle(Model model, String pageTitle) {
         model.addAttribute(PAGE_TITLE, " | " + pageTitle);
+    }
+
+    protected UserVo getLoginUser(HttpServletRequest request) {
+        return SessionManager.INSTANCE.getLoginUser(request.getSession());
     }
 }
