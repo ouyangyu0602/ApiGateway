@@ -1,10 +1,8 @@
 /*
  * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
  */
-package com.blueocn.api.support.spring;
+package com.blueocn.api.support.config;
 
-import com.blueocn.api.support.config.ConfigureLoader;
-import com.blueocn.api.support.config.Config;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,16 +38,16 @@ public class ConfigFactoryBean implements FactoryBean<Config>, InitializingBean 
 
     @Override
     public void afterPropertiesSet() {
-        String kongAddress = ConfigureLoader.getProperty("kongAddress");
+        String kongAddress = ConfigLoader.getProperty("kongAddress");
         if (StringUtils.isBlank(kongAddress)) {
             throw new IllegalArgumentException("kongAddress in api-config.cfg can't be null.");
         }
         config = new Config();
         config.setKongAddress(kongAddress);
-        config.setListenPort(Integer.parseInt(ConfigureLoader.getProperty("listenPort")));
-        config.setInvokeTimeoutMillis(Integer.parseInt(ConfigureLoader.getProperty("invokeTimeoutMillis")));
+        config.setListenPort(Integer.parseInt(ConfigLoader.getProperty("listenPort")));
+        config.setInvokeTimeoutMillis(Integer.parseInt(ConfigLoader.getProperty("invokeTimeoutMillis")));
 
-        for (Map.Entry<String, String> entry : ConfigureLoader.allConfig().entrySet()) {
+        for (Map.Entry<String, String> entry : ConfigLoader.allConfig().entrySet()) {
             // 将 config. 开头的配置都加入到config中
             if (entry.getKey().startsWith("configs.")) {
                 config.setParameter(entry.getKey().replaceFirst("configs.", ""), entry.getValue());

@@ -20,7 +20,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @version 1.0.0
  * @since 2015-12-15 17:41
  */
-public class ConfigureLoader {
+public class ConfigLoader {
 
     private static final Map<String, String> CONFIG = Maps.newHashMap();
     private static final String CONF_FILE = "api-config.cfg";
@@ -32,7 +32,7 @@ public class ConfigureLoader {
         try {
             if (load.compareAndSet(false, true)) {
                 Properties conf = new Properties();
-                InputStream is = ConfigureLoader.class.getClassLoader().getResourceAsStream(path);
+                InputStream is = ConfigLoader.class.getClassLoader().getResourceAsStream(path);
                 conf.load(is);
 
                 for (Map.Entry<Object, Object> entry : conf.entrySet()) {

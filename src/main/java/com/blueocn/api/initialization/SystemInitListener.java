@@ -3,7 +3,7 @@
  */
 package com.blueocn.api.initialization;
 
-import com.blueocn.api.support.config.ConfigureLoader;
+import com.blueocn.api.support.config.ConfigLoader;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -23,7 +23,7 @@ public class SystemInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         String confPath = servletContextEvent.getServletContext().getInitParameter("lts.admin.config.path");
-        ConfigureLoader.load(confPath);
+        ConfigLoader.load(confPath);
     }
 
     @Override

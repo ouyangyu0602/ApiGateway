@@ -1,9 +1,8 @@
 /*
  * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved. 
  */
-package com.blueocn.api.support.spring;
+package com.blueocn.api.support.config;
 
-import com.blueocn.api.support.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

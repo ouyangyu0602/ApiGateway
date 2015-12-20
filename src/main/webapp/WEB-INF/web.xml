@@ -77,7 +77,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.blueocn.api.support.config.MvcConfig</param-value>
+            <param-value>com.blueocn.api.support.config.WebConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -92,16 +92,4 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
-
-    <!-- Future usage -->
-    <!-- @See http://www.cnblogs.com/hzhuxin/archive/2011/12/19/2293730.html -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 </web-app>
