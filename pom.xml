@@ -240,6 +240,34 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- execute during default lifestyle in validate goal -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <outputDirectory>${resource.output.path}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${resource.origin.path}</directory>
+                                    <excludes>
+                                        <exclude>README.md</exclude>
+                                    </excludes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -253,120 +281,25 @@
             </activation>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-dev/</resource.origin.path>
+                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <!-- execute during default lifestyle in validate goal -->
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <encoding>${project.build.sourceEncoding}</encoding>
-                                    <outputDirectory>${basedir}/src/main/resources/runtimecfg/</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${basedir}/src/main/resources/runtimecfg-dev/</directory>
-                                            <excludes>
-                                                <exclude>README.md</exclude>
-                                            </excludes>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>test</id>
             <properties>
                 <maven.test.skip>false</maven.test.skip>
+                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-qa/</resource.origin.path>
+                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <!-- execute during default lifestyle in validate goal -->
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <encoding>${project.build.sourceEncoding}</encoding>
-                                    <outputDirectory>${basedir}/src/main/resources/runtimecfg/
-                                    </outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>
-                                                ${basedir}/src/main/resources/runtimecfg-qa/
-                                            </directory>
-                                            <excludes>
-                                                <exclude>README.md</exclude>
-                                            </excludes>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>production</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-product/</resource.origin.path>
+                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.5</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <encoding>${project.build.sourceEncoding}</encoding>
-                                    <outputDirectory>${basedir}/src/main/resources/runtimecfg/
-                                    </outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>
-                                                ${basedir}/src/main/resources/runtimecfg-product/
-                                            </directory>
-                                            <excludes>
-                                                <exclude>README.md</exclude>
-                                            </excludes>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 </project>
