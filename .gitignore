@@ -10,7 +10,7 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-# Compiled Python files
+# Compiled ()ython files
 *.pyc
 
 # Compiled C++ files
@@ -21,14 +21,20 @@ venv
 node_modules
 .sass-cache
 
-# Maven Project
+# Maven project
 target/
 
-# IDEA Project Files
+# IDEA project files
 *.iml
 .idea
 
-# Eclipse Project Files
+# Eclipse project files
 .classpath
 .project
 .settings/
+
+# Configration files
+#src/main/resources/runtimecfg/*
+#src/main/resources/runtimecfg-dev/*
+#src/main/resources/runtimecfg-product/*
+#src/main/resources/runtimecfg-qa/*
