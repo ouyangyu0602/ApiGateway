@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Title: ConfigInitializeBean
- * Description:
+ * Description: 对与Config配置实体类的初始化配置Bean, 调用Config的工厂类, 构建需要的 Config 单例Bean.
+ * 如果使用XML的形式定义, 这边会更加优雅.
  *
  * @author Yufan
  * @version 1.0.0
