@@ -34,7 +34,7 @@ target/
 .settings/
 
 # Configration files
-#src/main/resources/runtimecfg/*
-#src/main/resources/runtimecfg-dev/*
-#src/main/resources/runtimecfg-product/*
-#src/main/resources/runtimecfg-qa/*
+src/main/resources/runtimecfg/*
+src/main/resources/runtimecfg-dev/*
+src/main/resources/runtimecfg-product/*
+src/main/resources/runtimecfg-qa/*
