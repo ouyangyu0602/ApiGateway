@@ -31,7 +31,7 @@ import java.util.Map;
 import static com.blueocn.api.support.Constants.DEFAULT_CHARSET;
 
 /**
- * Title: MvcConfig
+ * Title: WebConfig
  * Description: Spring MVC 配置类, 和 Spring 的配置隔离.
  *
  * @author Yufan
