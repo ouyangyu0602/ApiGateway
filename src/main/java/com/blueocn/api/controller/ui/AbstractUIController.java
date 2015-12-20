@@ -19,7 +19,7 @@ import static com.blueocn.api.support.Constants.PAGE_TITLE;
  * @version 1.0.0
  * @since 2015-12-15 15:54
  */
-public abstract class BaseController {
+public abstract class AbstractUIController {
 
     /**
      * 对于显示的页面标题定义方法

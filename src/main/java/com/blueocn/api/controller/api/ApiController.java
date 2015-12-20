@@ -3,7 +3,6 @@
  */
 package com.blueocn.api.controller.api;
 
-import com.blueocn.api.controller.AbstractController;
 import com.blueocn.api.kong.CustomerClient;
 import com.blueocn.api.vo.RestfulResponse;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,7 +21,7 @@ import javax.annotation.Resource;
  * @since 2015-12-18 10:54
  */
 @RestController
-public class ApiController extends AbstractController {
+public class ApiController extends AbstractResponseController {
 
     @Resource
     private CustomerClient customerClient;

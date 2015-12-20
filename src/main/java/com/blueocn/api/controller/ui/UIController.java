@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2015-12-16 17:57
  */
 @Controller
-public class UIController extends BaseController {
+public class UIController extends AbstractUIController {
 
     @RequestMapping("index")
     public String index(Model model) {

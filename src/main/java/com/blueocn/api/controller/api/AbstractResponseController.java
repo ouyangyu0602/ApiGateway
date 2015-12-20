@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
  */
-package com.blueocn.api.controller;
+package com.blueocn.api.controller.api;
 
 import com.blueocn.api.support.spring.DateEditor;
 import com.blueocn.api.support.spring.MapEditor;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2015-12-15 12:54
  */
-public abstract class AbstractController {
+public abstract class AbstractResponseController {
 
     @InitBinder
     protected void initBinder(HttpServletRequest request,

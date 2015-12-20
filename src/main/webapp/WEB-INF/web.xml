@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd "
-         metadata-complete="false"
-         version="3.0">
+         metadata-complete="false" version="3.0">
 
     <display-name>API Admin</display-name>
 
+    <!-- Index location -->
     <welcome-file-list>
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
@@ -17,29 +16,43 @@
         <param-value>classpath:runtimecfg/log4j.xml</param-value>
     </context-param>
 
+    <!-- Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext -->
+    <!-- instead of the default XmlWebApplicationContext -->
     <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/spring-core.xml</param-value>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
     </context-param>
 
+    <!-- Outer configuration files for some changeable environment params, such as database or redis. -->
     <context-param>
         <param-name>lts.admin.config.path</param-name>
         <param-value>runtimecfg</param-value>
     </context-param>
 
+    <!-- Configuration locations must consist of one or more comma- or space-delimited -->
+    <!-- fully-qualified @Configuration classes. Fully-qualified packages may also be -->
+    <!-- specified for component-scanning -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.blueocn.api.support.config.ApiSystemConfig</param-value>
+    </context-param>
+
+    <!-- Bootstrap the log4j config file -->
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
 
+    <!-- Bootstrap the root application outer config params -->
     <listener>
         <listener-class>com.blueocn.api.initialization.SystemInitListener</listener-class>
     </listener>
 
+    <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- Better than spring mvc:resource configuration -->
+    <!-- Handle static resource, better than spring mvc:resource configuration -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/assets/*</url-pattern>
@@ -59,8 +72,12 @@
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/spring-web.xml</param-value>
+            <param-value>com.blueocn.api.support.config.MvcConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -70,9 +87,21 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
-    <!-- .htm 结尾的也作为请求, 会不会不好? -->
+    <!-- Include .htm request, I don't think it is awesome. -->
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
+
+    <!-- Future usage -->
+    <!-- @See http://www.cnblogs.com/hzhuxin/archive/2011/12/19/2293730.html -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

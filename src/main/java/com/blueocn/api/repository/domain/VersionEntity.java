@@ -8,6 +8,7 @@ import java.util.Date;
 /**
  * Title: VersionEntity
  * Description: 版本化领域模型基类
+ * 可基于此实现乐观锁概念
  *
  * @author Yufan
  * @version 1.0.0

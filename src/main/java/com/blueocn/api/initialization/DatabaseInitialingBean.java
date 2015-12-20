@@ -27,15 +27,16 @@ import java.util.List;
 /**
  * Title: ApiSystemDatabaseInitialingBean
  * Description: 第一次启动时初始化数据库使用, 便于服务部署和更新数据库
+ * 后续计划新增版本化概念, 做到开发时平滑升级.
  *
  * @author Yufan
  * @version 1.0.0
  * @since 2015-12-16 14:12
  */
 @Component
-public class ApiSystemDatabaseInitialingBean implements InitializingBean {
+public class DatabaseInitialingBean implements InitializingBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiSystemDatabaseInitialingBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseInitialingBean.class);
 
     @Autowired
     private CommonRepository commonRepository;

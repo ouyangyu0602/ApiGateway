@@ -3,7 +3,6 @@
  */
 package com.blueocn.api.controller.api;
 
-import com.blueocn.api.controller.AbstractController;
 import com.blueocn.api.service.UserService;
 import com.blueocn.api.support.session.SessionManager;
 import com.blueocn.api.vo.RestfulResponse;
@@ -28,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2015-12-17 22:43
  */
 @RestController
-public class UserController extends AbstractController {
+public class UserController extends AbstractResponseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 

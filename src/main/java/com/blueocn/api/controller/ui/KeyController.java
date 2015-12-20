@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2015-12-18 10:54
  */
 @Controller
-public class KeyController extends BaseController {
+public class KeyController extends AbstractUIController {
 
     @Resource
     private CustomerClient customerClient;

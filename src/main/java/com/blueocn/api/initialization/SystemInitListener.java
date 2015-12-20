@@ -3,14 +3,16 @@
  */
 package com.blueocn.api.initialization;
 
-import com.blueocn.api.support.config.AppConfigurer;
+import com.blueocn.api.support.config.ConfigureLoader;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
  * Title: 系统初始化加载
- * Description: 读取配置信息初始化
+ * Description: 读取配置信息中指定的配置文件运行路径, 调用ConfigureLoader初始化
+ * 原来这么写的原因是想直接使用 Spring 的 profile 方式, 定义不同的加载路径初始化.
+ * 后面觉得没必要那么麻烦, 所以这个设计被废弃, 此为废弃下来的代码.
  *
  * @author Yufan
  * @version 1.0.0
@@ -21,7 +23,7 @@ public class SystemInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         String confPath = servletContextEvent.getServletContext().getInitParameter("lts.admin.config.path");
-        AppConfigurer.load(confPath);
+        ConfigureLoader.load(confPath);
     }
 
     @Override
