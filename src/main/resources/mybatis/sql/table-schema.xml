@@ -4,12 +4,14 @@
     <tableSchema>
         <table>
             CREATE TABLE IF NOT EXISTS `USER` (
-                `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `USER_NAME` VARCHAR(16) NOT NULL,
-                `USER_IDENTITY` VARCHAR(32) NOT NULL,
-                `USER_TYPE` VARCHAR(32) NOT NULL,
-                `USER_PASSWORD` VARCHAR(64) NOT NULL,
-                PRIMARY KEY (`ID`)
+            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `USER_NAME` VARCHAR(16) NOT NULL,
+            `USER_IDENTITY` VARCHAR(32) NOT NULL,
+            `USER_TYPE` VARCHAR(32) NOT NULL,
+            `LAST_LOGIN_DATE` DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00',
+            `USER_STATUS` VARCHAR(32) NOT NULL DEFAULT 'AWAIT',
+            `USER_PASSWORD` VARCHAR(64) NOT NULL,
+            PRIMARY KEY (`ID`)
             );
         </table>
         <indexes>
@@ -21,16 +23,32 @@
     <tableSchema>
         <table>
             CREATE TABLE IF NOT EXISTS `KEY_STORE` (
-                `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `USER_ID` INT(11) UNSIGNED NOT NULL,
-                `KEY_TYPE` VARCHAR(32) DEFAULT NULL,
-                `CREATE_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-                `KEY_VALUE` VARCHAR(128) DEFAULT NULL,
-                PRIMARY KEY (`ID`)
+            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `USER_ID` INT(11) UNSIGNED NOT NULL,
+            `USER_EMAIL` VARCHAR(128) NOT NULL UNIQUE,
+            `KEY_TYPE` VARCHAR(32) DEFAULT NULL,
+            `CREATE_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            `KEY_VALUE` VARCHAR(128) DEFAULT NULL,
+            PRIMARY KEY (`ID`)
             );
         </table>
         <indexes>
             <index>CREATE INDEX `IDX_USER_ID_ON_KEY_STORE` ON `KEY_STORE` (`USER_ID`);</index>
+        </indexes>
+    </tableSchema>
+
+    <!-- 用户登录错误信息表 -->
+    <tableSchema>
+        <table>
+            CREATE TABLE IF NOT EXISTS `LOGIN_ERROR_LOG` (
+            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `USER_ID` INT(11) UNSIGNED NOT NULL,
+            `ERROR_TIME` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+            PRIMARY KEY (`ID`)
+            );
+        </table>
+        <indexes>
+            <index>CREATE INDEX `IDX_USER_ID_ON_LOGIN_ERROR_LOG` ON `LOGIN_ERROR_LOG` (`USER_ID`);</index>
         </indexes>
     </tableSchema>
 </tableSchemas>

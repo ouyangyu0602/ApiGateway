@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd "
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd "
          metadata-complete="false"
-         version="2.5">
+         version="3.0">
 
     <display-name>API Admin</display-name>
 
     <welcome-file-list>
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
+
+    <!-- Log4j configuration, Better than previously initialization in code. -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:runtimecfg/log4j.xml</param-value>
+    </context-param>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -21,16 +27,29 @@
         <param-value>runtimecfg</param-value>
     </context-param>
 
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.blueocn.api.initialization.SystemInitListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Better than spring mvc:resource configuration -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/assets/*</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>xssFilter</filter-name>
         <filter-class>com.blueocn.api.support.xss.XssFilter</filter-class>
     </filter>
 
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/assets/*</url-pattern>
-    </servlet-mapping>
-    
     <filter-mapping>
         <filter-name>xssFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -51,16 +70,9 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
+    <!-- .htm 结尾的也作为请求, 会不会不好? -->
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
-
-    <listener>
-        <listener-class>com.blueocn.api.initialization.SystemInitListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
 </web-app>

@@ -22,8 +22,13 @@ node_modules
 .sass-cache
 
 # Maven Project
-/target
+target/
 
 # IDEA Project Files
 *.iml
 .idea
+
+# Eclipse Project Files
+.classpath
+.project
+.settings/
