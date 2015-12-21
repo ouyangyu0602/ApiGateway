@@ -36,7 +36,7 @@
     <repositories>
         <repository>
             <id>local-central</id>
-            <url>http://maven.xiaoyou.com/nexus/content/groups/public/</url>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
