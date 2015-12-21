@@ -56,7 +56,7 @@ public class DatabaseInitialingBean implements InitializingBean {
                         commonRepository.executeSQL(index);
                     } catch (BadSqlGrammarException e) {
                         if (isDuplicateIndex(e)) {
-                            LOGGER.debug("Indexes already exists {}", e);
+                            LOGGER.debug("Indexes already exists ...", e);
                         } else {
                             throw e;
                         }
