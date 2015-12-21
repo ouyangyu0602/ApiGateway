@@ -28,7 +28,13 @@ import javax.sql.DataSource;
  * @since 2015-12-20 19:36
  */
 @Configuration
-@ComponentScan(basePackages = {"com.blueocn.api"}, excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.blueocn.api.controller.*")})
+@ComponentScan(
+    basePackages = {"com.blueocn.api"},
+    excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.blueocn.api.controller.*"),
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.blueocn.api.support.config.WebConfig")
+    }
+)
 @MapperScan(basePackages = "com.blueocn.api.repository.mapper", annotationClass = org.springframework.stereotype.Repository.class)
 public class ApiSystemConfig implements ApplicationContextAware {
 
