@@ -23,7 +23,7 @@
         <dbutils.version>1.6</dbutils.version>
         <druid.version>1.0.14</druid.version>
         <mysql.version>5.1.29</mysql.version>
-        <springframework.version>4.1.6.RELEASE</springframework.version>
+        <springframework.version>4.1.8.RELEASE</springframework.version>
         <jackson.version>2.6.3</jackson.version>
         <mybatis.version>3.3.0</mybatis.version>
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
@@ -36,7 +36,7 @@
     <repositories>
         <repository>
             <id>local-central</id>
-            <url>http://maven.oschina.net/content/groups/public/</url>
+            <url>http://maven.xiaoyou.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -68,6 +68,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${springframework.version}</version>
             <scope>test</scope>
         </dependency>
 

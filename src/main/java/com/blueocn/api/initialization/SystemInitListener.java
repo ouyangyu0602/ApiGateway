@@ -4,6 +4,8 @@
 package com.blueocn.api.initialization;
 
 import com.blueocn.api.support.config.ConfigLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -20,14 +22,17 @@ import javax.servlet.ServletContextListener;
  */
 public class SystemInitListener implements ServletContextListener {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SystemInitListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
+        LOGGER.info("Starting server, load config file from disk ...");
         String confPath = servletContextEvent.getServletContext().getInitParameter("lts.admin.config.path");
         ConfigLoader.load(confPath);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        // Do nothing ...
+        LOGGER.info("Stopping server ...");
     }
 }
