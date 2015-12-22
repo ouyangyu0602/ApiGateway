@@ -6,7 +6,10 @@ package com.blueocn.api.support.config;
 import com.alibaba.fastjson.JSON;
 import com.blueocn.api.support.Constants;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -18,6 +21,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2015-12-16 10:40
  */
+@Component("config")
 public class Config implements Serializable {
     private static final long serialVersionUID = 3694442039402766466L;
 
@@ -32,6 +36,24 @@ public class Config implements Serializable {
 
     // 配置文件中以 config. 开头的的配置参数, 实际的 key 会去除 config.
     private final Map<String, String> parameters = Maps.newHashMap();
+
+    @PostConstruct
+    public void initConfig() {
+        String kongAddress = ConfigLoader.getProperty("kongAddress");
+        if (StringUtils.isBlank(kongAddress)) {
+            throw new IllegalArgumentException("kongAddress in api-config.cfg can't be null.");
+        }
+        this.setKongAddress(kongAddress);
+        this.setListenPort(Integer.parseInt(ConfigLoader.getProperty("listenPort")));
+        this.setInvokeTimeoutMillis(Integer.parseInt(ConfigLoader.getProperty("invokeTimeoutMillis")));
+
+        for (Map.Entry<String, String> entry : ConfigLoader.allConfig().entrySet()) {
+            // 将 config. 开头的配置都加入到config中
+            if (entry.getKey().startsWith("configs.")) {
+                this.setParameter(entry.getKey().replaceFirst("configs.", ""), entry.getValue());
+            }
+        }
+    }
 
     public String getKongAddress() {
         return kongAddress;
