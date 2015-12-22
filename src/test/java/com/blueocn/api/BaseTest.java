@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ApiSystemConfig.class})
-public class BaseTest {
+public abstract class BaseTest {
     static {
         ConfigLoader.load("runtimecfg");
     }
