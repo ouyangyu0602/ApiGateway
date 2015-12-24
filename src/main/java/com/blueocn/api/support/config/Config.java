@@ -28,11 +28,20 @@ public class Config implements Serializable {
     // API 中心地址
     private String kongAddress;
 
+    // API 中心管理端口
+    private int kongListenPort;
+
     // 远程连接超时时间
     private int invokeTimeoutMillis;
 
-    // API 中心管理端口
-    private int listenPort;
+    // Redis 监听地址
+    private String redisAddress;
+
+    // Redis 端口
+    private int redisPort;
+
+    // Redis 密码
+    private String redisPassword;
 
     // 配置文件中以 config. 开头的的配置参数, 实际的 key 会去除 config.
     private final Map<String, String> parameters = Maps.newHashMap();
@@ -44,15 +53,21 @@ public class Config implements Serializable {
             throw new IllegalArgumentException("kongAddress in api-config.cfg can't be null.");
         }
         this.setKongAddress(kongAddress);
-        this.setListenPort(Integer.parseInt(ConfigLoader.getProperty("listenPort")));
+        this.setKongListenPort(Integer.parseInt(ConfigLoader.getProperty("kongListenPort")));
         this.setInvokeTimeoutMillis(Integer.parseInt(ConfigLoader.getProperty("invokeTimeoutMillis")));
-
-        for (Map.Entry<String, String> entry : ConfigLoader.allConfig().entrySet()) {
-            // 将 config. 开头的配置都加入到config中
-            if (entry.getKey().startsWith("configs.")) {
-                this.setParameter(entry.getKey().replaceFirst("configs.", ""), entry.getValue());
-            }
+        String redisAddress = ConfigLoader.getProperty("redisAddress");
+        if (StringUtils.isBlank(redisAddress)) {
+            throw new IllegalArgumentException("redisAddress in api-config.cfg can't be null.");
         }
+        this.setRedisAddress(redisAddress);
+        this.setRedisPort(Integer.parseInt(ConfigLoader.getProperty("redisPort", "6379")));
+        this.setRedisPassword(ConfigLoader.getProperty("redisPassword", ""));
+
+        // 将 config. 开头的配置都加入到config中
+        ConfigLoader.allConfig().entrySet().stream()
+            .filter(entry -> entry.getKey().startsWith("configs.")).forEach(entry -> {
+            this.setParameter(entry.getKey().replaceFirst("configs.", ""), entry.getValue());
+        });
     }
 
     public String getKongAddress() {
@@ -71,12 +86,36 @@ public class Config implements Serializable {
         this.invokeTimeoutMillis = invokeTimeoutMillis;
     }
 
-    public int getListenPort() {
-        return listenPort;
+    public int getKongListenPort() {
+        return kongListenPort;
     }
 
-    public void setListenPort(int listenPort) {
-        this.listenPort = listenPort;
+    public void setKongListenPort(int kongListenPort) {
+        this.kongListenPort = kongListenPort;
+    }
+
+    public String getRedisAddress() {
+        return redisAddress;
+    }
+
+    public void setRedisAddress(String redisAddress) {
+        this.redisAddress = redisAddress;
+    }
+
+    public int getRedisPort() {
+        return redisPort;
+    }
+
+    public void setRedisPort(int redisPort) {
+        this.redisPort = redisPort;
+    }
+
+    public String getRedisPassword() {
+        return redisPassword;
+    }
+
+    public void setRedisPassword(String redisPassword) {
+        this.redisPassword = redisPassword;
     }
 
     public void setParameter(String key, String value) {

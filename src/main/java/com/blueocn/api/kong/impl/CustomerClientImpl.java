@@ -47,7 +47,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httpPost = new HttpPost(
-                config.getKongAddress() + ":" + config.getListenPort() + "/consumers/");
+                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/");
             httpPost.addHeader("content-type", "application/json");
             httpPost.addHeader("Accept", "application/json");
             StringEntity entity = new StringEntity(JSON.toJSONString(customer));
@@ -70,7 +70,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpGet httpGet = new HttpGet(
-                config.getKongAddress() + ":" + config.getListenPort() + "/consumers/" + customerId
+                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId
                     + "/key-auth/");
             HttpResponse httpResponse = httpClient.execute(httpGet);
             String response = EntityUtils.toString(httpResponse.getEntity());
@@ -89,7 +89,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httpPost = new HttpPost(
-                config.getKongAddress() + ":" + config.getListenPort() + "/consumers/" + customerId + "/key-auth/");
+                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId + "/key-auth/");
             Map<String, String> map = Maps.newHashMap();
             map.put("key", key);
             StringEntity entity = new StringEntity(JSON.toJSONString(map));
@@ -109,7 +109,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpDelete httpDelete = new HttpDelete(
-                config.getKongAddress() + ":" + config.getListenPort() + "/consumers/" + customerId
+                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId
                     + "/key-auth/" + keyId);
             HttpResponse httpResponse = httpClient.execute(httpDelete);
             if (httpResponse.getStatusLine().getStatusCode() == 204) {

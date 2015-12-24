@@ -5,6 +5,8 @@ package com.blueocn.api;
 
 import com.blueocn.api.support.config.ApiSystemConfig;
 import com.blueocn.api.support.config.ConfigLoader;
+import com.blueocn.api.support.config.MyBatisConfig;
+import com.blueocn.api.support.config.RedisConfig;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 2015-12-21 15:01
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApiSystemConfig.class})
+@ContextConfiguration(classes = {ApiSystemConfig.class, MyBatisConfig.class, RedisConfig.class})
 public abstract class BaseTest {
     static {
         ConfigLoader.load("runtimecfg");
