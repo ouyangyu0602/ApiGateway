@@ -5,6 +5,7 @@ package com.blueocn.api.support.config;
 
 import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
 import com.blueocn.api.support.csrf.CSRFTool;
+import com.blueocn.api.support.interceptor.FirewallInterceptor;
 import com.blueocn.api.support.session.SessionHandlerInterceptor;
 import com.google.common.collect.Maps;
 import org.springframework.context.ResourceLoaderAware;
@@ -75,6 +76,24 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         return new Jaxb2RootElementHttpMessageConverter();
     }
 
+    /**
+     * I don't like to Autowired this HandleInterceptor for test consideration.
+     */
+    @Bean(name = "sessionHandlerInterceptor")
+    public SessionHandlerInterceptor sessionHandlerInterceptor() {
+        return new SessionHandlerInterceptor();
+    }
+
+    @Bean(name = "csrfHandlerInterceptor")
+    public CSRFHandlerInterceptor csrfHandlerInterceptor() {
+        return new CSRFHandlerInterceptor();
+    }
+
+    @Bean(name = "firewallInterceptor")
+    public FirewallInterceptor firewallInterceptor() {
+        return new FirewallInterceptor();
+    }
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(byteArrayHttpMessageConverter());
@@ -92,8 +111,9 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionHandlerInterceptor());
-        registry.addInterceptor(new CSRFHandlerInterceptor());
+        registry.addInterceptor(sessionHandlerInterceptor());
+        registry.addInterceptor(csrfHandlerInterceptor());
+        registry.addInterceptor(firewallInterceptor());
     }
 
     @Bean(name = "velocityConfig")
