@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.blueocn.api.support.Constants.LOGIN_ERROR_ATTRIBUTE;
 import static com.blueocn.api.support.Constants.PAGE_TITLE;
 
 /**
@@ -33,5 +34,15 @@ public abstract class AbstractUIController {
 
     protected UserVo getLoginUser(HttpServletRequest request) {
         return SessionManager.INSTANCE.getLoginUser(request.getSession());
+    }
+
+    /**
+     * 通用错误信息设置
+     *
+     * @param model        {@code Model} Spring MVC 页面模型
+     * @param errorMessage 错误信息设置
+     */
+    protected void setErrorMessage(Model model, String errorMessage) {
+        model.addAttribute(LOGIN_ERROR_ATTRIBUTE, errorMessage);
     }
 }

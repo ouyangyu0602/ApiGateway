@@ -5,8 +5,9 @@
     <div>
       <h1 class="logo-name"><img src="/assets/img/logo.svg"></h1>
     </div>
-    <form class="m-t" role="form" action="/login">
+    <form class="m-t" role="form" action="/login" method="post">
       <input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
+      #parse('/layout/errorMessage.vm')
       <div class="form-group">
         <input type="text" class="form-control" placeholder="用户名" name="userIdentity"
                required="required">
@@ -19,24 +20,3 @@
     </form>
   </div>
 </div>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $("form").on('submit', function(event) {
-      event.preventDefault();
-      // 请求登录
-      $.ajax({
-        url: '/login',
-        type: 'POST',
-        dataType: 'json',
-        data: $(this).serialize(),
-        success: function (json) {
-          if (json && json.success) {
-            location.href = "/index";
-          } else {
-            json ? swal(json['msg'], "", "error") : {};
-          }
-        }
-      });
-    });
-  });
-</script>

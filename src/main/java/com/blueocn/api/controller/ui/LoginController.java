@@ -3,7 +3,9 @@
  */
 package com.blueocn.api.controller.ui;
 
+import com.blueocn.api.service.UserService;
 import com.blueocn.api.support.session.SessionManager;
+import com.blueocn.api.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import static com.blueocn.api.support.Constants.LOGIN_URI;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Title: LoginController
@@ -25,8 +31,28 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController extends AbstractUIController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @Resource
+    private UserService userService;
+
+    @RequestMapping(value = LOGIN_URI, method = RequestMethod.GET)
     public String login(Model model) {
+        setPageTitle(model, "登录");
+        return "login";
+    }
+
+    @RequestMapping(value = LOGIN_URI, method = RequestMethod.POST)
+    public String login(UserVo userVo, HttpServletRequest request, Model model) {
+        try {
+            if (userService.login(checkNotNull(userVo.getUserIdentity(), "用户登录名不能为空"),
+                checkNotNull(userVo.getUserPassword(), "用户密码不能为空"))) {
+                SessionManager.INSTANCE.login(userVo, request.getSession());
+                return "redirect:/index";
+            }
+            setErrorMessage(model, "用户密码错误或者是用户不存在");
+        } catch (Exception e) {
+            LOGGER.warn("", e);
+            setErrorMessage(model, e.getMessage());
+        }
         setPageTitle(model, "登录");
         return "login";
     }
@@ -34,6 +60,6 @@ public class LoginController extends AbstractUIController {
     @RequestMapping(value = "logout")
     public String logout(HttpServletRequest request) {
         SessionManager.INSTANCE.logout(request.getSession());
-        return "redirect:/login";
+        return "redirect:" + LOGIN_URI;
     }
 }

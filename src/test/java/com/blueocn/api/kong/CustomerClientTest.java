@@ -21,10 +21,12 @@ public class CustomerClientTest extends MockTest {
     public void before() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(customerClient.createCustomer(customerData)).thenReturn(true);
+        Mockito.when(customerData.getCustomerId()).thenReturn("Test Mock");
     }
 
     @Test
     public void testCreateCustomer() throws Exception {
         Assert.assertTrue(customerClient.createCustomer(customerData));
+        Assert.assertTrue("Test Mock".equals(customerData.getCustomerId()));
     }
 }

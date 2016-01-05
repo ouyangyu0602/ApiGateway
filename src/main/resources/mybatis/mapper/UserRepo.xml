@@ -114,6 +114,9 @@
             <if test="userStatus != null">
                 <![CDATA[  AND `USER_STATUS` = #{userStatus} ]]>
             </if>
+            <if test="userPassword != null">
+                <![CDATA[  AND `USER_PASSWORD` = #{userPassword} ]]>
+            </if>
         </where>
     </sql>
 

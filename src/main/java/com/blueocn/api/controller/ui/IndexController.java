@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController extends AbstractUIController {
 
+    @RequestMapping("/")
+    public String index() {
+        return "redirect:/index";
+    }
+
     @RequestMapping("index")
-    public String index(Model model) {
+    public String home(Model model) {
         setPageTitle(model, "首页");
         return "index";
     }
