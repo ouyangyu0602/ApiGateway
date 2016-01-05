@@ -7,6 +7,7 @@ import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
 import com.blueocn.api.support.csrf.CSRFTool;
 import com.blueocn.api.support.interceptor.FirewallInterceptor;
 import com.blueocn.api.support.session.SessionHandlerInterceptor;
+import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +29,6 @@ import org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver;
 
 import java.util.List;
 import java.util.Map;
-
-import static com.blueocn.api.support.Constants.DEFAULT_CHARSET;
 
 /**
  * Title: WebConfig
@@ -53,7 +52,7 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
 
     @Bean(name = "stringHttpMessageConverter")
     StringHttpMessageConverter stringHttpMessageConverter() {
-        return new StringHttpMessageConverter(DEFAULT_CHARSET);
+        return new StringHttpMessageConverter(Charsets.UTF_8);
     }
 
     @Bean(name = "resourceHttpMessageConverter")
