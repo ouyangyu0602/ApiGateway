@@ -37,5 +37,5 @@ public interface Constants {
     // 请求跳转头
     String X_FORWARDED_FOR_HEADER = "x-forwarded-for";
 
-    String LOGIN_ERROR_ATTRIBUTE = "errorMessage";
+    String PAGE_ERROR_ATTRIBUTE = "errorMessage";
 }
