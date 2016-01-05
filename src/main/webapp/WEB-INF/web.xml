@@ -82,12 +82,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!-- Include .htm request, I don't think it is awesome. -->
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Include .htm request, I don't think it is awesome. -->
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>*.htm</url-pattern>

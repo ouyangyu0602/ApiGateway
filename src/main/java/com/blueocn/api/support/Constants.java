@@ -33,4 +33,7 @@ public interface Constants {
 
     // 系统默认编码
     Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
+    // 请求跳转头
+    String X_FORWARDED_FOR_HEADER = "x-forwarded-for";
 }

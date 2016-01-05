@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Title: FirewallInterceptor
- * Description:
+ * Description: 对请求的IP频度做限制, 防止某个IP请求超频
  *
  * @author Yufan
  * @version 1.0.0
@@ -27,7 +27,7 @@ public class FirewallInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) throws Exception {
-        return false;
+        return true;
     }
 
     @Override

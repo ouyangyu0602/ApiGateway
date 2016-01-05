@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blueocn.api.repository.mapper.LoginErrorLogRepository">
+
+    <insert id="add" parameterType="LoginErrorLogEntity" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+            INSERT INTO `LOGIN_ERROR_LOG` (
+                `USER_ID`,
+                `ERROR_TIME`
+            ) VALUES (
+                #{userId},
+                #{errorTime}
+            )
+        ]]>
+    </insert>
+
+    <insert id="insert" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+            INSERT INTO `LOGIN_ERROR_LOG` (
+                `USER_ID`,
+                `ERROR_TIME`
+            ) VALUES
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
+            <![CDATA[
+            (
+                #{userId},
+                #{errorTime}
+            )
+        ]]>
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM `LOGIN_ERROR_LOG` WHERE `ID` = #{id}
+    </delete>
+
+    <update id="update" parameterType="LoginErrorLogEntity">
+        UPDATE `LOGIN_ERROR_LOG`
+        <include refid="setCondition"/>
+        WHERE `ID` = #{id}
+    </update>
+
+    <select id="query" parameterType="LoginErrorLogEntity" resultMap="loginErrorLogResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM `LOGIN_ERROR_LOG`
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="queryOne" parameterType="long" resultMap="loginErrorLogResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM `LOGIN_ERROR_LOG` WHERE `ID` = #{id}
+    </select>
+
+    <sql id="setCondition">
+        <set>
+            <if test="userId != null">
+                <![CDATA[ `USER_ID` = #{userId}, ]]>
+            </if>
+            <if test="errorTime != null">
+                <![CDATA[ `ERROR_TIME` = #{errorTime}, ]]>
+            </if>
+        </set>
+    </sql>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="id != null and id != ''">
+                <![CDATA[  AND `ID` = #{id} ]]>
+            </if>
+            <if test="userId != null">
+                <![CDATA[  AND `USER_ID` = #{userId} ]]>
+            </if>
+            <if test="errorTime != null">
+                <![CDATA[  AND `ERROR_TIME` = #{errorTime} ]]>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectColumns">
+        `ID` ,`USER_ID`, `ERROR_TIME`
+    </sql>
+
+    <resultMap id="loginErrorLogResultMap" type="LoginErrorLogEntity">
+        <id property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="errorTime" column="ERROR_TIME"/>
+    </resultMap>
+</mapper>

@@ -9,6 +9,7 @@
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <name>API System</name>
+    <url>http://www.oneapm.com</url>
 
     <properties>
         <!-- Basic configuration -->

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * Title: 异常处理视图类
@@ -42,8 +41,7 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
                 writer = response.getWriter();
                 RestfulResponse restfulResponse = new RestfulResponse();
                 restfulResponse.setSuccess(false);
-                StringWriter sw = new StringWriter();
-                restfulResponse.setMsg(sw.toString());
+                restfulResponse.setMsg(ex.getMessage());
                 writer.write(JSON.toJSONString(restfulResponse));
                 writer.flush();
             } catch (IOException e) {
@@ -51,9 +49,9 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
             }
         } else {
             LOGGER.error(ex.getMessage(), ex);
-//            此种错误暂时无需在页面显示
-//            request.setAttribute("message", ex.getMessage());
-//            return new ModelAndView("common/error");
+            // 此种错误暂时无需在页面显示
+            request.setAttribute("message", ex.getMessage());
+            return new ModelAndView("common/error");
         }
         return null;
     }

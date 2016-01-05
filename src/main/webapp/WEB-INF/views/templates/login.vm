@@ -1,4 +1,4 @@
-#set($layout = "/layout/layout.vm")
+#set($layout = "/layout/noDecoration.vm")
 
 <div class="middle-box text-center loginscreen  animated fadeInDown">
   <div>

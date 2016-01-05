@@ -9,11 +9,13 @@
             INSERT INTO `USER` (
                 `USER_NAME`,
                 `USER_IDENTITY`,
+                `USER_EMAIL`,
                 `USER_PASSWORD`,
                 `USER_TYPE`
             ) VALUES (
                 #{userName},
                 #{userIdentity},
+                #{userEmail},
                 #{userPassword},
                 #{userType}
             )
@@ -25,6 +27,7 @@
             INSERT INTO `USER` (
                 `USER_NAME`,
                 `USER_IDENTITY`,
+                `USER_EMAIL`,
                 `USER_PASSWORD`,
                 `USER_TYPE`
             ) VALUES
@@ -34,6 +37,7 @@
             (
                 #{item.userName},
                 #{item.userIdentity},
+                #{userEmail},
                 #{item.userPassword},
                 #{item.userType}
             )
@@ -69,11 +73,17 @@
             <if test="userName != null">
                 <![CDATA[ `USER_NAME` = #{userName}, ]]>
             </if>
-            <if test="userIdentity != null">
-                <![CDATA[ `USER_IDENTITY` = #{userIdentity}, ]]>
+            <if test="userEmail != null">
+                <![CDATA[ `USER_EMAIL` = #{userEmail}, ]]>
             </if>
             <if test="userType != null">
                 <![CDATA[ `USER_TYPE` = #{userType}, ]]>
+            </if>
+            <if test="lastLoginDate != null">
+                <![CDATA[ `LAST_LOGIN_DATE` = #{lastLoginDate}, ]]>
+            </if>
+            <if test="userStatus != null">
+                <![CDATA[ `USER_STATUS` = #{userStatus}, ]]>
             </if>
             <if test="userPassword != null">
                 <![CDATA[ `USER_PASSWORD` = #{userPassword}, ]]>
@@ -92,17 +102,23 @@
             <if test="userIdentity != null">
                 <![CDATA[  AND `USER_IDENTITY` = #{userIdentity} ]]>
             </if>
+            <if test="userEmail != null">
+                <![CDATA[  AND `USER_EMAIL` = #{userEmail} ]]>
+            </if>
             <if test="userType != null">
                 <![CDATA[  AND `USER_TYPE` = #{userType} ]]>
             </if>
-            <if test="userPassword != null">
-                <![CDATA[  AND `USER_PASSWORD` = #{userPassword} ]]>
+            <if test="lastLoginDate != null">
+                <![CDATA[  AND `LAST_LOGIN_DATE` = #{lastLoginDate} ]]>
+            </if>
+            <if test="userStatus != null">
+                <![CDATA[  AND `USER_STATUS` = #{userStatus} ]]>
             </if>
         </where>
     </sql>
 
     <sql id="selectColumns">
-        `ID` ,`USER_NAME`, `USER_IDENTITY`, `USER_TYPE`, `USER_PASSWORD`
+        `ID` ,`USER_NAME`, `USER_IDENTITY`, `USER_TYPE`, `USER_PASSWORD`, `USER_STATUS`, `LAST_LOGIN_DATE`, `USER_EMAIL`
     </sql>
 
     <resultMap id="userResultMap" type="UserEntity">
@@ -111,5 +127,8 @@
         <result property="userIdentity" column="USER_IDENTITY"/>
         <result property="userType" column="USER_TYPE"/>
         <result property="userPassword" column="USER_PASSWORD"/>
+        <result property="userEmail" column="USER_EMAIL"/>
+        <result property="lastLoginDate" column="LAST_LOGIN_DATE"/>
+        <result property="userStatus" column="USER_STATUS"/>
     </resultMap>
 </mapper>

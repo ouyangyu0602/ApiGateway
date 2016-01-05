@@ -128,7 +128,7 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         VelocityLayoutViewResolver velocityLayoutViewResolver = new VelocityLayoutViewResolver();
         velocityLayoutViewResolver.setCache(false);
         velocityLayoutViewResolver.setPrefix("/templates/");
-        velocityLayoutViewResolver.setLayoutUrl("/layout/main.vm");
+        velocityLayoutViewResolver.setLayoutUrl("/layout/layout.vm");
         velocityLayoutViewResolver.setSuffix(".vm");
         velocityLayoutViewResolver.setExposeSpringMacroHelpers(true);
         velocityLayoutViewResolver.setContentType("text/html;charset=UTF-8");

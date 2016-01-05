@@ -3,10 +3,16 @@
 <head>
     #parse('/layout/head.vm')
 </head>
-<body class="gray-bg">
 
-    $screen_content
+<body class="pace-done">
+<div id="wrapper">
+    #parse('/layout/menu.vm')
+  <div id="page-wrapper" class="gray-bg" style="min-height: 761px;">
+      #parse('/layout/topbar.vm')
 
+      $screen_content
+  </div>
+</div>
     #parse('/layout/footer.vm')
 </body>
 </html>

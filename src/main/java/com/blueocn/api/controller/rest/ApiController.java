@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
  */
-package com.blueocn.api.controller.api;
+package com.blueocn.api.controller.rest;
 
 import com.blueocn.api.kong.CustomerClient;
 import com.blueocn.api.vo.RestfulResponse;
