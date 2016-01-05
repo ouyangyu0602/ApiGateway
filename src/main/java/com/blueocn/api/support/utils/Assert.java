@@ -44,7 +44,10 @@ public final class Assert {
      * @throws IllegalArgumentException if {@code reference} is blank
      */
     public static String checkNotBlank(String reference, Object errorMessage) {
-        return checkNotEmpty(reference == null ? null : reference.trim(), errorMessage);
+        if (reference == null || reference.trim().length() == 0) {
+            throwIllegalArgumentException(errorMessage);
+        }
+        return reference;
     }
 
     /**
@@ -74,8 +77,12 @@ public final class Assert {
      */
     public static String checkNotEmpty(String reference, Object errorMessage) {
         if (reference == null || reference.length() == 0) {
-            throw errorMessage == null ? new IllegalArgumentException() : new IllegalArgumentException(String.valueOf(errorMessage));
+            throwIllegalArgumentException(errorMessage);
         }
         return reference;
+    }
+
+    private static void throwIllegalArgumentException(Object errorMessage) {
+        throw errorMessage == null ? new IllegalArgumentException() : new IllegalArgumentException(String.valueOf(errorMessage));
     }
 }
