@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.blueocn.api.support.Constants.LOGIN_URI;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.blueocn.api.support.utils.Assert.checkNotBlank;
 
 /**
  * Title: LoginController
@@ -43,8 +43,8 @@ public class LoginController extends AbstractUIController {
     @RequestMapping(value = LOGIN_URI, method = RequestMethod.POST)
     public String login(UserVo userVo, HttpServletRequest request, Model model) {
         try {
-            if (userService.login(checkNotNull(userVo.getUserIdentity(), "用户登录名不能为空"),
-                checkNotNull(userVo.getUserPassword(), "用户密码不能为空"))) {
+            if (userService.login(checkNotBlank(userVo.getUserIdentity(), "用户登录名不能为空"),
+                checkNotBlank(userVo.getUserPassword(), "用户密码不能为空"))) {
                 SessionManager.INSTANCE.login(userVo, request.getSession());
                 return "redirect:/index";
             }
