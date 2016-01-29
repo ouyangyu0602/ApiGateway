@@ -22,7 +22,11 @@ public class UserVo implements Serializable {
 
     private String userIdentity;
 
+    private String userEmail;
+
     private String userPassword;
+
+    private String userPasswordConfirm;
 
     private UserTypeEnum userType;
 
@@ -56,5 +60,21 @@ public class UserVo implements Serializable {
 
     public void setUserType(UserTypeEnum userType) {
         this.userType = userType;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserPasswordConfirm() {
+        return userPasswordConfirm;
+    }
+
+    public void setUserPasswordConfirm(String userPasswordConfirm) {
+        this.userPasswordConfirm = userPasswordConfirm;
     }
 }

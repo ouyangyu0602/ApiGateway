@@ -1,9 +1,6 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -21,15 +18,19 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class RedisConfig {
 
-    @Autowired
-    private Config config;
+    @Value("${redisAddress}")
+    private String redisAddress;
+    @Value("${redisPort}")
+    private int redisPort;
+    @Value("${redisPassword}")
+    private String redisPassword;
 
     @Bean(name = "jedisConnectionFactory")
     public RedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName(config.getRedisAddress());
-        jedisConnectionFactory.setPort(config.getRedisPort());
-        jedisConnectionFactory.setPassword(config.getRedisPassword());
+        jedisConnectionFactory.setHostName(redisAddress);
+        jedisConnectionFactory.setPort(redisPort);
+        jedisConnectionFactory.setPassword(redisPassword);
         return jedisConnectionFactory;
     }
 

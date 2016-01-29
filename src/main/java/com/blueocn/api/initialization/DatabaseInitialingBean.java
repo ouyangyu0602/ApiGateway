@@ -1,9 +1,6 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.initialization;
 
-import com.blueocn.api.repository.mapper.CommonRepository;
+import com.blueocn.api.repository.mapper.CommonRepo;
 import com.google.common.collect.Lists;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import org.apache.commons.collections.CollectionUtils;
@@ -39,7 +36,7 @@ public class DatabaseInitialingBean implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseInitialingBean.class);
 
     @Autowired
-    private CommonRepository commonRepository;
+    private CommonRepo commonRepository;
 
     @Override
     public void afterPropertiesSet() throws Exception {

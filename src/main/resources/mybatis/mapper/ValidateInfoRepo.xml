@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blueocn.api.repository.mapper.ValidateInfoRepo">
+
+    <insert id="add" parameterType="ValidateInfoEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `VALIDATE_CODE_INFO` (
+            `ID`,
+            `USER_ID`,
+            `VALIDATE_CODE`
+        ) VALUES (
+            #{id},
+            #{userId},
+            #{validateCode}
+        )
+    </insert>
+    
+    <sql id="selectColumns">
+        `ID`, `USER_ID`, `VALIDATE_CODE`
+    </sql>
+    
+    <select id="queryInfoByCode" parameterType="string" resultMap="validateCodeResultMap">
+        SELECT <include refid="selectColumns"/>
+        <![CDATA[
+            FROM `VALIDATE_CODE_INFO`
+            WHERE `VALIDATE_CODE` = #{validateCode}
+        ]]>
+    </select>
+
+    <delete id="deleteByUserId" parameterType="long">
+        DELETE FROM `VALIDATE_CODE_INFO` WHERE `USER_ID` = #{userId}
+    </delete>
+    
+    <resultMap id="validateCodeResultMap" type="ValidateInfoEntity">
+        <id property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="validateCode" column="VALIDATE_CODE"/>
+    </resultMap>
+</mapper>

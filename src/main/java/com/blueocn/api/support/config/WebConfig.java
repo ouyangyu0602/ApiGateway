@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.config;
 
 import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
@@ -13,6 +10,8 @@ import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -30,6 +29,8 @@ import org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver;
 import java.util.List;
 import java.util.Map;
 
+import static com.blueocn.api.support.Constants.SYSTEM_CONF_PROPERTIES;
+
 /**
  * Title: WebConfig
  * Description: Spring MVC 配置类, 和 Spring 的配置隔离.
@@ -44,6 +45,13 @@ import java.util.Map;
 public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        configurer.setLocation(new ClassPathResource(SYSTEM_CONF_PROPERTIES));
+        return configurer;
+    }
 
     @Bean(name = "byteArrayHttpMessageConverter")
     ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {

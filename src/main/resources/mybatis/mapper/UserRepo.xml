@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.blueocn.api.repository.mapper.UserRepository">
+<mapper namespace="com.blueocn.api.repository.mapper.UserRepo">
 
     <insert id="add" parameterType="UserEntity" useGeneratedKeys="true" keyProperty="id">
         <![CDATA[
@@ -11,13 +11,15 @@
                 `USER_IDENTITY`,
                 `USER_EMAIL`,
                 `USER_PASSWORD`,
-                `USER_TYPE`
+                `USER_TYPE`,
+                `USER_SALT`
             ) VALUES (
                 #{userName},
                 #{userIdentity},
                 #{userEmail},
                 #{userPassword},
-                #{userType}
+                #{userType},
+                #{userSalt}
             )
         ]]>
     </insert>
@@ -29,7 +31,8 @@
                 `USER_IDENTITY`,
                 `USER_EMAIL`,
                 `USER_PASSWORD`,
-                `USER_TYPE`
+                `USER_TYPE`,
+                `USER_SALT`
             ) VALUES
         ]]>
         <foreach collection="list" item="item" index="index" separator=",">
@@ -37,9 +40,10 @@
             (
                 #{item.userName},
                 #{item.userIdentity},
-                #{userEmail},
+                #{item.userEmail},
                 #{item.userPassword},
-                #{item.userType}
+                #{item.userType},
+                #{item.userSalt}
             )
         ]]>
         </foreach>
@@ -55,6 +59,12 @@
         WHERE `ID` = #{id}
     </update>
 
+    <update id="activeNewUser" parameterType="long">
+        UPDATE `USER`
+        SET `USER_STATUS` = 'NORMAL'
+        WHERE `ID` = #{id} AND `USER_STATUS` = 'AWAIT'
+    </update>
+
     <select id="query" parameterType="UserEntity" resultMap="userResultMap">
         SELECT
         <include refid="selectColumns"/>
@@ -66,6 +76,20 @@
         SELECT
         <include refid="selectColumns"/>
         FROM `USER` WHERE `ID` = #{id}
+    </select>
+
+    <select id="queryExistUser" parameterType="UserEntity" resultMap="userResultMap">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM `USER`
+        <where>
+            <if test="userIdentity != null and userIdentity != ''">
+                <![CDATA[ OR `USER_IDENTITY` = #{userIdentity} ]]>
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                <![CDATA[ OR `USER_EMAIL` = #{userEmail} ]]>
+            </if>
+        </where>
     </select>
 
     <sql id="setCondition">
@@ -87,6 +111,9 @@
             </if>
             <if test="userPassword != null">
                 <![CDATA[ `USER_PASSWORD` = #{userPassword}, ]]>
+            </if>
+            <if test="userSalt != null">
+                <![CDATA[ `USER_SALT` = #{userSalt}, ]]>
             </if>
         </set>
     </sql>
@@ -121,7 +148,7 @@
     </sql>
 
     <sql id="selectColumns">
-        `ID` ,`USER_NAME`, `USER_IDENTITY`, `USER_TYPE`, `USER_PASSWORD`, `USER_STATUS`, `LAST_LOGIN_DATE`, `USER_EMAIL`
+        `ID` ,`USER_NAME`, `USER_IDENTITY`, `USER_TYPE`, `USER_PASSWORD`, `USER_STATUS`, `LAST_LOGIN_DATE`, `USER_EMAIL`, `USER_SALT`
     </sql>
 
     <resultMap id="userResultMap" type="UserEntity">
@@ -133,5 +160,6 @@
         <result property="userEmail" column="USER_EMAIL"/>
         <result property="lastLoginDate" column="LAST_LOGIN_DATE"/>
         <result property="userStatus" column="USER_STATUS"/>
+        <result property="userSalt" column="USER_SALT"/>
     </resultMap>
 </mapper>

@@ -7,6 +7,5 @@
 
     $screen_content
 
-    #parse('/layout/footer.vm')
 </body>
 </html>

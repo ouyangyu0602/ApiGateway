@@ -1,9 +1,5 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.config;
 
-import com.blueocn.api.support.datasource.DataSourceProviderFactory;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -33,17 +29,12 @@ public class MyBatisConfig implements ApplicationContextAware {
     private ApplicationContext context;
 
     @Autowired
-    private Config config;
-
-    @Bean(name = "dataSource")
-    public DataSource dataSource() {
-        return DataSourceProviderFactory.create(config).getDataSource(config);
-    }
+    private DataSource dataSource;
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(dataSource());
+        factoryBean.setDataSource(dataSource);
         factoryBean.setTypeAliasesPackage("com.blueocn.api.repository.domain");
         factoryBean.setMapperLocations(context.getResources("classpath:mybatis/mapper/*.xml"));
         return factoryBean.getObject();
@@ -52,7 +43,7 @@ public class MyBatisConfig implements ApplicationContextAware {
     @Bean(name = "transactionManager")
     public DataSourceTransactionManager transactionManager() {
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-        transactionManager.setDataSource(dataSource());
+        transactionManager.setDataSource(dataSource);
         return transactionManager;
     }
 

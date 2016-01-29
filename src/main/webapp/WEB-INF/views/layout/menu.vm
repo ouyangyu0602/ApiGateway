@@ -14,8 +14,8 @@
             <li>
                 <a href="#"><i class="fa fa-server"></i> <span class="nav-label">用户信息</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="/user/keyList.htm">密钥列表</a></li>
-                    <li><a href="node-group-manager.htm">申请密钥</a></li>
+                    <li><a href="/user/keyList">密钥列表</a></li>
+                    <li><a href="node-group-manager">申请密钥</a></li>
                 </ul>
             </li>
         </ul>

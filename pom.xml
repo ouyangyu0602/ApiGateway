@@ -89,11 +89,6 @@
 
         <!-- Database -->
         <dependency>
-            <groupId>commons-dbutils</groupId>
-            <artifactId>commons-dbutils</artifactId>
-            <version>${dbutils.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
@@ -235,6 +230,13 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.4</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -269,66 +271,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <!-- execute during default lifestyle in validate goal -->
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <encoding>${project.build.sourceEncoding}</encoding>
-                            <outputDirectory>${resource.output.path}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${resource.origin.path}</directory>
-                                    <excludes>
-                                        <exclude>README.md</exclude>
-                                    </excludes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
-
-    <!-- Different profile for multiply development situation -->
-    <profiles>
-        <!-- 默认的开发配置文件夹, 在没有指定别的 profile 时, 此 profile 配置生效. -->
-        <profile>
-            <id>develop</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-dev/</resource.origin.path>
-                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <maven.test.skip>false</maven.test.skip>
-                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-qa/</resource.origin.path>
-                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-                <resource.origin.path>${basedir}/src/main/resources/runtimecfg-product/</resource.origin.path>
-                <resource.output.path>${basedir}/src/main/resources/runtimecfg/</resource.output.path>
-            </properties>
-        </profile>
-    </profiles>
 </project>

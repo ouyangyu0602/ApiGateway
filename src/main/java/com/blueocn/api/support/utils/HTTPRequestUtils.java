@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.utils;
 
 import javax.servlet.http.HttpServletRequest;

@@ -20,10 +20,10 @@ import java.util.List;
 public class LoginErrorLogRepositoryTest extends BaseTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
-    private LoginErrorLogRepository repository;
+    private LoginErrorLogRepo repository;
 
     @Before
     public void before() {

@@ -1,11 +1,8 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.spring;
 
 import com.alibaba.fastjson.JSON;
 import com.blueocn.api.support.AjaxUtils;
-import com.blueocn.api.vo.RestfulResponse;
+import com.blueocn.api.response.RestfulResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -35,13 +32,11 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
 
         // Ajax
         if (AjaxUtils.isAjaxRequest(request)) {
-            PrintWriter writer = null;
             try {
                 LOGGER.warn("", ex);
-                writer = response.getWriter();
-                RestfulResponse restfulResponse = new RestfulResponse();
-                restfulResponse.setSuccess(false);
-                restfulResponse.setMsg(ex.getMessage());
+                PrintWriter writer = response.getWriter();
+                RestfulResponse restfulResponse = new RestfulResponse.Builder<String>()
+                    .setMsg(ex.getMessage()).setSuccess(false).build();
                 writer.write(JSON.toJSONString(restfulResponse));
                 writer.flush();
             } catch (IOException e) {

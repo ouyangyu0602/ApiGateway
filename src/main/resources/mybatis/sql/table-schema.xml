@@ -11,7 +11,8 @@
             `USER_TYPE` VARCHAR(32) NOT NULL,
             `LAST_LOGIN_DATE` DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00',
             `USER_STATUS` VARCHAR(32) NOT NULL DEFAULT 'AWAIT',
-            `USER_PASSWORD` VARCHAR(64) NOT NULL,
+            `USER_PASSWORD` VARCHAR(256) NOT NULL,
+            `USER_SALT` VARCHAR(64) NOT NULL,
             PRIMARY KEY (`ID`)
             );
         </table>
@@ -52,5 +53,17 @@
         <indexes>
             <index>CREATE INDEX `IDX_USER_ID_ON_LOGIN_ERROR_LOG` ON `LOGIN_ERROR_LOG` (`USER_ID`);</index>
         </indexes>
+    </tableSchema>
+
+    <!-- 用户验证码存库 -->
+    <tableSchema>
+        <table>
+            CREATE TABLE IF NOT EXISTS `VALIDATE_CODE_INFO` (
+            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `USER_ID` INT(11) UNSIGNED NOT NULL,
+            `VALIDATE_CODE` VARCHAR(64) NOT NULL UNIQUE,
+            PRIMARY KEY (`ID`)
+            );
+        </table>
     </tableSchema>
 </tableSchemas>

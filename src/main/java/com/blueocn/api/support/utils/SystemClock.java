@@ -1,11 +1,7 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.utils;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -40,27 +36,20 @@ public class SystemClock {
     }
 
     private void scheduleClockUpdating() {
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable runnable) {
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(
+            runnable -> {
                 Thread thread = new Thread(runnable, "System Clock");
                 thread.setDaemon(true);
                 return thread;
-            }
-        });
-        scheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                now.set(System.currentTimeMillis());
-            }
-        }, period, period, TimeUnit.MILLISECONDS);
+            });
+        scheduler.scheduleAtFixedRate((Runnable) () -> now.set(System.currentTimeMillis()), period, period, TimeUnit.MILLISECONDS);
     }
 
     private long currentTimeMillis() {
         return now.get();
     }
 
-    private static class InstanceHolder {
+    private static class InstanceHolder { // NOSONAR
         public static final SystemClock INSTANCE = new SystemClock(1);
     }
 }

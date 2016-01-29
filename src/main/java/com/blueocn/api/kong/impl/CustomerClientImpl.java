@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.kong.impl;
 
 import com.alibaba.fastjson.JSON;
@@ -10,7 +7,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.blueocn.api.kong.CustomerClient;
 import com.blueocn.api.kong.data.CustomerData;
 import com.blueocn.api.kong.data.CustomerKeyData;
-import com.blueocn.api.support.config.Config;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -21,7 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -39,15 +35,18 @@ import java.util.Map;
 @Service
 public class CustomerClientImpl implements CustomerClient {
 
-    @Autowired
-    private Config config;
+    @Value("${kongAddress}")
+    private String kongAddress;
+
+    @Value("${kongListenPort}")
+    private Integer KongListenPort;
 
     @Override
     public boolean createCustomer(CustomerData customer) {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httpPost = new HttpPost(
-                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/");
+                kongAddress + ":" + KongListenPort + "/consumers/");
             httpPost.addHeader("content-type", "application/json");
             httpPost.addHeader("Accept", "application/json");
             StringEntity entity = new StringEntity(JSON.toJSONString(customer));
@@ -70,7 +69,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpGet httpGet = new HttpGet(
-                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId
+                kongAddress + ":" + KongListenPort + "/consumers/" + customerId
                     + "/key-auth/");
             HttpResponse httpResponse = httpClient.execute(httpGet);
             String response = EntityUtils.toString(httpResponse.getEntity());
@@ -89,7 +88,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpPost httpPost = new HttpPost(
-                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId + "/key-auth/");
+                kongAddress + ":" + KongListenPort + "/consumers/" + customerId + "/key-auth/");
             Map<String, String> map = Maps.newHashMap();
             map.put("key", key);
             StringEntity entity = new StringEntity(JSON.toJSONString(map));
@@ -109,7 +108,7 @@ public class CustomerClientImpl implements CustomerClient {
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpDelete httpDelete = new HttpDelete(
-                config.getKongAddress() + ":" + config.getKongListenPort() + "/consumers/" + customerId
+                kongAddress + ":" + KongListenPort + "/consumers/" + customerId
                     + "/key-auth/" + keyId);
             HttpResponse httpResponse = httpClient.execute(httpDelete);
             if (httpResponse.getStatusLine().getStatusCode() == 204) {

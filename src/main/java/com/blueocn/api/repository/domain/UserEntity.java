@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.repository.domain;
 
 import com.blueocn.api.enums.UserStatusEnum;
@@ -57,6 +54,8 @@ UserEntity extends IdEntity {
      */
     private UserStatusEnum userStatus;
 
+    private String userSalt;
+
     public String getUserName() {
         return userName;
     }
@@ -111,5 +110,13 @@ UserEntity extends IdEntity {
 
     public void setUserStatus(UserStatusEnum userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public String getUserSalt() {
+        return userSalt;
+    }
+
+    public void setUserSalt(String userSalt) {
+        this.userSalt = userSalt;
     }
 }

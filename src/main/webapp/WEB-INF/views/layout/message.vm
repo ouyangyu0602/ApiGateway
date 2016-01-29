@@ -1,0 +1,6 @@
+#if($message)
+<div class="alert alert-infos alert-dismissable">
+  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+  $!message
+</div>
+#end

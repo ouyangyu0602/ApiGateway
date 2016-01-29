@@ -1,0 +1,136 @@
+#set($layout = "/layout/noDecoration.vm")
+<link type="text/css" rel="stylesheet" href="/assets/js/plugins/bootstrapvalidator/css/bootstrapValidator.min.css"/>
+
+<div class="middle-box text-center loginscreen animated fadeInDown">
+  <div>
+    <div>
+      <h1 class="logo-name"><img src="/assets/img/logo.svg" style="width: 240px"></h1>
+    </div>
+    <h2>API管理系统用户注册</h2>
+    <form id="registerForm" class="m-t text-left" role="form" action="/user/register" method="post">
+      <div class="errrorMessage alert alert-danger alert-dismissable" style="display: none">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+      </div>
+      <input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
+      <div class="form-group">
+        <input type="text" class="form-control" name="userName" placeholder="用户昵称" required="required">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="userIdentity" placeholder="登录名" required="required">
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" name="userEmail" placeholder="Email" required="required">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="userPassword" placeholder="密码" required="required">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="userPasswordConfirm" placeholder="密码确认" required="required">
+      </div>
+      <button type="submit" class="btn btn-primary block full-width m-b">注册</button>
+
+      <p class="text-muted text-center">
+        <small>已经拥有账户?</small>
+      </p>
+      <a class="btn btn-sm btn-white btn-block" href="/user/login">登录</a>
+    </form>
+  </div>
+</div>
+<div class="footer fixed_full">
+  <div>Copyright © 2014 - 2015 <strong>OneAPM</strong>. All Rights Reserved</div>
+</div>
+<div style="height: 60px;"></div>
+
+<script src="/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="/assets/js/plugins/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
+<script src="/assets/js/plugins/bootstrapvalidator/js/language/zh_CN.js"></script>
+<script type="text/javascript">
+  $("#registerForm").bootstrapValidator({
+    message: '输入值不规范, 请改正',
+    fields: {
+      userName: {
+        message: '用户昵称格式错误',
+        validators: {
+          notEmpty: {},
+          stringLength: {
+            min: 1,
+            max: 10
+          }
+        }
+      },
+      userIdentity: {
+        message: '用户名格式错误',
+        validators: {
+          notEmpty: {},
+          stringLength: {
+            min: 6,
+            max: 20
+          },
+          remote: {
+            type: 'GET',
+            url: '/user/register/check',
+            message: '登录名已经存在',
+            delay: 1000
+          },
+          regexp: {
+            regexp: /^[a-zA-Z0-9_\.]+$/
+          },
+          different: {
+            field: 'userPassword',
+            message: '用户名和密码不能一致'
+          }
+        }
+      },
+      userEmail: {
+        notEmpty: {},
+        validators: {
+          emailAddress: {}
+        },
+        remote: {
+          type: 'GET',
+          url: '/user/register/check',
+          message: '用户邮箱已经存在',
+          delay: 1000
+        }
+      },
+      userPassword: {
+        validators: {
+          notEmpty: {},
+          identical: {
+            field: 'userPasswordConfirm',
+            message: '密码与确认密码不一致'
+          },
+          different: {
+            field: 'userIdentity',
+            message: '用户名和密码不能一致'
+          }
+        }
+      },
+      userPasswordConfirm: {
+        validators: {
+          notEmpty: {},
+          identical: {
+            field: 'userPassword'
+          },
+          different: {
+            field: 'userIdentity',
+            message: '用户名和密码不能一致'
+          }
+        }
+      }
+    }
+  }).on('success.form.bv', function (e) {
+    // Prevent submit form
+    e.preventDefault();
+    var $form = $(e.target);
+    $.post($form.attr('action'), $form.serialize() , function (result) {
+      if (result && result.success) {
+        swal({title: "注册成功", text: "我们已经向你的邮箱发送了一封激活邮件, 请激活后登录.", type: "success"}, function () {
+          location.href = "/user/login";
+        });
+      } else {
+        swal(result['msg'], "", "error");
+      }
+    }, 'json');
+  });
+</script>

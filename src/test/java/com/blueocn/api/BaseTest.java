@@ -1,13 +1,9 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api;
 
 import com.blueocn.api.support.config.ApiSystemConfig;
-import com.blueocn.api.support.config.ConfigLoader;
-import com.blueocn.api.support.config.MyBatisConfig;
-import com.blueocn.api.support.config.RedisConfig;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,9 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 2015-12-21 15:01
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApiSystemConfig.class, MyBatisConfig.class, RedisConfig.class})
+@ContextConfiguration(classes = {ApiSystemConfig.class})
 public abstract class BaseTest {
-    static {
-        ConfigLoader.load("runtimecfg");
-    }
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 }

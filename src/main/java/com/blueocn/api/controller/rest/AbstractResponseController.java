@@ -1,10 +1,8 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.controller.rest;
 
 import com.blueocn.api.support.spring.DateEditor;
 import com.blueocn.api.support.spring.MapEditor;
+import com.blueocn.api.response.RestfulResponse;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -29,5 +27,15 @@ public abstract class AbstractResponseController {
         //对于需要转换为Date类型的属性，使用DateEditor进行处理
         binder.registerCustomEditor(Date.class, new DateEditor());
         binder.registerCustomEditor(Map.class, "extParams", new MapEditor());
+    }
+
+    /**
+     * 通用响应异常处理方法
+     *
+     * @param e 异常对象
+     * @return {@code RestfulResponse}
+     */
+    protected RestfulResponse handleException(Exception e) {
+        return new RestfulResponse.Builder<String>().setMsg(e.getMessage()).setSuccess(false).build();
     }
 }

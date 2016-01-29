@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.repository.mapper;
 
 import com.blueocn.api.BaseTest;
@@ -18,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommonRepositoryTest extends BaseTest {
 
     @Autowired
-    private CommonRepository commonRepository;
+    private CommonRepo commonRepository;
 
     @Test
     public void testExecuteSQL() throws Exception {

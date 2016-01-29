@@ -1,0 +1,27 @@
+#set($layout = "/layout/noDecoration.vm")
+
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+  <div>
+    <div>
+      <h1 class="logo-name"><img src="/assets/img/logo.svg"></h1>
+    </div>
+    <form class="m-t" role="form" action="/user/login" method="post">
+      <input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
+      #parse('/layout/errorMessage.vm')
+      #parse('/layout/message.vm')
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="用户名" name="userIdentity"
+               required="required">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="密码" name="userPassword"
+               required="required">
+      </div>
+      <button type="submit" class="btn btn-primary block full-width m-b">登录</button>
+    </form>
+  </div>
+</div>
+<div class="footer fixed_full">
+  <div>Copyright © 2014 - 2015 <strong>OneAPM</strong>. All Rights Reserved</div>
+</div>
+<div style="height: 60px;"></div>

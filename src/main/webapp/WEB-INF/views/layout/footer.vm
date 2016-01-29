@@ -41,7 +41,6 @@
             form.find('select').selectpicker('render');
         });
     });
-
 </script>
 
 <!-- Mainly scripts -->

@@ -1,7 +1,6 @@
-/*
- * Copyright (c) 2008, 2015, OneAPM and/or its affiliates. All rights reserved. 
- */
 package com.blueocn.api.support;
+
+import org.springframework.core.env.AbstractEnvironment;
 
 import java.util.regex.Pattern;
 
@@ -25,7 +24,7 @@ public interface Constants {
     String LOGIN_USER = "loginUser";
 
     // 登录页URI
-    String LOGIN_URI = "/login";
+    String LOGIN_URI = "/user/login";
 
     // 模板标题定义符
     String PAGE_TITLE = "pageTitle";
@@ -34,4 +33,13 @@ public interface Constants {
     String X_FORWARDED_FOR_HEADER = "x-forwarded-for";
 
     String PAGE_ERROR_ATTRIBUTE = "errorMessage";
+
+    // 密码和盐值拼接字符串
+    String PASSWORD_SALT_SPIT_CHAR = "(^_^)";
+
+    String ACTIVE_PROFILE_NAME =
+        System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "");
+
+    String SYSTEM_CONF_PROPERTIES =
+        "application" + ("".equals(ACTIVE_PROFILE_NAME) ? "" : "-") + ACTIVE_PROFILE_NAME + ".properties";
 }
