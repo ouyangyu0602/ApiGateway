@@ -93,7 +93,7 @@ public class DatabaseInitialingBean implements InitializingBean {
 
                 NodeList indexes = tableSchemaXML.getElementsByTagName("indexes");
                 if (indexes != null && indexes.getLength() > 0) {
-                    tableSchema.indexes = new ArrayList<String>();
+                    tableSchema.indexes = new ArrayList<>();
                     NodeList indexList = ((Element) indexes.item(0)).getElementsByTagName("index");
                     for (int j = 0; j < indexList.getLength(); j++) {
                         Node index = indexList.item(j);

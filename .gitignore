@@ -10,17 +10,6 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-# Compiled Python files
-*.pyc
-
-# Compiled C++ files
-*.out
-
-# Application specific files
-venv
-node_modules
-.sass-cache
-
 # Maven project
 target/
 
@@ -33,6 +22,5 @@ target/
 .project
 .settings/
 
-# Configration files
-src/main/resources/runtimecfg/*
-src/main/resources/runtimecfg-dev/*
+# SonarLint Plugin
+.sonar_lock

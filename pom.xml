@@ -5,10 +5,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.blueocn</groupId>
-    <artifactId>apisystem</artifactId>
+    <artifactId>apigateway</artifactId>
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    <name>API System</name>
+    <name>API Gateway</name>
     <url>http://www.oneapm.com</url>
 
     <properties>
@@ -59,6 +59,11 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
             <version>${httpclient.version}</version>
         </dependency>
         <dependency>
@@ -229,13 +234,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.4</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

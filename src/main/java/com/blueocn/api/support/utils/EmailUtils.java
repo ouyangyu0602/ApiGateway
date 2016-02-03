@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2008, 2016, OneAPM and/or its affiliates. All rights reserved.
- */
 package com.blueocn.api.support.utils;
 
 import com.blueocn.api.vo.MailVo;

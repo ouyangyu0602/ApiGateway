@@ -39,31 +39,4 @@
             <index>CREATE INDEX `IDX_USER_ID_ON_KEY_STORE` ON `KEY_STORE` (`USER_ID`);</index>
         </indexes>
     </tableSchema>
-
-    <!-- 用户登录错误信息表 -->
-    <tableSchema>
-        <table>
-            CREATE TABLE IF NOT EXISTS `LOGIN_ERROR_LOG` (
-            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `USER_ID` INT(11) UNSIGNED NOT NULL,
-            `ERROR_TIME` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-            PRIMARY KEY (`ID`)
-            );
-        </table>
-        <indexes>
-            <index>CREATE INDEX `IDX_USER_ID_ON_LOGIN_ERROR_LOG` ON `LOGIN_ERROR_LOG` (`USER_ID`);</index>
-        </indexes>
-    </tableSchema>
-
-    <!-- 用户验证码存库 -->
-    <tableSchema>
-        <table>
-            CREATE TABLE IF NOT EXISTS `VALIDATE_CODE_INFO` (
-            `ID` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `USER_ID` INT(11) UNSIGNED NOT NULL,
-            `VALIDATE_CODE` VARCHAR(64) NOT NULL UNIQUE,
-            PRIMARY KEY (`ID`)
-            );
-        </table>
-    </tableSchema>
 </tableSchemas>
