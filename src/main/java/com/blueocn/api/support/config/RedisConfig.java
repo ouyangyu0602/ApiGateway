@@ -18,11 +18,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class RedisConfig {
 
-    @Value("${redisAddress}")
+    @Value("${redis.address}")
     private String redisAddress;
-    @Value("${redisPort}")
+    @Value("${redis.port}")
     private int redisPort;
-    @Value("${redisPassword}")
+    @Value("${redis.password}")
     private String redisPassword;
 
     @Bean(name = "jedisConnectionFactory")

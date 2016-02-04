@@ -27,7 +27,7 @@ public enum HTTPRequestUtils {
      */
     public String getClientIP(HttpServletRequest request) {
         final String xForwardedFor = request.getHeader(X_FORWARDED_FOR_HEADER);
-        String clientIP = null;
+        String clientIP;
         if (xForwardedFor == null) {
             clientIP = request.getRemoteAddr();
         } else {
@@ -44,7 +44,7 @@ public enum HTTPRequestUtils {
      */
     public final String extractClientIpFromXForwardedFor(String xForwardedFor) {
         if (xForwardedFor != null) {
-            String tokenize[] = xForwardedFor.trim().split(",");
+            String[] tokenize = xForwardedFor.trim().split(",");
             if (tokenize.length != 0) {
                 return tokenize[0].trim();
             }

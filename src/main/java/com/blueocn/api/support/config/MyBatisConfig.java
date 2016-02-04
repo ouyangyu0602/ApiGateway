@@ -32,7 +32,7 @@ public class MyBatisConfig implements ApplicationContextAware {
     private DataSource dataSource;
 
     @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
+    public SqlSessionFactory sqlSessionFactory() throws Exception { // NOSONAR
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setTypeAliasesPackage("com.blueocn.api.repository.domain");
@@ -48,7 +48,7 @@ public class MyBatisConfig implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
+    public void setApplicationContext(ApplicationContext context) {
         this.context = context;
     }
 }

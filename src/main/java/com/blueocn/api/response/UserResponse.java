@@ -1,5 +1,8 @@
 package com.blueocn.api.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +13,8 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 2015-12-23 00:07
  */
+@Setter
+@Getter
 public class UserResponse implements Serializable {
 
     private static final long serialVersionUID = -8932495247335419789L;
@@ -40,30 +45,6 @@ public class UserResponse implements Serializable {
 
     public UserResponse(Long userId) {
         this.success = true;
-        this.userId = userId;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

@@ -9,9 +9,9 @@ package com.blueocn.api.support.utils;
  * @version 1.0.0
  * @since 2016-01-05 23:32
  */
-public final class Assert {
+public final class Asserts {
 
-    private Assert() {
+    private Asserts() {
         // No Construct function
     }
 

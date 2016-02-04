@@ -16,14 +16,17 @@ import java.util.regex.Pattern;
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
+    private static final List<Pattern> PATTERNS = new CopyOnWriteArrayList<>();
+
     public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
     }
 
+    @Override
     public String[] getParameterValues(String parameter) {
         String[] values = super.getParameterValues(parameter);
         if (values == null) {
-            return null;
+            return new String[0];
         }
         int count = values.length;
         String[] encodedValues = new String[count];
@@ -33,6 +36,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return encodedValues;
     }
 
+    @Override
     public String getParameter(String parameter) {
         String value = super.getParameter(parameter);
         if (value == null) {
@@ -41,14 +45,13 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return cleanXSS(value);
     }
 
+    @Override
     public String getHeader(String name) {
         String value = super.getHeader(name);
         if (value == null)
             return null;
         return cleanXSS(value);
     }
-
-    private static final List<Pattern> PATTERNS = new CopyOnWriteArrayList<Pattern>();
 
     static {
         PATTERNS.add(Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE));
@@ -63,10 +66,10 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         PATTERNS.add(Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
     }
 
-    private String cleanXSS(String value) {
+    private static String cleanXSS(String value) {
         if (value != null) {
             for (Pattern pattern : PATTERNS) {
-                value = pattern.matcher(value).replaceAll("");
+                value = pattern.matcher(value).replaceAll(""); // NOSONAR
             }
         }
         return value;

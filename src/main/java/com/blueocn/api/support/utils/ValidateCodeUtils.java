@@ -140,6 +140,7 @@ public final class ValidateCodeUtils {
         String validateCode = generateCode(30);
         Long timeMiles = decodeTimeMiles(validateCode.substring(3, 29));
         Date date = new Date(timeMiles);
+        LOGGER.info("Code Not Expired? " + isCodeNotExpired(validateCode));
         LOGGER.info("Validate Code: " + validateCode + " TimeMiles: " + timeMiles + " Date: " + date);
     }
 }

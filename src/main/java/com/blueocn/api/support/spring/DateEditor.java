@@ -65,9 +65,9 @@ public class DateEditor extends PropertyEditorSupport {
     @Override
     public String getAsText() {
         Date value = (Date) getValue();
-        DateFormat dateFormat = this.dateFormat;
-        if (dateFormat == null)
-            dateFormat = TIME_FORMAT;
-        return (value != null ? dateFormat.format(value) : "");
+        DateFormat format = this.dateFormat;
+        if (format == null)
+            format = TIME_FORMAT;
+        return value != null ? format.format(value) : "";
     }
 }

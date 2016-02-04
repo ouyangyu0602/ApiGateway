@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.blueocn.api.support.Constants.LOGIN_URI;
-import static com.blueocn.api.support.utils.Assert.checkNotBlank;
+import static com.blueocn.api.support.utils.Asserts.checkNotBlank;
 
 /**
  * Title: LoginController

@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2015-12-15 16:31
  */
 public class AjaxUtils {
+
+    private AjaxUtils() {
+        // No Construct
+    }
+
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String requestedWith = request.getHeader("X-Requested-With");
         return requestedWith != null && "XMLHttpRequest".equals(requestedWith);

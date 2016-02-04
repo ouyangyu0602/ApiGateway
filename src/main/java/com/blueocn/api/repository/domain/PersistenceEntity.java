@@ -3,6 +3,9 @@
  */
 package com.blueocn.api.repository.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
@@ -13,19 +16,13 @@ import java.util.Date;
  * @version 1.0.0
  * @since 2015-12-17 03:19
  */
+@Getter
+@Setter
 public abstract class PersistenceEntity extends IdEntity {
     private static final long serialVersionUID = -7210028618007753467L;
 
-    /**
+    /*
      * 创建时间
      */
     private Date createdDate;
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
 }

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @version 1.0.0
  * @since 2015-12-16 10:53
  */
-public interface Constants {
+public interface Constants { // NOSONAR
 
     // 逗号分割符
     Pattern COMMA_SPLIT_PATTERN = Pattern.compile("\\s*[,]+\\s*");
@@ -35,7 +35,7 @@ public interface Constants {
     String PAGE_ERROR_ATTRIBUTE = "errorMessage";
 
     // 密码和盐值拼接字符串
-    String PASSWORD_SALT_SPIT_CHAR = "(^_^)";
+    String SALT_SPIT_CHAR = "(^_^)";
 
     String ACTIVE_PROFILE_NAME =
         System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "");

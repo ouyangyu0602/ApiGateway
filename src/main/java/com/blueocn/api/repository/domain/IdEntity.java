@@ -3,6 +3,9 @@
  */
 package com.blueocn.api.repository.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -13,16 +16,10 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 2015-12-17 03:16
  */
+@Setter
+@Getter
 public abstract class IdEntity implements Serializable {
     private static final long serialVersionUID = 8810780370104541317L;
 
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -3,6 +3,9 @@
  */
 package com.blueocn.api.repository.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
@@ -14,29 +17,15 @@ import java.util.Date;
  * @version 1.0.0
  * @since 2015-12-17 04:03
  */
+@Setter
+@Getter
 public abstract class VersionEntity extends PersistenceEntity {
     private static final long serialVersionUID = 1263311144253791913L;
 
     private Long version = 0L;
 
-    /**
+    /*
      * 最后修改时间时间
      */
     private Date lastModifiedDate;
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 }

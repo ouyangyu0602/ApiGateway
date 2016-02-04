@@ -7,7 +7,7 @@ import com.blueocn.api.support.utils.password.codec.Utf8;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static com.blueocn.api.support.Constants.PASSWORD_SALT_SPIT_CHAR;
+import static com.blueocn.api.support.Constants.SALT_SPIT_CHAR;
 
 public class ShaEncoder {
 
@@ -130,7 +130,7 @@ public class ShaEncoder {
         if ((salt == null) || "".equals(salt)) {
             return password;
         } else {
-            return password + PASSWORD_SALT_SPIT_CHAR + salt.toString();
+            return password + SALT_SPIT_CHAR + salt.toString();
         }
     }
 

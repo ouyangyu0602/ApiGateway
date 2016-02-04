@@ -2,7 +2,6 @@ package com.blueocn.api.support.config;
 
 import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
 import com.blueocn.api.support.csrf.CSRFTool;
-import com.blueocn.api.support.interceptor.FirewallInterceptor;
 import com.blueocn.api.support.session.SessionHandlerInterceptor;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
@@ -96,11 +95,6 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         return new CSRFHandlerInterceptor();
     }
 
-    @Bean(name = "firewallInterceptor")
-    public FirewallInterceptor firewallInterceptor() {
-        return new FirewallInterceptor();
-    }
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(byteArrayHttpMessageConverter());
@@ -120,7 +114,6 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(sessionHandlerInterceptor());
         registry.addInterceptor(csrfHandlerInterceptor());
-        registry.addInterceptor(firewallInterceptor());
     }
 
     @Bean(name = "velocityConfig")
