@@ -1,7 +1,7 @@
 package com.blueocn.api.support.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.blueocn.api.kong.request.ApiReq;
+import com.blueocn.api.kong.model.ApiReq;
 import org.junit.Assert;
 import org.junit.Test;
 

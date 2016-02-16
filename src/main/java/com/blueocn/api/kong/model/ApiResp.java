@@ -1,7 +1,7 @@
-package com.blueocn.api.kong.response;
+package com.blueocn.api.kong.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.blueocn.api.kong.request.ApiReq;
+import com.blueocn.api.kong.model.ApiReq;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,8 +1,7 @@
-package com.blueocn.api.kong.request;
+package com.blueocn.api.kong.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -16,6 +15,9 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiReq implements Serializable {
     private static final long serialVersionUID = 9177479561761205922L;
 
@@ -41,7 +43,7 @@ public class ApiReq implements Serializable {
     private String upstreamUrl;
 
     @JSONField(name = "created_at")
-    private Integer createdAt;
+    private Long createdAt;
 
     @JSONField(name = "size")
     private Integer size;

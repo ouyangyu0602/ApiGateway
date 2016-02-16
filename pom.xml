@@ -13,11 +13,10 @@
 
     <properties>
         <!-- Basic configuration -->
-        <copy.dependencies.skip>true</copy.dependencies.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency version configuration -->
-        <fastjson.version>1.1.41</fastjson.version>
+        <fastjson.version>1.2.4</fastjson.version>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.5</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
@@ -30,11 +29,11 @@
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <common-lang3.version>3.3.2</common-lang3.version>
         <guava.version>18.0</guava.version>
-        <javamail.version>1.5.0-b01</javamail.version>
         <mockito.version>1.10.8</mockito.version>
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
         <jedis.version>2.8.0</jedis.version>
-        <retrofit.version>2.0.0-beta3</retrofit.version> <!-- Waiting for final release version -->
+        <okhttp.version>3.0.1</okhttp.version>
+        <retrofit.version>2.0.0-beta4</retrofit.version> <!-- Waiting for final release version -->
     </properties>
 
     <repositories>
@@ -56,14 +55,16 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${javamail.version}</version>
-        </dependency>
+
+        <!-- Rest http client -->
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>
+            <version>${retrofit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>adapter-java8</artifactId>
             <version>${retrofit.version}</version>
         </dependency>
 
@@ -91,6 +92,12 @@
             <artifactId>retrofit-mock</artifactId>
             <version>${retrofit.version}</version>
             <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>${okhttp.version}</version>
             <scope>test</scope>
         </dependency>
 

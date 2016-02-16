@@ -1,7 +1,8 @@
 package com.blueocn.api.kong.service;
 
-import com.blueocn.api.kong.request.ApiReq;
-import com.blueocn.api.kong.response.ApiResp;
+import com.blueocn.api.kong.model.ApiReq;
+import com.blueocn.api.kong.model.ApiResp;
+import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
@@ -21,7 +22,7 @@ public interface ApiService {
      * @return 创建的API信息
      */
     @POST("/apis")
-    ApiReq add(ApiReq newApi);
+    Call<ApiReq> add(@Body ApiReq newApi);
 
     /**
      * 查询 API
@@ -30,7 +31,7 @@ public interface ApiService {
      * @return 指定ID的API信息
      */
     @GET("/apis/{apiId}")
-    ApiReq queryOne(@Path("apiId") String apiId);
+    Call<ApiReq> queryOne(@Path("apiId") String apiId);
 
     /**
      * API 管理
@@ -39,7 +40,7 @@ public interface ApiService {
      * @return API 查询列表
      */
     @GET("/apis")
-    ApiResp query(ApiReq queryInfo);
+    Call<ApiResp> query(@Query("") ApiReq queryInfo);
 
     /**
      * API 信息修改 (只有修改, 无法创建)
@@ -48,7 +49,7 @@ public interface ApiService {
      * @param apiReq API 信息
      */
     @PATCH("/apis/{apiId}")
-    ApiReq update(@Path("apiId") String apiId, ApiReq apiReq);
+    Call<ApiReq> update(@Path("apiId") String apiId, ApiReq apiReq);
 
     /**
      * 修改或者创建 API, 当消息对象的ID不存在时则为创建
@@ -56,7 +57,7 @@ public interface ApiService {
      * @param apiReq API 信息
      */
     @PUT("/apis")
-    ApiReq updateOrCreate(ApiReq apiReq);
+    Call<ApiReq> updateOrCreate(ApiReq apiReq);
 
     /**
      * 删除某个API
@@ -64,5 +65,5 @@ public interface ApiService {
      * @param apiId API ID
      */
     @DELETE("/apis/{apiId}")
-    String delete(@Path("apiId") String apiId);
+    Call<String> delete(@Path("apiId") String apiId);
 }
