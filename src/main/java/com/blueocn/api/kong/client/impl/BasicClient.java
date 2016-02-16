@@ -20,7 +20,7 @@ public abstract class BasicClient {
     @Autowired
     private KongConfig config;
 
-    protected Retrofit retrofit;
+    private Retrofit retrofit;
 
     /**
      * HTTP 请求接口 Retrofit 适配器
@@ -34,5 +34,9 @@ public abstract class BasicClient {
             .baseUrl(config.getKongAdminUrl())
             .addConverterFactory(FastjsonConverterFactory.create())
             .build();
+    }
+
+    protected Retrofit getRetrofit() {
+        return retrofit;
     }
 }

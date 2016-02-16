@@ -1,7 +1,6 @@
 package com.blueocn.api.kong.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.blueocn.api.kong.model.ApiReq;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,11 +17,11 @@ import java.util.List;
  */
 @Setter
 @Getter
-public class ApiResp implements Serializable {
+public class Apis implements Serializable {
     private static final long serialVersionUID = 8473584357526776595L;
 
     @JSONField(name = "data")
-    private List<ApiReq> data;
+    private List<Api> data;
 
     @JSONField(name = "total")
     private Integer total;

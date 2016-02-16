@@ -4,9 +4,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Map;
+
+import static com.blueocn.api.support.utils.MapConverter.convert;
 
 /**
- * Title: ApiReq
+ * Title: Api
  * Description: Kong API 请求信息实体, 参见 https://getkong.org/docs/0.6.x/admin-api/#request-body
  *
  * @author Yufan
@@ -18,7 +21,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiReq implements Serializable {
+public class Api implements Serializable {
     private static final long serialVersionUID = 9177479561761205922L;
 
     @JSONField(name = "id")
@@ -50,4 +53,11 @@ public class ApiReq implements Serializable {
 
     @JSONField(name = "offset")
     private String offset;
+
+    /**
+     * @see com.blueocn.api.support.utils.MapConverter#convert(Object)
+     */
+    public Map<String, Object> toMap() {
+        return convert(this);
+    }
 }
