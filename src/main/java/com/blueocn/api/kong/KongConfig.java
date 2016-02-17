@@ -34,6 +34,7 @@ public class KongConfig {
 
     private String getKongAddress() {
         if (kongAddress != null) {
+            // Kong 管理页面默认无 HTTPS, 实际使用时位于内网, 对外不公开, 所以使用 HTTP.
             return kongAddress.startsWith("http") ? kongAddress : "http://" + kongAddress;
         }
         return "http://127.0.0.1"; // 缺省配置 NOSONAR
