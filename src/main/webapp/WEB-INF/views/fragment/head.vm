@@ -1,0 +1,26 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Page title -->
+<title>API 管理后台 | ${pageTitle}</title>
+
+<link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/assets/favicon.ico}" />
+
+<!-- Vendor styles -->
+<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/fontawesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/metisMenu/dist/metisMenu.min.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/animate.css/animate.min.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"/>
+
+<!-- App styles -->
+<link rel="stylesheet" href="${rc.contextPath}/assets/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/fonts/pe-icon-7-stroke/css/helper.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/styles/style.css">
+
+#if( ${pageStyles} )
+<!-- Page based styles -->
+  #foreach ( ${style} in ${pageStyles} )
+    ${style}
+  #end
+#end

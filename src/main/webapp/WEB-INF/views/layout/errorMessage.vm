@@ -1,6 +1,0 @@
-#if($errorMessage)
-<div class="alert alert-danger alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  $!errorMessage
-</div>
-#end

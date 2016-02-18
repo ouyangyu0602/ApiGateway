@@ -132,6 +132,10 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         velocityLayoutViewResolver.setSuffix(".vm");
         velocityLayoutViewResolver.setExposeSpringMacroHelpers(true);
         velocityLayoutViewResolver.setContentType("text/html;charset=UTF-8");
+        // @see AbstractTemplateView#setExposeSpringMacroHelpers
+        velocityLayoutViewResolver.setExposeSpringMacroHelpers(true);
+        // 定义是否暴露Spring的RequestContext对象暴露为变量rc, 便于获取程序路径
+        velocityLayoutViewResolver.setRequestContextAttribute("rc");
         velocityLayoutViewResolver.setViewClass(org.springframework.web.servlet.view.velocity.VelocityLayoutView.class);
         velocityLayoutViewResolver.setAttributesMap(getAttributesMap());
         return velocityLayoutViewResolver;

@@ -1,0 +1,29 @@
+<!-- Navigation -->
+<aside id="menu">
+  <div id="navigation">
+    <div class="profile-picture">
+      <div class="stats-label text-color">
+        <span class="font-extra-bold font-uppercase">Username</span> ## TODO 用户名定义
+        <div class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+            <small class="text-muted">操作 <b class="caret"></b></small>
+          </a>
+          <ul class="dropdown-menu animated flipInX m-t-xs">
+            <li><a href="#">修改密码</a></li> ## TODO 修改密码
+            <li><a href="#">注销</a></li> ## TODO 注销
+          </ul>
+        </div>
+      </div>
+    </div>
+    <ul class="nav" id="side-menu">
+      <!-- Project Menu -->
+      <li class="active">
+        <a href="index.html"> <span class="nav-label">Page 1</span> <span
+            class="label label-success pull-right">start</span> </a>
+      </li>
+      <li>
+        <a href="page2.html"> <span class="nav-label">Page 2</span> </a>
+      </li>
+    </ul>
+  </div>
+</aside>

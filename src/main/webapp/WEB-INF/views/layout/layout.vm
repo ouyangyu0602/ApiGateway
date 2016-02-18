@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  #parse('/layout/head.vm')
+  #parse("/fragment/head.vm")
 </head>
+<body>
+  #parse("/fragment/splash.vm")
+  #parse("/fragment/header.vm")
+  #parse("/fragment/menu.vm")
 
-<body class="pace-done">
-<div id="wrapper">
-  #parse('/layout/menu.vm')
-  <div id="page-wrapper" class="gray-bg" style="min-height: 761px;">
-    #parse('/layout/topbar.vm')
-    #parse('/layout/errorMessage.vm')
-    $screen_content
+  <!-- Main Wrapper -->
+  <div id="wrapper">
+    ${screen_content}
+    <!-- Footer-->
+    <footer class="footer">
+      <span class="pull-right">Based On <a href="http://github.com/Mashape/kong" target="_blank">Kong</a></span>
+      Copyright © 2008-2016 北京蓝海讯通科技股份有限公司
+    </footer>
   </div>
-</div>
-  #parse('/layout/footer.vm')
+
+  #parse("/fragment/footer.vm")
 </body>
 </html>

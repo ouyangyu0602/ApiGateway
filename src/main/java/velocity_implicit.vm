@@ -1,0 +1,14 @@
+#* @implicitly included *#
+
+#* Velocity basic configuration location define, for code inspection. *#
+#* @velocityproperties path="../webapp/WEB-INF/views/velocity.properties" runtime_root="../webapp/WEB-INF/views" *#
+
+#* Define global variables *#
+#* @vtlvariable name="pageTitle" type="java.lang.String" *#
+#* @vtlvariable name="pageStyles" type="java.util.List<java.lang.String>" *#
+#* @vtlvariable name="pageScripts" type="java.util.List<java.lang.String>" *#
+#* @vtlvariable name="rc" type="org.springframework.web.servlet.support.RequestContext" *#
+
+#* File specificed variables *#
+#* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/layout.vm" *#
+#* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/page.vm" *#
