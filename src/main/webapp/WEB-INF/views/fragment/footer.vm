@@ -1,15 +1,8 @@
 <!-- Vendor scripts -->
-<script src="${rc.contextPath}/assets/vendor/jquery/jquery.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/metisMenu/metisMenu.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/iCheck/icheck.min.js"></script>
 
 <!-- App scripts -->
 <script src="${rc.contextPath}/assets/scripts/app.js"></script>
-
-#if( ${pageScripts} )
-<!-- Page based scripts -->
-  #foreach ( ${scipt} in ${pageScripts} )
-    ${scipt}
-  #end
-#end

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.blueocn.api.support.Constants.LOGIN_URI;
 import static com.blueocn.api.support.Constants.LOGIN_USER;
+import static com.blueocn.api.support.session.SessionManager.INSTANCE;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -28,11 +29,11 @@ public class SessionHandlerInterceptor extends HandlerInterceptorAdapter {
                              HttpServletResponse response, Object handler) throws Exception {
 
         if (isIncludeUri(request.getRequestURI())) {
-            if (SessionManager.INSTANCE.isNotLogin(request.getSession())) {
+            if (INSTANCE.isNotLogin(request.getSession())) {
                 response.sendRedirect(LOGIN_URI);
                 return false;
             }
-            request.setAttribute(LOGIN_USER, SessionManager.INSTANCE.getLoginUser(request.getSession()));
+            request.setAttribute(LOGIN_USER, INSTANCE.getLoginUser(request.getSession()));
         }
         return true;
     }

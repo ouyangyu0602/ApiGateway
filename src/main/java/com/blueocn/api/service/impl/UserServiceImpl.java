@@ -44,7 +44,9 @@ public class UserServiceImpl implements UserService {
             for (UserEntity user : existUser) {
                 checkUserStatus(user);
                 if (isPasswordValid(password, user.getUserPassword(), user.getUserSalt())) {
-                    return new UserResponse();
+                    UserVo userVo = new UserVo();
+                    BeanUtils.copyProperties(user, userVo);
+                    return new UserResponse(userVo);
                 }
             }
         }
@@ -60,7 +62,7 @@ public class UserServiceImpl implements UserService {
             entity.setUserSalt(generateSalt(32));
             entity.setUserPassword(encodePassword(userVo.getUserPassword(), entity.getUserSalt()));
             userRepository.add(entity);
-            return new UserResponse(entity.getId());
+            return new UserResponse(queryUserById(entity.getId()));
         } catch (DataIntegrityViolationException ex) {
             LOGGER.warn("", ex);
             return new UserResponse("用户注册失败, Email 或者 登录名已经存在.");

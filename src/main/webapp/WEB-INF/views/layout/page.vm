@@ -1,1 +1,10 @@
-${screen_content}
+<html>
+<head>
+  #parse("/fragment/head.vm")
+</head>
+<body class="blank">
+  #parse("/fragment/splash.vm")
+  ${screen_content}
+  #parse("/fragment/footer.vm")
+</body>
+</html>

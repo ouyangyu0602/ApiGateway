@@ -1,7 +1,6 @@
 package com.blueocn.api.controller.ui;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -21,8 +20,7 @@ public class IndexController extends AbstractUIController {
     }
 
     @RequestMapping("index")
-    public String home(Model model) {
-        setPageTitle(model, "首页");
+    public String home() {
         return "index";
     }
 }

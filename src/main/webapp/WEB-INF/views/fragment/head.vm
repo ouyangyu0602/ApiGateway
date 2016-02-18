@@ -3,13 +3,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Page title -->
-<title>API 管理后台 | ${pageTitle}</title>
+#if( $pageTitle )
+<title>$!{pageTitle} | API 管理后台</title>
+#else
+<title>API 管理后台</title>
+#end
 
-<link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/assets/favicon.ico}" />
+<link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/assets/favicon.ico"/>
 
 <!-- Vendor styles -->
 <link rel="stylesheet" href="${rc.contextPath}/assets/vendor/fontawesome/css/font-awesome.min.css"/>
-<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/metisMenu/dist/metisMenu.min.css"/>
+<link rel="stylesheet" href="${rc.contextPath}/assets/vendor/metisMenu/metisMenu.min.css"/>
 <link rel="stylesheet" href="${rc.contextPath}/assets/vendor/animate.css/animate.min.css"/>
 <link rel="stylesheet" href="${rc.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css"/>
 
@@ -21,6 +25,7 @@
 #if( ${pageStyles} )
 <!-- Page based styles -->
   #foreach ( ${style} in ${pageStyles} )
-    ${style}
+  <link rel="stylesheet" href="${rc.contextPath}${style}">
   #end
 #end
+<script src="${rc.contextPath}/assets/vendor/jquery/jquery.min.js"></script>

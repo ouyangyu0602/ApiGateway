@@ -26,7 +26,7 @@
             <a class="" href="${rc.contextPath}/#">修改密码</a> ## TODO Change Pwd Link
           </li>
           <li>
-            <a class="" href="${rc.contextPath}/#">注销</a> ## TODO Logout Link
+            <a class="" href="${rc.contextPath}/user/logout">注销</a>
           </li>
         </ul>
       </div>
@@ -34,7 +34,7 @@
     <div class="navbar-right">
       <ul class="nav navbar-nav no-borders">
         <li>
-          <a href="${rc.contextPath}/#"> ## TODO Logout Link
+          <a href="${rc.contextPath}/user/logout">
             <i class="pe-7s-upload pe-rotate-90"></i>
           </a>
         </li>

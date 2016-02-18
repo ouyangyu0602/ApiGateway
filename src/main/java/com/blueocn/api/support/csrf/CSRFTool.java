@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0.0
  * @since 2015-12-15 12:54
  */
-public class CSRFTool {
-    public static String getToken(HttpServletRequest request) {
+public class CSRFTool { // NOSONAR
+    public String getToken(HttpServletRequest request) {
         return CSRFTokenManager.getToken(request.getSession());
     }
 }

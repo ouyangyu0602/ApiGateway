@@ -1,5 +1,6 @@
 package com.blueocn.api.response;
 
+import com.blueocn.api.vo.UserVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +33,7 @@ public class UserResponse implements Serializable {
     /**
      * 注册成功的用户ID
      */
-    private Long userId;
+    private UserVo userVo;
 
     public UserResponse() {
         this.success = true;
@@ -43,8 +44,8 @@ public class UserResponse implements Serializable {
         this.response = response;
     }
 
-    public UserResponse(Long userId) {
+    public UserResponse(UserVo userVo) {
         this.success = true;
-        this.userId = userId;
+        this.userVo = userVo;
     }
 }

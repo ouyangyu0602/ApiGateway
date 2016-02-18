@@ -1,1 +1,42 @@
 #set($layout = "/layout/page.vm")
+#set($pageTitle = "用户登录")
+
+<div class="login-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center m-b-md">
+        <h3>API 管理系统登录</h3>
+      </div>
+      <div class="hpanel">
+        #parse("/fragment/message.vm")
+        <div class="panel-body">
+          <form action="${rc.contextPath}/user/login" id="loginForm" method="post">
+            <input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
+            <div class="form-group">
+              <label class="control-label" for="userIdentity">用户名</label>
+              <input type="text" placeholder="你的登录名" title="请输入你的用户名"
+                     required="" value="" name="userIdentity" id="userIdentity" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="userPassword">密码</label>
+              <input type="password" title="请输入您的密码" placeholder="******"
+                     required="" value="" name="userPassword" id="userPassword" class="form-control">
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" class="i-checks" checked>
+              记住登录
+              <p class="help-block small">(请不要在公共电脑上勾选此选项)</p>
+            </div>
+            <button class="btn btn-success btn-block">登录</button>
+##            <a class="btn btn-default btn-block" href="#">Register</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      Copyright © 2008-2016 北京蓝海讯通科技股份有限公司
+    </div>
+  </div>
+</div>

@@ -26,19 +26,16 @@ public class ApiManageController extends AbstractUIController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String listApi(@RequestParam(value = "offset", required = false) String offset,
         @RequestParam(value = "size", required = false) Integer size, Model model) {
-        setPageTitle(model, "API 列表");
         return null;
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String addApi(Model model) {
-        setPageTitle(model, "添加 API");
         return "api/edit";
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public String editApi(@RequestParam(value = "id") String id, Model model) {
-        setPageTitle(model, "编辑 API");
         model.addAttribute("api", id);
         return "api/edit";
     }

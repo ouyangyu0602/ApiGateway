@@ -17,6 +17,8 @@ public interface Constants { // NOSONAR
     // 逗号分割符
     Pattern COMMA_SPLIT_PATTERN = Pattern.compile("\\s*[,]+\\s*");
 
+    Pattern BRACE_SPLIT_PATTERN = Pattern.compile("\\s*(\\{\\S*?\\})+\\s*");
+
     // 用户Session信息标识
     String LOGIN_USER_IN_SESSION = "current_login_user";
 
@@ -31,8 +33,6 @@ public interface Constants { // NOSONAR
 
     // 请求跳转头
     String X_FORWARDED_FOR_HEADER = "x-forwarded-for";
-
-    String PAGE_ERROR_ATTRIBUTE = "errorMessage";
 
     // 密码和盐值拼接字符串
     String SALT_SPIT_CHAR = "(^_^)";

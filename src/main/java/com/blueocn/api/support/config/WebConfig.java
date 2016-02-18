@@ -1,10 +1,8 @@
 package com.blueocn.api.support.config;
 
 import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
-import com.blueocn.api.support.csrf.CSRFTool;
 import com.blueocn.api.support.session.SessionHandlerInterceptor;
 import com.google.common.base.Charsets;
-import com.google.common.collect.Maps;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,7 +24,6 @@ import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 import org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.blueocn.api.support.Constants.SYSTEM_CONF_PROPERTIES;
 
@@ -137,14 +134,8 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         // 定义是否暴露Spring的RequestContext对象暴露为变量rc, 便于获取程序路径
         velocityLayoutViewResolver.setRequestContextAttribute("rc");
         velocityLayoutViewResolver.setViewClass(org.springframework.web.servlet.view.velocity.VelocityLayoutView.class);
-        velocityLayoutViewResolver.setAttributesMap(getAttributesMap());
+        velocityLayoutViewResolver.setToolboxConfigLocation("/WEB-INF/toolbox.xml");
         return velocityLayoutViewResolver;
-    }
-
-    private Map<String, Object> getAttributesMap() {
-        Map<String, Object> attributesMap = Maps.newHashMap();
-        attributesMap.put("csrfTool", new CSRFTool());
-        return attributesMap;
     }
 
     @Override
