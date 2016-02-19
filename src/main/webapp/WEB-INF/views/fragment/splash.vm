@@ -3,9 +3,10 @@
   <div class="color-line"></div>
   <div class="splash-title">
     <h1>API 管理平台</h1>
-    <p>Now Loading ... 少女が祈ってる ...</p>
+    <p>Now Loading ... 少女が祈ってる ... 正在加载中 ...</p>
     <div class="spinner">
-      <div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div>
+      #* 此行不要做代码格式化 *#
+      <div class="rect1"></div>&nbsp;<div class="rect2"></div>&nbsp;<div class="rect3"></div>&nbsp;<div class="rect4"></div>&nbsp;<div class="rect5"></div>
     </div>
   </div>
 </div>

@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
                 if (isPasswordValid(password, user.getUserPassword(), user.getUserSalt())) {
                     UserVo userVo = new UserVo();
                     BeanUtils.copyProperties(user, userVo);
+                    userVo.setUserPassword(null);
                     return new UserResponse(userVo);
                 }
             }

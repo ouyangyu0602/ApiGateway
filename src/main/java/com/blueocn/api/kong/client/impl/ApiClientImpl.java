@@ -1,12 +1,14 @@
 package com.blueocn.api.kong.client.impl;
 
 import com.blueocn.api.kong.client.ApiClient;
+import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
-import com.blueocn.api.kong.service.ApiService;
+import com.blueocn.api.kong.connector.ApiConnector;
 import com.blueocn.api.support.utils.Asserts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -23,20 +25,23 @@ import java.io.IOException;
  * @since 2016-02-03 18:41
  */
 @Component
-public class ApiClientImpl extends BasicClient implements ApiClient {
+public class ApiClientImpl implements ApiClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiClientImpl.class);
 
-    private ApiService apiService;
+    @Autowired
+    private Connector connector;
+
+    private ApiConnector apiConnector;
 
     @PostConstruct
     private void init() { // NOSONAR
-        apiService = super.getRetrofit().create(ApiService.class);
+        apiConnector = connector.create(ApiConnector.class);
     }
 
     @Override
     public Api add(Api api) throws IOException {
-        Call<Api> call = apiService.add(api);
+        Call<Api> call = apiConnector.add(api);
         Response<Api> response = call.execute();
         LOGGER.debug("Request Body {}", response.raw().request().toString());
         LOGGER.debug("Response Body {}", response.raw().message());
@@ -45,21 +50,21 @@ public class ApiClientImpl extends BasicClient implements ApiClient {
 
     @Override
     public Apis query(Api api) throws IOException {
-        Call<Apis> call = apiService.query(api == null ? null : api.toMap());
+        Call<Apis> call = apiConnector.query(api == null ? null : api.toMap());
         Response<Apis> response = call.execute();
         return response.body();
     }
 
     @Override
     public Api queryOne(String apiId) throws IOException {
-        Call<Api> call = apiService.queryOne(apiId);
+        Call<Api> call = apiConnector.queryOne(apiId);
         Response<Api> response = call.execute();
         return response.body();
     }
 
     @Override
     public Api update(Api api) throws IOException {
-        Call<Api> call = apiService.update(api.getId(), api);
+        Call<Api> call = apiConnector.update(api.getId(), api);
         Response<Api> response = call.execute();
         return response.body();
     }
@@ -67,7 +72,7 @@ public class ApiClientImpl extends BasicClient implements ApiClient {
     @Override
     public void delete(String apiId) throws IOException {
         Asserts.checkNotBlank(apiId, "待删除的API ID");
-        Call<String> call = apiService.delete(apiId);
+        Call<String> call = apiConnector.delete(apiId);
         call.execute();
     }
 }

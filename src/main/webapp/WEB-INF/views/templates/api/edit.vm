@@ -1,0 +1,126 @@
+#set( $pageStyles = [
+  "/assets/vendor/ladda/ladda-themeless.min.css"
+] )
+
+#if( $api )
+  #set( $pageTitle = "编辑 API" )
+#else
+  #set( $pageTitle = "新增 API" )
+#end
+#set( $parentMenu = "api" )
+#set( $menuName = "addApi" )
+
+#breadCrumb( "API 管理", "新增或者编辑你的API信息, API 信息存储与 Kong 上.")
+
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="hpanel hgreen">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          API 添加帮助
+        </div>
+        <div class="panel-body">
+          <p>
+            The API object describes an API that's being exposed by Kong. In order to do that Kong
+            needs to know
+            how to retrieve the API when a consumer is calling it. This can be achieved either
+            by specifying a custom DNS address or a specific URL path.
+          </p>
+          <p>
+            Then, Kong needs to know what is the final target URL of the API where the requests will
+            be proxied.
+          </p>
+          <p>
+            Checkout <a href="https://getkong.org/docs/0.6.x/admin-api/#add-api" target="_blank">Kong
+            documentation</a> for the meaning of these parameters.
+          </p>
+        </div>
+        <div class="panel-footer">
+          文档版本 0.6.x
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="hpanel">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          API 信息
+        </div>
+        <div class="panel-body">
+          <form method="get" class="form-horizontal">
+            <div class="form-group"><label class="col-sm-3 control-label">Name</label>
+              <div class="col-sm-9"><input type="text" class="form-control"></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Request Host</label>
+              <div class="col-sm-9"><input type="text" class="form-control"> <span
+                  class="help-block m-b-none">At least a 'request_host' or a 'request_path' must be specified</span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Request Path</label>
+              <div class="col-sm-9"><input type="text" class="form-control"></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Upstream Url</label>
+              <div class="col-sm-9"><input type="text" class="form-control"> <span
+                  class="help-block m-b-none">upstream_url is required</span></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Other Option</label>
+              <div class="col-sm-9"><label class="checkbox-inline">
+                <input id="strip_request_path" class="i-checks" type="checkbox"
+                       name="strip_request_path"> Strip request path</label>
+                <label class="checkbox-inline">
+                  <input id="preserve_host" class="i-checks" type="checkbox" name="preserve_host">
+                  Preserve host
+                </label>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-2">
+                <button class="ladda-button btn btn-success" type="button"
+                        data-style="expand-right"><span
+                    class="ladda-label"><i class="fa fa-check"></i> 保存</span><span
+                    class="ladda-spinner"></span></button>
+                <button class="btn btn-default" type="button" onclick="history.go(-1)"><i
+                    class="fa fa-times"></i> 取消
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="${rc.contextPath}/assets/vendor/ladda/spin.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.jquery.min.js"></script>
+<script type="text/javascript">
+  Ladda.bind('.ladda-button', {
+    callback: function (instance) {
+      var progress = 0;
+      var interval = setInterval(function () {
+        progress = Math.min(progress + Math.random() * 0.1, 1);
+        instance.setProgress(progress);
+
+        if (progress === 1) {
+          instance.stop();
+          clearInterval(interval);
+        }
+      }, 200);
+    }
+  });
+  ## TODO 保存动作
+</script>

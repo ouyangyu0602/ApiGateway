@@ -1,4 +1,4 @@
-package com.blueocn.api.kong.service;
+package com.blueocn.api.kong.connector;
 
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 2016-02-04 15:44
  */
-public interface ApiService {
+public interface ApiConnector {
 
     /**
      * 新增 API

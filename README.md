@@ -19,7 +19,7 @@
 3. 修改配置文件 `application.properties`, 拷贝重命名为 `application-{env}.properties`, `{env}` 为 Spring Profile.
 4. 启动项目, 以IDEA为例, `Edit Configuration` -> `ADD Configuration` -> `Maven` -> 写自己的配置参数: `clean tomcat7:run -Dspring.profiles.active=dev`
 5. 其他的IDE配置大同小异, 本质都是使用 `mvn clean tomcat7:run`.
-6. 程序启动完毕, 访问 http://localhost:9999/index
+6. 程序启动完毕, 访问 http://localhost:9999 (端口配置在 `pom.xml` 里面)
 7. MySQL创建用户与授权:
   1. 终端连接数据库 `mysql -u root -p <password>`, 这里 `<password>` 改为你的 root 密码, 如果不存在密码, 则不需要加 `-p` 参数
   2. 查看当前存在几个数据库 `SHOW DATABASES;`.
@@ -36,6 +36,7 @@
 
 好处在于, 一套代码, 能在不修改任何配置参数的情况下, 同时兼容多种部署环境, 方便项目上线和代码持续集成.
 
-## 五、Kong相关学习资料
+## 五、相关学习资料
 
 1. [Kong官方文档](http://getkong.org/doc)
+2. [Retrofit2](http://square.github.io/retrofit/)

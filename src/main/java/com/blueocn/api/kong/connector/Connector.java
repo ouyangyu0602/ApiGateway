@@ -1,7 +1,8 @@
-package com.blueocn.api.kong.client.impl;
+package com.blueocn.api.kong.connector;
 
 import com.blueocn.api.kong.KongConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.fastjson.FastjsonConverterFactory;
 
@@ -15,7 +16,8 @@ import javax.annotation.PostConstruct;
  * @version 1.0.0
  * @since 2016-02-15 16:04
  */
-public abstract class BasicClient {
+@Component
+public class Connector {
 
     @Autowired
     private KongConfig config;
@@ -36,7 +38,7 @@ public abstract class BasicClient {
             .build();
     }
 
-    protected Retrofit getRetrofit() {
-        return retrofit;
+    public <T> T create(final Class<T> service) {
+        return retrofit.create(service);
     }
 }

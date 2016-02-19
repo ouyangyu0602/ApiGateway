@@ -8,6 +8,7 @@ package com.blueocn.api.service;
  * @version 1.0.0
  * @since 2016-01-09 13:15
  */
+@FunctionalInterface
 public interface CommonTaskExecutorService {
 
     /**

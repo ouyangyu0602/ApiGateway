@@ -1,4 +1,4 @@
-#set($successMessage = "dsdsdsdsds")
+#set( $parentMenu = "index" )
 
 <div class="content animate-panel">
   <div class="row">

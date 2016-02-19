@@ -4,7 +4,7 @@
  *
  */
 
-$(document).ready(function () {
+$(document).ready(function () { // NOSONAR
 
   // Add special class to minimalize page elements when screen is less than 768px
   setBodySmall();
@@ -103,13 +103,12 @@ $(document).ready(function () {
 
   // Move modal to body
   // Fix Bootstrap backdrop issu with animation.css
-  $('.modal').appendTo("body")
-
+  $('.modal').appendTo("body");
 });
 
 $(window).bind("load", function () {
   // Remove splash screen after load
-  $('.splash').css('display', 'none')
+  $('.splash').css('display', 'none');
 });
 
 $(window).bind("resize click", function () {
@@ -151,8 +150,7 @@ function setBodySmall() {
   if ($(this).width() < 769) {
     $('body').addClass('page-small');
   } else {
-    $('body').removeClass('page-small');
-    $('body').removeClass('show-sidebar');
+    $('body').removeClass('page-small').removeClass('show-sidebar');
   }
 }
 
@@ -166,17 +164,17 @@ $.fn['animatePanel'] = function () {
 
   // Set default values for attrs
   if (!effect) {
-    effect = 'zoomIn'
+    effect = 'zoomIn';
   }
   if (!delay) {
-    delay = 0.06
+    delay = 0.06;
   } else {
-    delay = delay / 10
+    delay = delay / 10;
   }
   if (!child) {
-    child = '.row > div'
+    child = '.row > div';
   } else {
-    child = "." + child
+    child = "." + child;
   }
 
   //Set defaul values for start animation and delay
@@ -205,8 +203,6 @@ $.fn['animatePanel'] = function () {
 
   // Clear animation after finish
   setTimeout(function () {
-    $('.stagger').css('animation', '');
-    $('.stagger').removeClass(effect).removeClass('animated-panel').removeClass('stagger');
-  }, animateTime)
-
+    $('.stagger').css('animation', '').removeClass(effect).removeClass('animated-panel').removeClass('stagger');
+  }, animateTime);
 };
