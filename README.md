@@ -9,7 +9,7 @@
 3. IDE: Intellij IDEA, Eclipse, Netbeans
 4. MySQL 5.2 or higher
 5. Git 2.x
-6. Kong 5.x (会提供阿里云在线版，也可自己搭建)
+6. Kong 0.6.x (会提供阿里云在线版，也可自己搭建)
 7. Redis
 
 ## 二、部署开发

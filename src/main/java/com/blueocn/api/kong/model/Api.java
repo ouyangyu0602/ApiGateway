@@ -54,6 +54,9 @@ public class Api implements Serializable {
     @JSONField(name = "offset")
     private String offset;
 
+    @JSONField(serialize = false, deserialize = false)
+    private String errorMessage;
+
     /**
      * @see com.blueocn.api.support.utils.MapConverter#convert(Object)
      */

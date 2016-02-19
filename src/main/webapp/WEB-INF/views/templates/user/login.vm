@@ -11,7 +11,7 @@
         #parse("/fragment/message.vm")
         <div class="panel-body">
           <form action="${rc.contextPath}/user/login" id="loginForm" method="post">
-            <input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
+            #csrfTag()
             <div class="form-group">
               <label class="control-label" for="userIdentity">用户名</label>
               <input type="text" placeholder="你的登录名" title="请输入你的用户名"

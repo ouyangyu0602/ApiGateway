@@ -2,6 +2,7 @@ package com.blueocn.api.service.impl;
 
 import com.blueocn.api.kong.client.ApiClient;
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Title: ApiServiceImpl
@@ -36,5 +39,24 @@ public class ApiServiceImpl implements ApiService {
             LOGGER.warn("", e);
         }
         return null;
+    }
+
+    @Override
+    public RestfulResponse<String> save(Api api) {
+        Api newApi;
+        try {
+            if (isBlank(api.getId())) {
+                newApi = client.add(api);
+            } else {
+                newApi = client.update(api);
+            }
+        } catch (IOException e) {
+            LOGGER.info("", e);
+            return new RestfulResponse<>(e.getMessage());
+        }
+        if (isBlank(newApi.getErrorMessage())) {
+            return new RestfulResponse<>();
+        }
+        return new RestfulResponse<>(newApi.getErrorMessage());
     }
 }

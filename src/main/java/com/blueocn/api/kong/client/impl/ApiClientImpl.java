@@ -1,10 +1,10 @@
 package com.blueocn.api.kong.client.impl;
 
 import com.blueocn.api.kong.client.ApiClient;
+import com.blueocn.api.kong.connector.ApiConnector;
 import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
-import com.blueocn.api.kong.connector.ApiConnector;
 import com.blueocn.api.support.utils.Asserts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,30 +43,40 @@ public class ApiClientImpl implements ApiClient {
     public Api add(Api api) throws IOException {
         Call<Api> call = apiConnector.add(api);
         Response<Api> response = call.execute();
-        LOGGER.debug("Request Body {}", response.raw().request().toString());
-        LOGGER.debug("Response Body {}", response.raw().message());
-        return response.body();
+        if (response.isSuccess()) {
+            return response.body();
+        }
+        return Api.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override
     public Apis query(Api api) throws IOException {
         Call<Apis> call = apiConnector.query(api == null ? null : api.toMap());
         Response<Apis> response = call.execute();
-        return response.body();
+        if (response.isSuccess()) {
+            return response.body();
+        }
+        return null;
     }
 
     @Override
     public Api queryOne(String apiId) throws IOException {
         Call<Api> call = apiConnector.queryOne(apiId);
         Response<Api> response = call.execute();
-        return response.body();
+        if (response.isSuccess()) {
+            return response.body();
+        }
+        return Api.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override
     public Api update(Api api) throws IOException {
         Call<Api> call = apiConnector.update(api.getId(), api);
         Response<Api> response = call.execute();
-        return response.body();
+        if (response.isSuccess()) {
+            return response.body();
+        }
+        return Api.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override

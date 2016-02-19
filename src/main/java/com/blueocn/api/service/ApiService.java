@@ -1,6 +1,7 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.response.RestfulResponse;
 
 /**
  * Title: ApiService
@@ -19,4 +20,12 @@ public interface ApiService {
      * @return 当 API 信息不存在时, 会返回 null
      */
     Api query(String apiId);
+
+    /**
+     * 保存 API
+     *
+     * @param api 待保存的 API 实体
+     * @return 存储结果
+     */
+    RestfulResponse<String> save(Api api);
 }

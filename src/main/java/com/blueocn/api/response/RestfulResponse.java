@@ -33,11 +33,6 @@ public class RestfulResponse<T> implements Serializable {
         this.success = true;
     }
 
-    public RestfulResponse(T msg) {
-        this.success = false;
-        this.msg = msg;
-    }
-
     public RestfulResponse(Builder<T> builder) {
         this.success = builder.success;
         this.code = builder.code;
@@ -48,6 +43,13 @@ public class RestfulResponse<T> implements Serializable {
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public RestfulResponse(T msg) {
+        if (msg != null) {
+            this.success = false;
+            this.msg = msg;
+        }
     }
 
     public void setSuccess(boolean success) {
