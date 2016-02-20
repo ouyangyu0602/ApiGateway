@@ -135,12 +135,12 @@
     }
   }
 
-  // Save method
   $(document).ready(function() {
     $("form.api-form").on("submit", function(e) {
+      $("span.help-block").html("");
       e.preventDefault();
       $.ajax($(this).attr("action"), {
-        data: $(this).serialize(),
+        data: $("form").serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
         method: "post",
         success: function(data) {
           if (data["success"]) {

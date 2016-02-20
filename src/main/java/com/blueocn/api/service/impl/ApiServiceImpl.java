@@ -2,6 +2,7 @@ package com.blueocn.api.service.impl;
 
 import com.blueocn.api.kong.client.ApiClient;
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ApiService;
 import org.slf4j.Logger;
@@ -58,5 +59,35 @@ public class ApiServiceImpl implements ApiService {
             return new RestfulResponse<>();
         }
         return new RestfulResponse<>(newApi.getErrorMessage());
+    }
+
+    @Override
+    public Apis queryAll(Api api) {
+        try {
+            Api queryApi = api == null ? new Api() : api;
+            queryApi.setSize(getApiAmount());
+            return client.query(queryApi);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return null;
+    }
+
+    /**
+     * 查询 Kong 上面的 API 数量, 如果查询失败或者没有 API, 则会返回 null.
+     *
+     * @return API 数量
+     */
+    private Integer getApiAmount() {
+        try {
+            Api api = Api.builder().size(1).build();
+            Apis apis = client.query(api);
+            if (apis != null) {
+                return apis.getTotal();
+            }
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return null;
     }
 }

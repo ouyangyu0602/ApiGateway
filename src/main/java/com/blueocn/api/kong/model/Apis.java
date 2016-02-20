@@ -28,7 +28,4 @@ public class Apis implements Serializable {
 
     @JSONField(name = "next")
     private String next;
-
-    @JSONField(name = "message")
-    private String message;
 }

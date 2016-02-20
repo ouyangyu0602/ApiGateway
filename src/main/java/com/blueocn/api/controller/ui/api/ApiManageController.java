@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Title: ApiManageController
@@ -29,25 +29,23 @@ public class ApiManageController extends AbstractUIController {
     @Autowired
     private ApiService apiService;
 
-//    @RequestMapping(value = "list", method = RequestMethod.GET)
-//    public String listApi(@RequestParam(value = "offset", required = false) String offset,
-//        @RequestParam(value = "size", required = false) Integer size, Model model) {
-//        return null;
-//    }
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String listApi() {
+        return "api/list";
+    }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String addApi() {
         return "api/edit";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public String editApi(@RequestParam(value = "id") String id, Model model) {
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String editApi(@PathVariable(value = "id") String id, Model model) {
         Api api = apiService.query(id);
         if (api != null) {
             model.addAttribute("api", api);
         } else {
             LOGGER.info("此 API 不存在, API ID {}", id);
-            // TODO 添加异常页面, 处理展示
         }
         return "api/edit";
     }

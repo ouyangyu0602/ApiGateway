@@ -2768,7 +2768,15 @@ h6 {
   color: #9d9fa2;
 }
 .form-control {
-  border-color: #e4e5e7 !important;
+  border-color: #d6d7d9;
+}
+.form-control:focus {
+  opacity: 0.5;
+  border-color: #787F8E;
+  background-color: #f4f5f7;
+  transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
 }
 .input-group-addon {
   background: #fafbfc;
@@ -2800,6 +2808,7 @@ h6 {
 .splash-title h1 {
   font-size: 26px;
 }
+
 /* Checkbox styles */
 .checkbox-primary input[type="checkbox"]:checked + label::before {
   background-color: #34495e;

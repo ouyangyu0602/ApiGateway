@@ -1,6 +1,7 @@
 package com.blueocn.api.controller.rest.api;
 
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class RestApiController {
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public RestfulResponse<String> save(Api api) {
         return apiService.save(api);
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.POST)
+    public Apis queryApiList(Api api) {
+        return apiService.queryAll(api);
     }
 }

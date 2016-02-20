@@ -1,6 +1,7 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
 
 /**
@@ -28,4 +29,12 @@ public interface ApiService {
      * @return 存储结果
      */
     RestfulResponse<String> save(Api api);
+
+    /**
+     * 查询全部符合查询条件的 API
+     *
+     * @param api 查询的API参数
+     * @return 查询结果
+     */
+    Apis queryAll(Api api);
 }

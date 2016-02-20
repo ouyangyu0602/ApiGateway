@@ -37,10 +37,10 @@ public class Api implements Serializable {
     private String requestPath;
 
     @JSONField(name = "strip_request_path")
-    private boolean stripRequestPath;
+    private Boolean stripRequestPath;
 
     @JSONField(name = "preserve_host")
-    private boolean preserveHost;
+    private Boolean preserveHost;
 
     @JSONField(name = "upstream_url")
     private String upstreamUrl;

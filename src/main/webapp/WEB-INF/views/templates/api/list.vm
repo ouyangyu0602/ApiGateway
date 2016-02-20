@@ -1,0 +1,155 @@
+#set( $pageTitle = "API 列表" )
+#set( $parentMenu = "api" )
+#set( $menuName = "listApi" )
+
+#set( $pageStyles = [
+  "/assets/vendor/datatables/css/dataTables.bootstrap.min.css",
+  "/assets/vendor/sweetalert/sweet-alert.css"
+])
+
+#breadCrumb( "API 管理", "下面是当前存储于 Kong 上面的 API 信息")
+
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="hpanel">
+        <div class="panel-heading hbuilt">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          API 信息
+        </div>
+        <div class="panel-body">
+          <!-- Search Area -->
+          <div class="row">
+            <form id="apiForm" action="${rc.contextPath}/api/list" class="form" method="post">
+              #csrfTag()
+              <div class="form-group col-sm-6">
+                <label class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="name" value=""/>
+                </div>
+                <div class="hr-line-dashed"></div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="col-sm-3 control-label">Request Host</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="requestHost" value=""/>
+                </div>
+                <div class="hr-line-dashed"></div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="col-sm-3 control-label">Request Path</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="requestPath" value=""/>
+                </div>
+                <div class="hr-line-dashed"></div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="col-sm-3 control-label">Upstream Url</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="upstreamUrl" value=""/>
+                </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4">
+                  <button class="btn btn-success querApi" type="button"><i class="fa fa-check"></i> 查询</span></button>
+                  <button class="btn btn-default reset" type="button"><i class="fa fa-times"></i> 重置</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Data Area -->
+        </div>
+        <div class="panel-body">
+          <table id="apiList" class="table table-striped table-bordered table-hover" style="min-width: 100%">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Request Host</th>
+              <th>Request Path</th>
+              <th>Upstream Url</th>
+              <th>Preserve Host</th>
+              <th>Strip Request Path</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="panel-footer">
+          &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="${rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<!-- Datatable Vendor -->
+<script src="${rc.contextPath}/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/datatables/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+  var TableHelper = function() {
+    var loading = function(setting) {
+      console.log($("#" + setting["formId"]).serialize().replace(/[^&]+=\.?(?:&|$)/g, ''));
+      var form = $("#" + setting["formId"]);
+      $.ajax($("#" + setting["formId"]).attr("action"), {
+        data: $("#" + setting["formId"]).serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
+        method: "post",
+        success: function(data) {
+          setting["data"] = data["data"];
+          console.log(data);
+          tableRender(setting);
+        },
+        error: function() {
+          swal({
+            title: "加载失败 !",
+            text: "请检查页面重新提交 !",
+            type: "warning"
+          });
+        }
+      });
+    };
+
+    var tableRender = function(setting) {
+      setting["dataTable"].destroy();
+      $("#" + setting["tableId"]).html(setting["tableHeader"]);
+      setting["dataTable"] = $("#" + setting["tableId"]).DataTable({
+        fixedHeader: true,
+        data: setting["data"],
+        columns: [
+          { data : "name"},
+          { data : "requestHost"},
+          { data : "requestPath"},
+          { data : "upstreamUrl"},
+          { data : "preserveHost"},
+          { data : "stripRequestPath"}
+        ]
+      });
+    };
+
+    return {
+      init: function(setting) {
+        loading(setting);
+      }
+    };
+  }();
+
+  $(document).ready(function() {
+    var setting = {
+      formId: "apiForm",
+      tableId: "apiList",
+      dataTable: $("#apiList").DataTable(),
+      tableHeader: $("#apiList").html()
+    };
+    TableHelper.init(setting);
+    $("button.querApi").on("click", function() {
+      console.log("Reload API");
+      TableHelper.init(setting);
+    });
+    $(".reset").on("click", function() {
+      location.reload();
+    });
+  });
+</script>

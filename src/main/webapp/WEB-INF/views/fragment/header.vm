@@ -11,7 +11,7 @@
     </div>
     <form role="search" class="navbar-form-custom" method="post" action="#">
       <div class="form-group">
-        <input type="text" placeholder="Search something special" class="form-control"
+        <input type="text" placeholder="API 信息搜索" class="form-control"
                name="search">
       </div>
     </form>

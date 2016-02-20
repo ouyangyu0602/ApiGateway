@@ -26,18 +26,18 @@
           <li><a href="${rc.contextPath}/index">首页</a></li>
           #if( $parentPage )
           <li>
-            <span>${parentPage}</span>
+            <span>$!{parentPage}</span>
           </li>
           #end
           <li class="active">
-            <span>${pageTitle}</span>
+            <span>$!{pageTitle}</span>
           </li>
         </ol>
       </div>
       <h2 class="font-light m-b-xs">
-        ${pageTitle}
+        $!{pageTitle}
       </h2>
-      <small>${pageDesc}</small>
+      <small>$!{pageDesc}</small>
     </div>
   </div>
 </div>
