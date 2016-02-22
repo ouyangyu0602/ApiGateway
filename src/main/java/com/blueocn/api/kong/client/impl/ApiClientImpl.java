@@ -6,6 +6,7 @@ import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.support.utils.Asserts;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class ApiClientImpl implements ApiClient {
         if (response.isSuccess()) {
             return response.body();
         }
+        LOGGER.debug("API 保存失败 - {}", response.errorBody().string());
         return Api.builder().errorMessage(response.errorBody().string()).build();
     }
 
@@ -71,6 +73,8 @@ public class ApiClientImpl implements ApiClient {
 
     @Override
     public Api update(Api api) throws IOException {
+        Preconditions.checkNotNull(api, "API 信息不能为空");
+        Asserts.checkNotBlank(api.getId(), "API ID 不能为空");
         Call<Api> call = apiConnector.update(api.getId(), api);
         Response<Api> response = call.execute();
         if (response.isSuccess()) {
@@ -81,7 +85,7 @@ public class ApiClientImpl implements ApiClient {
 
     @Override
     public void delete(String apiId) throws IOException {
-        Asserts.checkNotBlank(apiId, "待删除的API ID");
+        Asserts.checkNotBlank(apiId, "待删除的 API ID 不能为空");
         Call<String> call = apiConnector.delete(apiId);
         call.execute();
     }

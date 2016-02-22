@@ -1,0 +1,3 @@
+#set( $pageTitle = "开发者管理" )
+#set( $parentMenu = "consumer" )
+#set( $menuName = "listConsumer" )

@@ -28,6 +28,13 @@
           <li #activeMenu("listApi" $menuName)><a href="${rc.contextPath}/api/list">检索 API</a></li>
         </ul>
       </li>
+      <li #activeMenu("consumer" $parentMenu)>
+        <a href="#"><span class="nav-label">开发者管理</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+          <li #activeMenu("addConsumer" $menuName)><a href="${rc.contextPath}/consumer/add">开发者申请</a></li>
+          <li #activeMenu("listConsumer" $menuName)><a href="${rc.contextPath}/consumer/list">开发者管理</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </aside>

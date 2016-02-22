@@ -1,12 +1,12 @@
 package com.blueocn.api.kong.model;
 
 /**
- * Title: Customer
+ * Title: Customers
  * Description:
  *
  * @author Yufan
  * @version 1.0.0
- * @since 2016-02-16 13:20
+ * @since 2016-02-16 13:25
  */
-public class Customer {
+public class Consumers {
 }

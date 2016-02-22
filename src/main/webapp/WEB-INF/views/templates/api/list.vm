@@ -154,7 +154,7 @@
       confirmButtonText: "删除",
       cancelButtonText: "取消",
       closeOnConfirm: false,
-      closeOnCancel: false
+      closeOnCancel: true
     }, function(confirm) {
       if (confirm) {
         $.ajax("$!{rc.contextPath}/api/delete/" + apiId, {

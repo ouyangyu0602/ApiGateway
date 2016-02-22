@@ -56,7 +56,7 @@ public interface ApiConnector {
     /**
      * 修改或者创建 API, 当消息对象的ID不存在时则为创建
      *
-     * @deprecated 请使用 {@link #update(String, Api)} 和 {@link #add(Api)} 两个方法, 此方法仅做保留定义, 无测试.
+     * @deprecated 请使用 {@link #update(String, Api)} 和 {@link #add(Api)} 两个方法
      * @param api API 信息
      */
     @PUT("/apis")
