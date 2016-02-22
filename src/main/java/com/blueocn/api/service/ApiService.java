@@ -37,4 +37,10 @@ public interface ApiService {
      * @return 查询结果
      */
     Apis queryAll(Api api);
+
+    /**
+     * 删除 API
+     * @param apiId API ID
+     */
+    void delete(String apiId);
 }

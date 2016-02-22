@@ -73,6 +73,15 @@ public class ApiServiceImpl implements ApiService {
         return null;
     }
 
+    @Override
+    public void delete(String apiId) {
+        try {
+            client.delete(apiId);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+    }
+
     /**
      * 查询 Kong 上面的 API 数量, 如果查询失败或者没有 API, 则会返回 null.
      *
