@@ -71,7 +71,7 @@ public class ApiClientImplTest extends BaseTest {
         client.delete(newApiId);
 
         Api api2 = client.queryOne(newApiId);
-        Assert.assertNull(api2);
+        Assert.assertNull(api2 == null ? api2 : api2.getId());
     }
 
     private Api randomApi() {

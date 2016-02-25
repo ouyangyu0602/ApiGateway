@@ -18,21 +18,21 @@
     <ul class="nav" id="side-menu">
       <!-- Project Menu -->
       <li #activeMenu("index" $parentMenu)>
-        <a href="${rc.contextPath}/index"> <span class="nav-label">首页</span><span
+        <a href="${rc.contextPath}/admin/index"> <span class="nav-label">首页</span><span
             class="label label-success pull-right">start</span></a>
       </li>
       <li #activeMenu("api" $parentMenu)>
         <a href="#"><span class="nav-label">API 管理</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
-          <li #activeMenu("addApi" $menuName)><a href="${rc.contextPath}/api/add">添加 API</a></li>
-          <li #activeMenu("listApi" $menuName)><a href="${rc.contextPath}/api/list">检索 API</a></li>
+          <li #activeMenu("addApi" $menuName)><a href="${rc.contextPath}/admin/api/add">添加 API</a></li>
+          <li #activeMenu("listApi" $menuName)><a href="${rc.contextPath}/admin/api/list">检索 API</a></li>
         </ul>
       </li>
       <li #activeMenu("consumer" $parentMenu)>
         <a href="#"><span class="nav-label">开发者管理</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
-          <li #activeMenu("addConsumer" $menuName)><a href="${rc.contextPath}/consumer/add">开发者申请</a></li>
-          <li #activeMenu("listConsumer" $menuName)><a href="${rc.contextPath}/consumer/list">开发者管理</a></li>
+          <li #activeMenu("addConsumer" $menuName)><a href="${rc.contextPath}/admin/consumer/add">开发者申请</a></li>
+          <li #activeMenu("listConsumer" $menuName)><a href="${rc.contextPath}/admin/consumer/list">开发者管理</a></li>
         </ul>
       </li>
     </ul>

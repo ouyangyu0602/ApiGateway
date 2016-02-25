@@ -10,8 +10,7 @@
       <div class="hpanel">
         #parse("/fragment/message.vm")
         <div class="panel-body">
-          <form action="${rc.contextPath}/user/login" id="loginForm" method="post">
-            #csrfTag()
+          <form action="${rc.contextPath}/admin/user/login" id="loginForm" method="post">
             <div class="form-group">
               <label class="control-label" for="userIdentity">用户名</label>
               <input type="text" placeholder="你的登录名" title="请输入你的用户名"

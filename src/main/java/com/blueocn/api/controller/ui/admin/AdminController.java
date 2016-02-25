@@ -1,5 +1,6 @@
-package com.blueocn.api.controller.ui;
+package com.blueocn.api.controller.ui.admin;
 
+import com.blueocn.api.controller.ui.AbstractUIController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2015-12-16 17:57
  */
 @Controller
-public class IndexController extends AbstractUIController {
+public class AdminController extends AbstractUIController {
 
-    @RequestMapping("/")
+    @RequestMapping("admin")
     public String index() {
-        return "redirect:/index";
+        return "redirect:/admin/index";
     }
 
-    @RequestMapping("index")
+    @RequestMapping("admin/index")
     public String home() {
-        return "index";
+        return "admin/index";
     }
 }

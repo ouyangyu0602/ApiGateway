@@ -1,4 +1,4 @@
-package com.blueocn.api.controller.ui.user;
+package com.blueocn.api.controller.ui.admin.user;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
 import com.blueocn.api.response.UserResponse;
@@ -28,18 +28,19 @@ import static com.blueocn.api.support.utils.Asserts.checkNotBlank;
  * @since 2016-01-04 22:05
  */
 @Controller
+@RequestMapping("admin")
 public class UserController extends AbstractUIController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private UserService userService;
 
-    @RequestMapping(value = LOGIN_URI, method = RequestMethod.GET)
+    @RequestMapping(value = "user/login", method = RequestMethod.GET)
     public String login(Model model) { // NOSONAR
-        return "user/login";
+        return "admin/user/login";
     }
 
-    @RequestMapping(value = LOGIN_URI, method = RequestMethod.POST)
+    @RequestMapping(value = "user/login", method = RequestMethod.POST)
     public String login(UserVo userVo, HttpServletRequest request, Model model) {
         try {
             checkNotBlank(userVo.getUserIdentity(), "用户登录名不能为空");
@@ -47,7 +48,7 @@ public class UserController extends AbstractUIController {
             UserResponse response = userService.login(userVo.getUserIdentity(), userVo.getUserPassword());
             if (response.isSuccess()) {
                 INSTANCE.login(response.getUserVo(), request.getSession());
-                return "redirect:/index";
+                return "redirect:/admin/index";
             }
             setMessage(model, ERROR, response.getResponse());
         } catch (Exception e) {
@@ -57,14 +58,14 @@ public class UserController extends AbstractUIController {
         return login(model);
     }
 
-    @RequestMapping(value = "/user/logout")
+    @RequestMapping(value = "user/logout")
     public String logout(HttpServletRequest request) {
         INSTANCE.logout(request.getSession());
         return "redirect:" + LOGIN_URI;
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
+    @RequestMapping(value = "user/register", method = RequestMethod.GET)
     public String register() {
-        return "user/register"; // TODO User register ?
+        return "admin/user/register"; // TODO User register ?
     }
 }

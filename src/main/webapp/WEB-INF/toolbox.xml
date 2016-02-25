@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<toolbox>
-    <tool>
-        <key>csrfTool</key>
-        <scope>request</scope>
-        <class>com.blueocn.api.support.csrf.CSRFTool</class>
-    </tool>
-</toolbox>

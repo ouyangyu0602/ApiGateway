@@ -42,10 +42,3 @@
   </div>
 </div>
 #end
-
-#*
-* CSRF Tag
- *#
-#macro( csrfTag )
-<input type="hidden" name="csrfToken" value="$csrfTool.getToken($request)"/>
-#end

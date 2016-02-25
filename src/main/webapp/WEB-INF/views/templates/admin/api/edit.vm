@@ -55,8 +55,7 @@
           API 信息
         </div>
         <div class="panel-body">
-          <form method="get" class="form-horizontal api-form" action="${rc.contextPath}/api/save">
-            #csrfTag()
+          <form method="get" class="form-horizontal api-form" action="${rc.contextPath}/admin/api/save">
             <input type="hidden" name="id" value="$!{api.id}">
             <div class="form-group"><label class="col-sm-3 control-label">Name</label>
               <div class="col-sm-9"><input type="text" name="name" class="form-control" value="$!{api.name}">
@@ -148,7 +147,7 @@
               title: "保存成功 !",
               type: "success"
             },function() {
-              location.href = "${rc.contextPath}/api/list";
+              location.href = "${rc.contextPath}/admin/api/list";
             });
           } else {
             console.log(data["msg"]);

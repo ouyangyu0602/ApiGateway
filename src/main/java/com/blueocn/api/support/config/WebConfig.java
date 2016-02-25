@@ -1,8 +1,8 @@
 package com.blueocn.api.support.config;
 
-import com.blueocn.api.support.csrf.CSRFHandlerInterceptor;
 import com.blueocn.api.support.session.SessionHandlerInterceptor;
 import com.google.common.base.Charsets;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -41,6 +41,9 @@ import static com.blueocn.api.support.Constants.SYSTEM_CONF_PROPERTIES;
 public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
+
+    @Value("${login.exclude.uri}")
+    private String[] excludeUris;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -87,11 +90,6 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         return new SessionHandlerInterceptor();
     }
 
-    @Bean(name = "csrfHandlerInterceptor")
-    public CSRFHandlerInterceptor csrfHandlerInterceptor() {
-        return new CSRFHandlerInterceptor();
-    }
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(byteArrayHttpMessageConverter());
@@ -109,8 +107,9 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(sessionHandlerInterceptor());
-        registry.addInterceptor(csrfHandlerInterceptor());
+        registry.addInterceptor(sessionHandlerInterceptor())
+            .addPathPatterns("/admin/**")
+            .excludePathPatterns(excludeUris);
     }
 
     @Bean(name = "velocityConfig")
@@ -134,7 +133,6 @@ public class WebConfig extends WebMvcConfigurationSupport implements ResourceLoa
         // 定义是否暴露Spring的RequestContext对象暴露为变量rc, 便于获取程序路径
         velocityLayoutViewResolver.setRequestContextAttribute("rc");
         velocityLayoutViewResolver.setViewClass(org.springframework.web.servlet.view.velocity.VelocityLayoutView.class);
-        velocityLayoutViewResolver.setToolboxConfigLocation("/WEB-INF/toolbox.xml");
         return velocityLayoutViewResolver;
     }
 

@@ -1,4 +1,4 @@
-package com.blueocn.api.controller.rest.api;
+package com.blueocn.api.controller.rest.admin.api;
 
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2016-02-19 16:03
  */
 @RestController
-@RequestMapping("api")
+@RequestMapping("admin/api")
 public class RestApiController {
 
     @Autowired

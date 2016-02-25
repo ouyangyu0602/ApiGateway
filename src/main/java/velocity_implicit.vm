@@ -7,7 +7,6 @@
 #* @vtlvariable name="pageTitle" type="java.lang.String" *#
 #* @vtlvariable name="pageStyles" type="java.util.List<java.lang.String>" *#
 #* @vtlvariable name="rc" type="org.springframework.web.servlet.support.RequestContext" *#
-#* @vtlvariable name="csrfTool" type="com.blueocn.api.support.csrf.CSRFTool" *#
 #* @vtlvariable name="request" type="javax.servlet.http.HttpServletRequest" *#
 #* @vtlvariable name="loginUser" type="com.blueocn.api.vo.UserVo" *#
 #* @vtlvariable name="parentMenu" type="java.lang.String" *#
@@ -17,6 +16,6 @@
 #* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/layout.vm" *#
 #* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/page.vm" *#
 #* @vtlvariable name="message" type="com.blueocn.api.vo.MessageVo" file="../webapp/WEB-INF/views/fragment/message.vm" *#
-#* @vtlvariable name="api" type="com.blueocn.api.kong.model.Api" file="../webapp/WEB-INF/views/templates/api/edit.vm" *#
+#* @vtlvariable name="api" type="com.blueocn.api.kong.model.Api" file="../webapp/WEB-INF/views/templates/admin/api/edit.vm" *#
 
 #* Define macros *#

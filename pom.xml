@@ -31,6 +31,7 @@
         <guava.version>18.0</guava.version>
         <mockito.version>1.10.8</mockito.version>
         <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
+        <spring-security-web.version>4.0.3.RELEASE</spring-security-web.version>
         <jedis.version>2.8.0</jedis.version>
         <okhttp.version>3.0.1</okhttp.version>
         <retrofit.version>2.0.0-beta4</retrofit.version> <!-- Waiting for final release version -->
@@ -208,6 +209,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-web.version}</version>
         </dependency>
 
         <!-- Frontend Template -->

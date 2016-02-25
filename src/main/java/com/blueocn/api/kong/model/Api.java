@@ -3,11 +3,6 @@ package com.blueocn.api.kong.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
-import java.io.Serializable;
-import java.util.Map;
-
-import static com.blueocn.api.support.utils.MapConverter.convert;
-
 /**
  * Title: Api
  * Description: Kong API 请求信息实体, 参见 https://getkong.org/docs/0.6.x/admin-api/#request-body
@@ -21,7 +16,7 @@ import static com.blueocn.api.support.utils.MapConverter.convert;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Api implements Serializable {
+public class Api extends BaseModel {
     private static final long serialVersionUID = 9177479561761205922L;
 
     @JSONField(name = "id")
@@ -56,11 +51,4 @@ public class Api implements Serializable {
 
     @JSONField(serialize = false, deserialize = false)
     private String errorMessage;
-
-    /**
-     * @see com.blueocn.api.support.utils.MapConverter#convert(Object)
-     */
-    public Map<String, Object> toMap() {
-        return convert(this);
-    }
 }

@@ -26,7 +26,7 @@ public interface Constants { // NOSONAR
     String LOGIN_USER = "loginUser";
 
     // 登录页URI
-    String LOGIN_URI = "/user/login";
+    String LOGIN_URI = "/admin/user/login";
 
     // 模板标题定义符
     String PAGE_TITLE = "pageTitle";

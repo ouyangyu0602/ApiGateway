@@ -23,8 +23,7 @@
         <div class="panel-body">
           <!-- Search Area -->
           <div class="row">
-            <form id="apiForm" action="${rc.contextPath}/api/list" class="form" method="post">
-              #csrfTag()
+            <form id="apiForm" action="${rc.contextPath}/admin/api/list" class="form" method="post">
               <div class="form-group col-sm-6">
                 <label class="col-sm-3 control-label">Name</label>
                 <div class="col-sm-9">
@@ -130,7 +129,7 @@
         ],
         "columnDefs": [{
           "render": function (data, type, row) {
-            return "<a href='$!{rc.contextPath}/api/edit/" + data + "'>编辑</a>" + "、<a onclick='deleteApi(\"" + data + "\")'>删除</a>";
+            return "<a href='$!{rc.contextPath}/admin/api/edit/" + data + "'>编辑</a>" + "、<a onclick='deleteApi(\"" + data + "\")'>删除</a>";
           },
           targets: 6
         }]
@@ -157,7 +156,7 @@
       closeOnCancel: true
     }, function(confirm) {
       if (confirm) {
-        $.ajax("$!{rc.contextPath}/api/delete/" + apiId, {
+        $.ajax("$!{rc.contextPath}/admin/api/delete/" + apiId, {
           complete: function() {
             swal({
               title: "删除成功 !",

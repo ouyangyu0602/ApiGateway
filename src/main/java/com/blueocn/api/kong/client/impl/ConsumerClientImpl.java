@@ -36,7 +36,7 @@ public class ConsumerClientImpl implements ConsumerClient {
     private ConsumerConnector consumerConnector;
 
     @PostConstruct
-    private void init() {
+    private void init() { // NOSONAR
         consumerConnector = connector.create(ConsumerConnector.class);
     }
 
@@ -47,7 +47,7 @@ public class ConsumerClientImpl implements ConsumerClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return null; // TODO
+        return Consumer.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override
@@ -67,18 +67,18 @@ public class ConsumerClientImpl implements ConsumerClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return null; // TODO
+        return Consumer.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override
     public Consumer update(Consumer consumer) throws IOException {
         Preconditions.checkNotNull(consumer, "用户信息");
-        Call<Consumer> call = consumerConnector.update(null, consumer); // TODO
+        Call<Consumer> call = consumerConnector.update(consumer.getId(), consumer);
         Response<Consumer> response = call.execute();
         if (response.isSuccess()) {
             return response.body();
         }
-        return null; // TODO
+        return Consumer.builder().errorMessage(response.errorBody().string()).build();
     }
 
     @Override

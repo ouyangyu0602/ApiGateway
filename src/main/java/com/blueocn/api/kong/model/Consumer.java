@@ -1,9 +1,7 @@
 package com.blueocn.api.kong.model;
 
-import com.blueocn.api.support.utils.MapConverter;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
-
-import java.util.Map;
 
 /**
  * Title: Customer
@@ -18,8 +16,21 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Consumer {
-    public Map<String, Object> toMap() {
-        return MapConverter.convert(this);
-    }
+public class Consumer extends BaseModel {
+    private static final long serialVersionUID = -3640559484596681040L;
+
+    @JSONField(name = "id")
+    private String id;
+
+    @JSONField(name = "username")
+    private String username;
+
+    @JSONField(name = "custom_id")
+    private String customId;
+
+    @JSONField(name = "created_at")
+    private Long createdAt;
+
+    @JSONField(serialize = false, deserialize = false)
+    private String errorMessage;
 }

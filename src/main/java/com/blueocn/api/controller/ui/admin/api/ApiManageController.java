@@ -1,4 +1,4 @@
-package com.blueocn.api.controller.ui.api;
+package com.blueocn.api.controller.ui.admin.api;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
 import com.blueocn.api.kong.model.Api;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @since 2016-01-29 12:08
  */
 @Controller
-@RequestMapping("api")
+@RequestMapping("admin/api")
 public class ApiManageController extends AbstractUIController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiManageController.class);
@@ -31,12 +31,12 @@ public class ApiManageController extends AbstractUIController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String listApi() {
-        return "api/list";
+        return "admin/api/list";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String addApi() {
-        return "api/edit";
+        return "admin/api/edit";
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
@@ -47,6 +47,6 @@ public class ApiManageController extends AbstractUIController {
         } else {
             LOGGER.info("此 API 不存在, API ID {}", id);
         }
-        return "api/edit";
+        return "admin/api/edit";
     }
 }
