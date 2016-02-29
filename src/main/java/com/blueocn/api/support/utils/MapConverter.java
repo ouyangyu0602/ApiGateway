@@ -29,4 +29,12 @@ public final class MapConverter {
         return JSON.parseObject(jsonStr, new TypeReference<Map<String, Object>>() {
         });
     }
+
+    /**
+     * 将 Map 转为指定对象
+     */
+    public static <T> T convert(Map<String, Object> map, Class<T> clazz) {
+        String jsonStr = JSON.toJSONString(map);
+        return JSON.parseObject(jsonStr, clazz);
+    }
 }

@@ -2,6 +2,8 @@ package com.blueocn.api.support.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.kong.model.Plugin;
+import com.blueocn.api.kong.model.configs.OAuth2;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,5 +32,17 @@ public class JSONTest {
 
         List<Api> list = JSON.parseArray(testStr, Api.class);
         Assert.assertEquals(list.size(), 3);
+    }
+
+    @Test
+    public void testPlugins() throws Exception {
+        Plugin plugin = new Plugin();
+        OAuth2 oAuth2 = new OAuth2();
+        oAuth2.setScopes(new String[] {"a", "b", "c", "d"});
+        plugin.setConfig(oAuth2);
+        plugin.setName("OAuth2");
+        String json = JSON.toJSONString(plugin);
+
+        Assert.assertTrue(json.contains("\"name\":\"OAuth2\""));
     }
 }

@@ -31,6 +31,12 @@ public class Consumer extends BaseModel {
     @JSONField(name = "created_at")
     private Long createdAt;
 
+    @JSONField(name = "size")
+    private Integer size;
+
+    @JSONField(name = "offset")
+    private String offset;
+
     @JSONField(serialize = false, deserialize = false)
     private String errorMessage;
 }
