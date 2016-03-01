@@ -71,10 +71,10 @@ public interface PluginClient<T extends Serializable> {
     /**
      * 删除插件信息
      *
-     * @param pluginId 插件ID
      * @param apiId    插件对应的API ID
+     * @param pluginId 插件ID
      */
-    void delete(String pluginId, String apiId) throws IOException;
+    void delete(String apiId, String pluginId) throws IOException;
 
     /**
      * 查询所有启用的 API

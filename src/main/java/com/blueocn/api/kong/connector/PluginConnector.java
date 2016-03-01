@@ -86,7 +86,7 @@ public interface PluginConnector {
      * @param pluginId 插件ID
      */
     @DELETE("/apis/{apiId}/plugins/{pluginId}")
-    Call<String> delete(String apiId, String pluginId);
+    Call<ResponseBody> delete(@Path("apiId") String apiId, @Path("pluginId") String pluginId);
 
     /**
      * 查询所有Kong上启用的插件

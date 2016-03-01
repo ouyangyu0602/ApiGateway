@@ -6,6 +6,7 @@ import com.blueocn.api.kong.client.ApiClient;
 import com.blueocn.api.kong.client.PluginClient;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Plugin;
+import com.blueocn.api.kong.model.Plugins;
 import com.blueocn.api.kong.model.configs.OAuth2;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,25 +29,41 @@ public class OAuthDefaultPluginClientTest extends BaseTest {
     @Test
     public void testAdd() throws Exception {
         Api req = randomApi();
-        Api result = apiClient.add(req);
+        Api newApi = apiClient.add(req);
 
-        OAuth2 oAuth2 = new OAuth2();
-        oAuth2.setScopes(new String[] {"email", "phone", "name"});
-        oAuth2.setMandatoryScope(true);
-        Plugin<OAuth2> plugin = new Plugin<>();
-        plugin.setConfig(oAuth2);
-        plugin.setName("oauth2");
+        // 新增插件
+        OAuth2 oAuth1 = new OAuth2();
+        oAuth1.setScopes(new String[] {"email", "phone", "name"});
+        oAuth1.setMandatoryScope(true);
+        Plugin<OAuth2> plugin1 = new Plugin<>();
+        plugin1.setConfig(oAuth1);
+        plugin1.setName("oauth2");
 
-        Plugin<OAuth2> plugin2 = pluginClient.add(result.getId(), plugin);
+        Plugin<OAuth2> plugin2 = pluginClient.add(newApi.getId(), plugin1);
 
         logger.info(JSON.toJSONString(plugin2));
 
-        OAuth2 oAuth = plugin2.getConfig();
-        Assert.assertNotNull(plugin2);
-        Assert.assertNotNull(oAuth);
+        OAuth2 oAuth2 = plugin2.getConfig();
+        Assert.assertTrue(plugin2.getName().equals(plugin1.getName()));
+        Assert.assertArrayEquals(oAuth2.getScopes(), oAuth1.getScopes());
 
-        Plugin<OAuth2> oAuth2Plugin = pluginClient.queryOne(plugin2.getId());
-        Assert.assertNotNull(oAuth2Plugin);
+        // 查询插件
+        Plugin<OAuth2> plugin3 = pluginClient.queryOne(plugin2.getId());
+        Assert.assertNotNull(plugin3);
+        Assert.assertEquals(plugin2.getApiId(), plugin3.getApiId());
+        Assert.assertEquals(plugin3.getApiId(), newApi.getId());
+
+        // 查询具体的API对应的插件
+        Plugins<OAuth2> plugins1 = pluginClient.querySpecificApi(plugin3.getApiId(), null);
+        Assert.assertNotNull(plugins1);
+        Assert.assertEquals(plugins1.getTotal(), new Integer(1));
+
+        // 删除API
+        pluginClient.delete(plugin3.getApiId(), plugin3.getId());
+        Plugin<OAuth2> plugin4 = pluginClient.queryOne(plugin3.getId());
+        Assert.assertNull(plugin4.getApiId());
+
+        apiClient.delete(plugin3.getApiId());
     }
 
     private Api randomApi() {

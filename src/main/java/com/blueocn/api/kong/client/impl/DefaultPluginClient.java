@@ -126,7 +126,7 @@ public abstract class DefaultPluginClient<T extends Serializable> implements Plu
 
     @Override
     public Plugins<T> querySpecificApi(String apiId, Plugin<T> plugin) throws IOException {
-        Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin.toMap());
+        Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin == null ? null : plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
             return jsonToList(response.body().string());
@@ -152,13 +152,13 @@ public abstract class DefaultPluginClient<T extends Serializable> implements Plu
 
     @Override
     public void delete(String pluginId) throws IOException {
-        delete(pluginId, null);
+        delete(null, pluginId);
     }
 
     @Override
-    public void delete(String pluginId, final String apiId) throws IOException {
+    public void delete(final String apiId, String pluginId) throws IOException {
         Asserts.checkNotBlank(pluginId, "插件 ID 不能为空");
-        pluginConnector.delete(pluginId, isBlank(apiId) ? getApiIdByPluginId(pluginId) : apiId);
+        pluginConnector.delete(isBlank(apiId) ? getApiIdByPluginId(pluginId) : apiId, pluginId).execute();
     }
 
     @Override
