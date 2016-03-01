@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class OAuth2 implements Serializable{
+public class OAuth2Config implements Serializable {
     private static final long serialVersionUID = -2469455037787198356L;
 
     @JSONField(name = "scopes")

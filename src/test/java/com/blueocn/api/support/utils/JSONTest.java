@@ -3,7 +3,7 @@ package com.blueocn.api.support.utils;
 import com.alibaba.fastjson.JSON;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.configs.OAuth2;
+import com.blueocn.api.kong.model.configs.OAuth2Config;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,9 +37,9 @@ public class JSONTest {
     @Test
     public void testPlugins() throws Exception {
         Plugin plugin = new Plugin();
-        OAuth2 oAuth2 = new OAuth2();
-        oAuth2.setScopes(new String[] {"a", "b", "c", "d"});
-        plugin.setConfig(oAuth2);
+        OAuth2Config oAuth2Config = new OAuth2Config();
+        oAuth2Config.setScopes(new String[] {"a", "b", "c", "d"});
+        plugin.setConfig(oAuth2Config);
         plugin.setName("OAuth2");
         String json = JSON.toJSONString(plugin);
 
