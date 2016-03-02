@@ -1,4 +1,4 @@
-package com.blueocn.api.controller.ui.admin.api;
+package com.blueocn.api.controller.ui.admin;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
 import com.blueocn.api.kong.model.Api;

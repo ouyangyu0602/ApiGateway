@@ -1,4 +1,4 @@
-package com.blueocn.api.controller.rest.admin.api;
+package com.blueocn.api.controller.rest.admin;
 
 import com.blueocn.api.controller.rest.AbstractResponseController;
 import com.blueocn.api.kong.model.Api;

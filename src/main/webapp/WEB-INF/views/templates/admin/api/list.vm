@@ -129,7 +129,9 @@
         ],
         "columnDefs": [{
           "render": function (data, type, row) {
-            return "<a href='$!{rc.contextPath}/admin/api/edit/" + data + "'>编辑</a>" + "、<a onclick='deleteApi(\"" + data + "\")'>删除</a>";
+            return "<a href='$!{rc.contextPath}/admin/api/edit/" + data + "'>编辑</a>"
+                + " <a onclick='deleteApi(\"" + data + "\")'>删除</a> <a onclick='"
+                + "swal({title: \"你访问的页面被吃了哦 !\", text:\"_(:з」∠)_\",type: \"error\"})" + "'>插件</a>";
           },
           targets: 6
         }]

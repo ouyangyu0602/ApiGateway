@@ -1,0 +1,6 @@
+#set( $pageTitle = "新增插件" )
+#set( $parentMenu = "plugin" )
+#set( $menuName = "selectApi" )
+
+#breadCrumb( "插件管理", "选择你想编辑的 API, 和对应的你想添加的插件.")
+
