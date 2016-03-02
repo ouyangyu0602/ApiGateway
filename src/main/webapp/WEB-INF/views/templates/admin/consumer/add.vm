@@ -1,3 +1,0 @@
-#set( $pageTitle = "开发者申请" )
-#set( $parentMenu = "consumer" )
-#set( $menuName = "addConsumer" )

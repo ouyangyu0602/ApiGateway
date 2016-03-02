@@ -1,10 +1,12 @@
 package com.blueocn.api.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.blueocn.api.kong.client.ApiClient;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ApiService;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class ApiServiceImpl implements ApiService {
     public Api query(String apiId) {
         try {
             Api api = client.queryOne(apiId);
-            LOGGER.debug("API的信息: {}", api);
+            LOGGER.debug("API的信息: {}", JSON.toJSONString(api));
             return api;
         } catch (IOException e) {
             LOGGER.warn("", e);
@@ -44,6 +46,7 @@ public class ApiServiceImpl implements ApiService {
 
     @Override
     public RestfulResponse<String> save(Api api) {
+        Preconditions.checkNotNull(api, "待保存的 API 信息不能为空");
         Api newApi;
         try {
             if (isBlank(api.getId())) {
@@ -55,10 +58,10 @@ public class ApiServiceImpl implements ApiService {
             LOGGER.info("", e);
             return new RestfulResponse<>(e.getMessage());
         }
-        if (isBlank(newApi.getErrorMessage())) {
+        if (newApi != null && isBlank(newApi.getErrorMessage())) {
             return new RestfulResponse<>();
         }
-        return new RestfulResponse<>(newApi.getErrorMessage());
+        return new RestfulResponse<>(newApi == null ? "保存失败" : newApi.getErrorMessage());
     }
 
     @Override

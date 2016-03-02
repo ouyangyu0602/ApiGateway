@@ -17,5 +17,6 @@
 #* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/page.vm" *#
 #* @vtlvariable name="message" type="com.blueocn.api.vo.MessageVo" file="../webapp/WEB-INF/views/fragment/message.vm" *#
 #* @vtlvariable name="api" type="com.blueocn.api.kong.model.Api" file="../webapp/WEB-INF/views/templates/admin/api/edit.vm" *#
+#* @vtlvariable name="consumer" type="com.blueocn.api.kong.model.Consumer" file="../webapp/WEB-INF/views/templates/admin/consumer/edit.vm" *#
 
 #* Define macros *#

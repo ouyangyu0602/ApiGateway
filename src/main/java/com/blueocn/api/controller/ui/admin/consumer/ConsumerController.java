@@ -1,8 +1,14 @@
 package com.blueocn.api.controller.ui.admin.consumer;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
+import com.blueocn.api.kong.model.Consumer;
+import com.blueocn.api.service.ConsumerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Title: CustomerController
@@ -16,13 +22,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("admin/consumer")
 public class ConsumerController extends AbstractUIController {
 
-    @RequestMapping("add")
+    @Autowired
+    private ConsumerService consumerService;
+
+    @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add() {
-        return "admin/consumer/add";
+        return "admin/consumer/edit";
     }
 
-    @RequestMapping("list")
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list() {
         return "admin/consumer/list";
+    }
+
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") String id, Model model) {
+        Consumer consumer = consumerService.query(id);
+        if (consumer != null) {
+            model.addAttribute("consumer", consumer);
+        }
+        return "admin/consumer/edit";
     }
 }

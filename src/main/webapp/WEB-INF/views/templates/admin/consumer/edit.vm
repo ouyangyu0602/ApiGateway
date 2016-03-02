@@ -1,0 +1,142 @@
+#set( $pageStyles = [
+  "/assets/vendor/ladda/ladda-themeless.min.css",
+  "/assets/vendor/sweetalert/sweet-alert.css"
+] )
+
+#if( $consumer )
+  #set( $pageTitle = "开发者修改" )
+#else
+  #set( $pageTitle = "开发者申请" )
+#end
+#set( $parentMenu = "consumer" )
+#set( $menuName = "addConsumer" )
+
+#breadCrumb( "开发者管理", "新增或者编辑开发者信息, 部分信息存储于 Kong 上.")
+
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="hpanel hgreen">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          开发者添加帮助
+        </div>
+        <div class="panel-body">
+          <p>
+            The Consumer object represents a consumer (aka "client", aka "user") of an API.
+          </p>
+          <p>
+            Checkout <a href="https://getkong.org/docs/0.7.x/admin-api/#create-consumer"
+                        target="_blank">Kong documentation</a> for the meaning of the form
+            parameters.
+          </p>
+        </div>
+        <div class="panel-footer">
+          文档版本 0.7.x
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="hpanel">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          开发者信息
+        </div>
+        <div class="panel-body">
+          <form method="get" class="form-horizontal consumer-form"
+                action="${rc.contextPath}/admin/consumer/save">
+            <input type="hidden" name="id" value="$!{consumer.id}">
+            <div class="form-group"><label class="col-sm-3 control-label">Username</label>
+              <div class="col-sm-9"><input type="text" name="username" class="form-control"
+                                           value="$!{consumer.username}">
+                <span class="help-block m-b-none data-username"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Customer Id</label>
+              <div class="col-sm-9"><input type="text" name="customId" class="form-control"
+                                           value="$!{consumer.customId}">
+                <span class="help-block m-b-none data-custom_id"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-2">
+                <button class="ladda-button btn btn-success" type="submit"
+                        data-style="expand-right">
+                  <span class="ladda-label"><i class="fa fa-check"></i> 保存</span>
+                  <span class="ladda-spinner"></span></button>
+                <button class="btn btn-default" type="button" onclick="history.go(-1)">
+                  <i class="fa fa-times"></i> 取消
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="${rc.contextPath}/assets/vendor/ladda/spin.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.jquery.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript">
+  Ladda.bind('.ladda-button', {
+    callback: function (instance) {
+      var progress = 0;
+      var interval = setInterval(function () {
+        progress = Math.min(progress + Math.random() * 0.1, 1);
+        instance.setProgress(progress);
+
+        if (progress === 1) {
+          instance.stop();
+          clearInterval(interval);
+        }
+      }, 200);
+    }
+  });
+
+  function showErrorMessage(error) {
+    for (var key in error) {
+      $(".data-" + key).html(error[key]);
+    }
+  }
+
+  $(document).ready(function () {
+    $("form.consumer-form").on("submit", function (e) {
+      $("span.help-block").html("");
+      e.preventDefault();
+      $.ajax($(this).attr("action"), {
+        data: $("form").serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
+        method: "post",
+        success: function (data) {
+          if (data["success"]) {
+            swal({
+              title: "保存成功 !",
+              type: "success"
+            }, function () {
+              location.href = "${rc.contextPath}/admin/consumer/list";
+            });
+          } else {
+            console.log(data["msg"]);
+            var error = JSON.parse(data["msg"]);
+            showErrorMessage(error);
+            swal({
+              title: "保存失败 !",
+              text: "请检查页面重新输入 !",
+              type: "warning"
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

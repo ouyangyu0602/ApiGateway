@@ -1,5 +1,6 @@
 package com.blueocn.api.controller.rest.admin.api;
 
+import com.blueocn.api.controller.rest.AbstractResponseController;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("admin/api")
-public class RestApiController {
+public class RestApiController extends AbstractResponseController {
 
     @Autowired
     private ApiService apiService;
