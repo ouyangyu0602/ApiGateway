@@ -53,6 +53,13 @@ public interface PluginClient<T extends Serializable> {
     Plugins<T> querySpecificApi(String apiId, Plugin<T> plugin) throws IOException;
 
     /**
+     * 查询某个具体的 API 对应的某个插件信息, 由最终的接口实现类定义插件是什么
+     *
+     * @param apiId API ID
+     */
+    Plugin<T> querySpecificApiAndPlugin(String apiId) throws IOException;
+
+    /**
      * 更新插件信息
      *
      * @param pluginId 插件ID
@@ -78,6 +85,7 @@ public interface PluginClient<T extends Serializable> {
 
     /**
      * 查询所有启用的 API
+     *
      * @return API的名称集合, @NotNull
      */
     List<String> enabledPlugins() throws IOException;

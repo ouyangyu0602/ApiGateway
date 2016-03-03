@@ -38,7 +38,7 @@ public class Plugin<T extends Serializable> extends BaseModel {
     private T config;
 
     @JSONField(name = "enabled")
-    private boolean enabled = true;
+    private Boolean enabled;
 
     @JSONField(name = "created_at")
     private Long createdAt;

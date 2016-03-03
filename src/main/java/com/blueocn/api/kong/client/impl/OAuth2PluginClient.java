@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  * @version 1.0.0
  * @since 2016-02-29 11:13
  */
-@Component("oAuth2")
-public class OAuth2PluginClient extends DefaultPluginClient<OAuth2Config> {
+@Component("oAuth2PluginClient")
+public class OAuth2PluginClient extends AbstractPluginClient<OAuth2Config> {
 
     @Override
     protected Plugins<OAuth2Config> jsonToList(String json) {
@@ -28,5 +28,10 @@ public class OAuth2PluginClient extends DefaultPluginClient<OAuth2Config> {
     protected Plugin<OAuth2Config> jsonToObject(String json) {
         return JSON.parseObject(json, new TypeReference<Plugin<OAuth2Config>>() {
         });
+    }
+
+    @Override
+    protected String getPluginName() {
+        return "oauth2";
     }
 }

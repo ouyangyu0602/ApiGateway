@@ -73,7 +73,7 @@ public class ApiServiceImpl implements ApiService {
         } catch (IOException e) {
             LOGGER.info("", e);
         }
-        return null;
+        return new Apis(); // Never return null
     }
 
     @Override

@@ -1,0 +1,18 @@
+#* @vtlvariable name="message" type="java.lang.String" *#
+#set($layout = "/layout/page.vm")
+#set($pageTitle = "系统异常")
+
+<div class="back-link">
+  <a href="${rc.contextPath}/admin" class="btn btn-primary">返回后台首页</a>
+</div>
+<div class="error-container">
+  <i class="pe-7s-way text-success big-icon"></i>
+  <h1>500</h1>
+  <strong>Internal Server Error</strong>
+  <p>
+    The server encountered something unexpected that didn't allow it to complete the request. We
+    apologize.
+  </p>
+  <p>$!{message}</p>
+  <a class="btn btn-xs btn-success" onclick="history.go(-1)">回到上一页</a>
+</div>

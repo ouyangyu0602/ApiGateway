@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class OAuthServiceImpl implements OAuthService {
 
-
-
     @Override
     public boolean validAppKey(String appKey) {
         return false;

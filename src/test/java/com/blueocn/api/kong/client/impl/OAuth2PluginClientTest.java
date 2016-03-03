@@ -19,7 +19,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class OAuth2PluginClientTest extends BaseTest {
 
-    @Qualifier("oAuth2")
+    @Qualifier("oAuth2PluginClient")
     @Autowired
     private PluginClient<OAuth2Config> pluginClient;
 
