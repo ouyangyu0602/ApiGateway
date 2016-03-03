@@ -1,0 +1,167 @@
+#set( $pageTitle = "OAuth2 插件配置" )
+#set( $parentMenu = "plugin" )
+#set( $menuName = "" )
+
+#set( $pageStyles = [
+  "/assets/vendor/ladda/ladda-themeless.min.css",
+  "/assets/vendor/sweetalert/sweet-alert.css"
+])
+
+#breadCrumb( "插件管理", "配置 OAuth2 认证信息")
+
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="hpanel hgreen">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          插件添加帮助
+        </div>
+        <div class="panel-body">
+          <p>
+            When adding a Plugin on top of an API, every request made by a client will be evaluated
+            by the Plugin's configuration you setup
+          </p>
+          <p>
+            You can checkout the kong documentation to see the
+            <a hre="https://getkong.org/plugins/" target="_blank">list of available plugins</a>,
+            as well as their configuration settings.
+          </p>
+        </div>
+        <div class="panel-footer">
+          文档版本 0.7.x
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="hpanel">
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          OAuth 配置
+        </div>
+        <div class="panel-body">
+          <form method="post" class="form-horizontal oauth-form" action="$!{rc.contextPath}/admin/api/$!{apiId}/plugin/oauth2">
+            <input type="hidden" name="id" value="$!{oAuth2.id}">
+            <div class="form-group"><label class="col-sm-3 control-label">Token expiration</label>
+              <div class="col-sm-9"><input type="text" name="config[tokenExpiration]" class="form-control" value="$!{oAuth2.config.tokenExpiration}">
+                <span class="help-block m-b-none data-token_expiration"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Scopes</label>
+              <div class="col-sm-9"><input type="text" name="config[scopes]" class="form-control" value="$!{oAuth2.config.scopes}">
+                <span class="help-block m-b-none data-scopes"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Provision Key</label>
+              <div class="col-sm-9"><input type="text" name="config[provisionKey]" class="form-control" value="$!{oAuth2.config.provisionKey}">
+                <span class="help-block m-b-none data-provision_key"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="row col-sm-offset-1">
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input class="i-checks" type="checkbox" name="config[mandatoryScope]" #if ( $oAuth2.config.mandatoryScope ) checked #end> Mandatory scope
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableImplicitGrant]" #if ( $oAuth2.config.enableImplicitGrant ) checked #end> Preserve host
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input class="i-checks" type="checkbox" name="config[hideCredentials]" #if ( $oAuth2.config.hideCredentials ) checked #end> Hide credentials
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enablePasswordGrant]" #if ( $oAuth2.config.enablePasswordGrant ) checked #end> Enable password grant
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input class="i-checks" type="checkbox" name="config[acceptHttpIfAlreadyTerminated]" #if ( $oAuth2.config.acceptHttpIfAlreadyTerminated ) checked #end> Accept http if already terminated
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableClientCredentials]" #if ( $oAuth2.config.enableClientCredentials ) checked #end> Enable client credentials
+                  </label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="checkbox-inline">
+                    <input class="i-checks" type="checkbox" name="config[enableAuthorizationCode]" #if ( $oAuth2.config.enableAuthorizationCode ) checked #end> Enable authorization code
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-3">
+                  <button class="btn btn-success save" type="button">
+                    <i class="fa fa-check"></i> 提交
+                  </button>
+                  <button class="btn btn-default" type="button" onclick="history.go(-1)">
+                    <i class="fa fa-times"></i> 取消
+                  </button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="${rc.contextPath}/assets/vendor/jquery.serializejson.min.js"></script>
+<script src="$!{rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<script type="text/javascript">
+  function showErrorMessage(error) {
+    for (var key in error) {
+      $(".data-" + key).html(error[key]);
+    }
+  }
+
+  $(document).ready(function() {
+    $("form.oauth-form").on("submit", function(event) {
+      event.preventDefault();
+      $("span.help-block").html("");
+      $.ajax($(this).attr("action"), {
+        data: $("form.api-form").find('input').not('[value=""]').serializeJSON({
+          checkboxUncheckedValue: "false",
+          parseBooleans: true
+        }),
+        method: "post",
+        success: function (data) {
+          if (data["success"]) {
+            swal({
+              title: "保存成功 !",
+              type: "success"
+            }, function () {
+              location.href = "${rc.contextPath}/admin/plugin/list";
+            });
+          } else {
+            console.log(data["msg"]);
+            var error = JSON.parse(data["msg"]);
+            showErrorMessage(error);
+            swal({
+              title: "保存失败 !",
+              text: "请检查页面重新输入 !",
+              type: "warning"
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

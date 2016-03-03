@@ -88,6 +88,7 @@
 <script src="${rc.contextPath}/assets/vendor/ladda/ladda.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/ladda/ladda.jquery.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/jquery.serializejson.min.js"></script>
 <script type="text/javascript">
   Ladda.bind('.ladda-button', {
     callback: function (instance) {
@@ -115,7 +116,10 @@
       $("span.help-block").html("");
       e.preventDefault();
       $.ajax($(this).attr("action"), {
-        data: $("form").serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
+        data: $("form.consumer-form").find('input').not('[value=""]').serializeJSON({
+          checkboxUncheckedValue: "false",
+          parseBooleans: true
+        }),
         method: "post",
         success: function (data) {
           if (data["success"]) {

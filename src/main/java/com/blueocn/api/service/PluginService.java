@@ -25,4 +25,11 @@ public interface PluginService {
      * @param apiId API ID
      */
     Plugin<OAuth2Config> queryOAuth2Plugin(String apiId);
+
+    /**
+     * 新建或者修改OAuth2 插件信息
+     * @param apiId  API ID
+     * @param plugin 插件信息
+     */
+    Plugin<OAuth2Config> saveOAuth2Plugin(String apiId, Plugin<OAuth2Config> plugin);
 }

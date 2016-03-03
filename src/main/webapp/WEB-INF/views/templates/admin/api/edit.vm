@@ -55,7 +55,7 @@
           API 信息
         </div>
         <div class="panel-body">
-          <form method="get" class="form-horizontal api-form" action="${rc.contextPath}/admin/api/save">
+          <form method="post" class="form-horizontal api-form" action="${rc.contextPath}/admin/api/save">
             <input type="hidden" name="id" value="$!{api.id}">
             <div class="form-group"><label class="col-sm-3 control-label">Name</label>
               <div class="col-sm-9"><input type="text" name="name" class="form-control" value="$!{api.name}">
@@ -82,13 +82,19 @@
             <div class="hr-line-dashed"></div>
             <div class="form-group">
               <label class="col-sm-3 control-label">Other Option</label>
-              <div class="col-sm-9"><label class="checkbox-inline">
-                <input id="strip_request_path" class="i-checks" type="checkbox"
-                       name="stripRequestPath" #if ( $api.stripRequestPath ) checked #end> Strip request path</label>
-                <label class="checkbox-inline">
-                  <input id="preserveHost" class="i-checks" type="checkbox" name="preserve_host" #if ( $api.preserveHost ) checked #end>
-                  Preserve host
-                </label>
+              <div class="col-sm-9">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label class="checkbox-inline">
+                      <input class="i-checks" type="checkbox" value="true" name="stripRequestPath" #if ( $api.stripRequestPath ) checked #end> Strip request path
+                    </label>
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="checkbox-inline">
+                      <input class="i-checks" type="checkbox" value="true" name="preserveHost" #if ( $api.preserveHost ) checked #end> Preserve host
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -112,6 +118,7 @@
 <script src="${rc.contextPath}/assets/vendor/ladda/ladda.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/ladda/ladda.jquery.min.js"></script>
 <script src="${rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/jquery.serializejson.min.js"></script>
 <script type="text/javascript">
   Ladda.bind('.ladda-button', {
     callback: function (instance) {
@@ -139,7 +146,10 @@
       $("span.help-block").html("");
       e.preventDefault();
       $.ajax($(this).attr("action"), {
-        data: $("form").serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
+        data: $("form.api-form").find('input').not('[value=""]').serializeJSON({
+          checkboxUncheckedValue: "false",
+          parseBooleans: true
+        }),
         method: "post",
         success: function(data) {
           if (data["success"]) {

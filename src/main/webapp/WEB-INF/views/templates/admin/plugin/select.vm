@@ -60,7 +60,7 @@
               <div class="form-group">
                 <div class="col-sm-8 col-sm-offset-3">
                   <button class="btn btn-success save" type="button">
-                    <i class="fa fa-check"></i> 保存
+                    <i class="fa fa-check"></i> 选择
                   </button>
                   <button class="btn btn-default" type="button" onclick="history.go(-1)">
                     <i class="fa fa-times"></i> 取消

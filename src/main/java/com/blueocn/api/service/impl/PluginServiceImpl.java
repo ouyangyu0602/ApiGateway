@@ -6,6 +6,7 @@ import com.blueocn.api.kong.model.configs.OAuth2Config;
 import com.blueocn.api.service.PluginService;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,20 @@ public class PluginServiceImpl implements PluginService {
         try {
             Preconditions.checkNotNull(apiId, "API ID 不能为空");
             return oAuth2PluginClient.querySpecificApiAndPlugin(apiId);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+            return null;
+        }
+    }
+
+    @Override
+    public Plugin<OAuth2Config> saveOAuth2Plugin(String apiId, Plugin<OAuth2Config> plugin) {
+        try {
+            if (StringUtils.isBlank(plugin.getId())) {
+                return oAuth2PluginClient.add(apiId, plugin);
+            } else {
+                return oAuth2PluginClient.update(plugin.getId(), plugin);
+            }
         } catch (IOException e) {
             LOGGER.info("", e);
             return null;

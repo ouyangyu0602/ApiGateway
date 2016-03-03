@@ -53,6 +53,7 @@ public class PluginController extends AbstractUIController {
     @RequestMapping(value = "api/{apiId}/plugin/oauth2", method = RequestMethod.GET)
     public String oAuth2Plugin(@PathVariable("apiId") String apiId, Model model) {
         Plugin<OAuth2Config> existPlugin = pluginService.queryOAuth2Plugin(apiId);
+        model.addAttribute("apiId", apiId);
         if (existPlugin != null) {
             model.addAttribute("oAuth2", existPlugin);
         }
