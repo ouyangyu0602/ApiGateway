@@ -50,7 +50,7 @@
             <input type="hidden" name="id" value="$!{oAuth2.id}">
             <input type="hidden" name="apiId" value="$!{apiId}">
             <div class="form-group"><label class="col-sm-3 control-label">Token expiration</label>
-              <div class="col-sm-9"><input type="text" name="config[tokenExpiration]" class="form-control" value="$!{oAuth2.config.tokenExpiration}">
+              <div class="col-sm-9"><input type="text" name="config[token_expiration]" class="form-control" value="$!{oAuth2.config.token_expiration}">
                 <span class="help-block m-b-none data-token_expiration"></span>
               </div>
             </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Provision Key</label>
-              <div class="col-sm-9"><input type="text" name="config[provisionKey]" class="form-control" value="$!{oAuth2.config.provisionKey}">
+              <div class="col-sm-9"><input type="text" name="config[provision_key]" class="form-control" value="$!{oAuth2.config.provision_key}">
                 <span class="help-block m-b-none data-provision_key"></span>
               </div>
             </div>
@@ -71,37 +71,37 @@
               <div class="row col-sm-offset-1">
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[mandatoryScope]" #if ( $oAuth2.config.mandatoryScope ) checked #end value="true"> Mandatory scope
+                    <input class="i-checks" type="checkbox" name="config[mandatory_scope]" #if ( $oAuth2.config.mandatory_scope ) checked #end value="true"> Mandatory scope
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableImplicitGrant]" #if ( $oAuth2.config.enableImplicitGrant ) checked #end value="true"> Preserve host
+                    <input class="i-checks" type="checkbox" name="config[enable_implicit_grant]" #if ( $oAuth2.config.enable_implicit_grant ) checked #end value="true"> Preserve host
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[hideCredentials]" #if ( $oAuth2.config.hideCredentials ) checked #end value="true"> Hide credentials
+                    <input class="i-checks" type="checkbox" name="config[hide_credentials]" #if ( $oAuth2.config.hide_credentials ) checked #end value="true"> Hide credentials
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enablePasswordGrant]" #if ( $oAuth2.config.enablePasswordGrant ) checked #end value="true"> Enable password grant
+                    <input class="i-checks" type="checkbox" name="config[enable_password_grant]" #if ( $oAuth2.config.enable_password_grant ) checked #end value="true"> Enable password grant
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[acceptHttpIfAlreadyTerminated]" #if ( $oAuth2.config.acceptHttpIfAlreadyTerminated ) checked #end value="true"> Accept http if already terminated
+                    <input class="i-checks" type="checkbox" name="config[accept_http_if_already_terminated]" #if ( $oAuth2.config.accept_http_if_already_terminated ) checked #end value="true"> Accept http if already terminated
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableClientCredentials]" #if ( $oAuth2.config.enableClientCredentials ) checked #end value="true"> Enable client credentials
+                    <input class="i-checks" type="checkbox" name="config[enable_client_credentials]" #if ( $oAuth2.config.enable_client_credentials ) checked #end value="true"> Enable client credentials
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[enableAuthorizationCode]" #if ( $oAuth2.config.enableAuthorizationCode ) checked #end value="true"> Enable authorization code
+                    <input class="i-checks" type="checkbox" name="config[enable_authorization_code]" #if ( $oAuth2.config.enable_authorization_code ) checked #end value="true"> Enable authorization code
                   </label>
                 </div>
               </div>

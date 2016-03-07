@@ -84,7 +84,7 @@
         data: $("#" + setting["formId"]).serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
         method: "post",
         success: function (data) {
-          setting["data"] = data["data"];
+          setting["data"] = data;
           console.log(data);
           tableRender(setting);
         },
@@ -106,8 +106,8 @@
         data: setting["data"],
         columns: [
           {data: "username"},
-          {data: "customId"},
-          {data: "createdAt"},
+          {data: "custom_id"},
+          {data: "created_at"},
           {data: "id"}
         ],
         "columnDefs": [{

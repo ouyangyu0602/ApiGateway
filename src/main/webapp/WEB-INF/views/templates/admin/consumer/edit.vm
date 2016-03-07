@@ -61,7 +61,7 @@
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Customer Id</label>
               <div class="col-sm-9"><input type="text" name="customId" class="form-control"
-                                           value="$!{consumer.customId}">
+                                           value="$!{consumer.custom_id}">
                 <span class="help-block m-b-none data-custom_id"></span>
               </div>
             </div>

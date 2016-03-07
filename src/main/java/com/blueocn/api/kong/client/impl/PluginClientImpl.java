@@ -1,6 +1,7 @@
 package com.blueocn.api.kong.client.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.blueocn.api.kong.client.PluginClient;
 import com.blueocn.api.kong.connector.Connector;
@@ -132,7 +133,8 @@ public class PluginClientImpl implements PluginClient {
         Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            List<Plugin> plugins = JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
+            JSONObject object = JSON.parseObject(response.body().string());
+            List<Plugin> plugins = JSON.parseArray(object.getString("data"), Plugin.class); // 直接硬编码 ...
             if (CollectionUtils.isNotEmpty(plugins)) {
                 return plugins.get(0); // 算坑么 ?
             }
