@@ -1,0 +1,3 @@
+#set($layout = "/layout/blank.vm")
+
+<h3>Opps, 认证失败. 我们正在思考解决方法.</h3>

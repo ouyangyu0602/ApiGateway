@@ -45,19 +45,28 @@
 <div role="main" class="main-content">
   <div id="js-pjax-container" class="context-loader-container" data-pjax-container>
     <div class="auth-form " id="login">
-      <form accept-charset="UTF-8" action="/session" method="post">
+      <form accept-charset="UTF-8" action="${rc.contextPath}/oauth2/authorize" method="post">
         <div style="margin:0;padding:0;display:inline">
-          <!-- hidden input -->
+          <input type="hidden" name="client_id" value="$!request.getParameter("client_id")"> ## 这里用此法取地址栏参数
+          <input type="hidden" name="scopes" value="$!request.getParameter("scopes")">
         </div>
         <div class="auth-form-header">
           <h1>OneAPM 用户登录</h1>
         </div>
+        #if( ${message} )
+        <div id="js-flash-container">
+          <div class="flash flash-full flash-error">
+            <div class="container">
+              $!{message.content}
+            </div>
+          </div>
+        </div>
+        #end
         <div class="auth-form-body">
           <label for="login_field">邮箱地址</label>
-          <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="input-block"
-                 id="login_field" name="login" tabindex="1" type="text"/>
-          <label for="password">密码 <a href="/password_reset" class="label-link">忘记密码？</a></label>
-          <input class="input-block" id="password" name="password" tabindex="2" type="password"/>
+          <input autocapitalize="off" autocorrect="off" autofocus="autofocus" class="input-block" name="username" tabindex="1" type="text" title="请输入您的邮箱" required/>
+          <label for="password">密码 <a href="https://user.oneapm.com/pages/v2/password/forget" target="_blank" class="label-link">忘记密码？</a></label>
+          <input class="input-block" id="password" name="password" tabindex="2" type="password" title="请输入您的密码" required/>
           <input class="btn btn-primary btn-block" name="commit" tabindex="3" type="submit"
                  value="登录"/>
         </div>

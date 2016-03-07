@@ -5,6 +5,8 @@ import com.blueocn.user.entity.ResultMessage;
 import com.blueocn.user.entity.UserInfo;
 import com.blueocn.user.impl.LoginService;
 import com.blueocn.user.impl.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import javax.annotation.PostConstruct;
 @Service
 public class MatrixServiceImpl implements MatrixService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatrixServiceImpl.class);
+
     @Value("${matrix.url}")
     private String userSystemBaseUrl;
 
@@ -35,11 +39,21 @@ public class MatrixServiceImpl implements MatrixService {
     }
 
     @Override
-    public ResultMessage<String> login(String account, String password) {
-        return loginService.login(account, password);
+    public UserInfo login(String account, String password) {
+        ResultMessage<String> loginResult = loginService.login(account, password);
+        if (loginResult.success) {
+            return getLoginUserInfo(loginResult.result);
+        }
+        LOGGER.warn("登录失败, 原因 {}", loginResult.message);
+        return null;
     }
 
-    public ResultMessage<UserInfo> getLoginUserInfo(String sessionId) {
-        return userInfoService.getUserInfo(sessionId);
+    private UserInfo getLoginUserInfo(String sessionId) {
+        ResultMessage<UserInfo> userInfo = userInfoService.getUserInfo(sessionId);
+        if (userInfo.success) {
+            return userInfo.result;
+        }
+        LOGGER.warn("获取登录的用户信息失败, 原因 {}", userInfo.message);
+        return null;
     }
 }

@@ -48,6 +48,21 @@ public class KongConfig {
     @Value("${kong.invoke.timeout}")
     private Integer kongInvokeTimeoutMillis;
 
+    /**
+     * Kong 对于 oAuth2 类的 API 需要指定 provisionKey
+     * <p/>
+     * The {@code provisionKey} is specifically for the provider,
+     * and not for the consumers - the consumers should never know about its value.
+     * <p/>
+     * It is required because it allows Kong to understand that provisioning the authorization_code
+     * in a 3-legged flow is effectively being done by the authorized web application, and cannot be bypassed.
+     * <p/>
+     * But it should absolutely be kept private and never communicated to the consumers
+     * which also means that the consumers are not required to send it.
+     */
+    @Value("${kong.oauth2.provisionKey}")
+    private String provisionKey;
+
     private String getKongHttpPort() {
         if (kongHttpPort != null) {
             if (isNumeric(kongHttpPort)) {
@@ -111,5 +126,9 @@ public class KongConfig {
 
     public Integer getTimeoutMillis() {
         return kongInvokeTimeoutMillis;
+    }
+
+    public String getProvisionKey() {
+        return provisionKey;
     }
 }

@@ -26,6 +26,13 @@ public interface OAuth2Client {
     /**
      * 查询一堆
      *
+     * @param oAuth2     查询参数
+     */
+    List<OAuth2> query(OAuth2 oAuth2) throws IOException;
+
+    /**
+     * 查询一堆
+     *
      * @param consumerId 开发者 ID
      * @param oAuth2     查询参数
      */

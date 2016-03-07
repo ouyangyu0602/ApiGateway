@@ -62,7 +62,7 @@
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Provision Key</label>
-              <div class="col-sm-9"><input type="text" name="config[provision_key]" class="form-control" value="$!{oAuth2.config.provision_key}">
+              <div class="col-sm-9"><input type="text" name="config[provision_key]" class="form-control" value="#if(${oAuth2.config.provision_key})${oAuth2.config.provision_key}#else${defaultProvisionKey}#end">
                 <span class="help-block m-b-none data-provision_key"></span>
               </div>
             </div>

@@ -1,6 +1,9 @@
 package com.blueocn.api.service;
 
+import com.blueocn.api.kong.model.consumers.OAuth2;
 import com.blueocn.api.response.RestfulResponse;
+
+import java.io.IOException;
 
 /**
  * Title: OAuthService
@@ -13,12 +16,21 @@ import com.blueocn.api.response.RestfulResponse;
 public interface OAuthService {
 
     /**
-     * 校验开发者传递的 App Key 是否有效
+     * 校验开发者传递的 Client Id 是否有效
      *
-     * @param appKey 对外宣称为 appKey, 实际在 kong 中存储时名为 client_id
-     * @return App Key 是否存在与 Kong 上
+     * @param clientId kong 中存储名的应用标识 {@code client_id}
+     * @return Client Id 是否存在
      */
-    boolean validAppKey(String appKey);
+    boolean isValidClientId(String clientId) throws IOException;
+
+    /**
+     * 通过 Client Id 查询具体应用信息
+     *
+     * @param clientId kong 中存储名的应用标识 {@code client_id}
+     * @return OAuth 应用信息
+     * @throws IOException
+     */
+    OAuth2 getOAuth2App(String clientId) throws IOException;
 
     /**
      * Kong oAuth2 认证

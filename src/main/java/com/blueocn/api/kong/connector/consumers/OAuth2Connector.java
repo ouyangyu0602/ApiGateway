@@ -37,6 +37,14 @@ public interface OAuth2Connector {
     Call<ResponseBody> query(@Path("consumerId") String consumerId, @QueryMap Map<String, Object> queryInfo);
 
     /**
+     * 通用查找 OAuth2 的应用信息
+     *
+     * @param param {@link OAuth2#toMap()}
+     */
+    @GET("/oauth2")
+    Call<ResponseBody> rawQuery(@QueryMap Map<String, Object> param);
+
+    /**
      * 查询指定的应用信息
      *
      * @param consumerId 开发者ID

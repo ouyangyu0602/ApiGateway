@@ -1,11 +1,11 @@
 package com.blueocn.api.controller.ui;
 
 import com.blueocn.api.enums.MessageTypeEnum;
-import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.MatrixService;
 import com.blueocn.api.service.OAuthService;
-import com.blueocn.user.entity.ResultMessage;
 import com.blueocn.user.entity.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Title: OAuth2Controller
@@ -28,40 +30,44 @@ import java.io.IOException;
 @RequestMapping("oauth2")
 public class OAuth2Controller extends AbstractUIController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2Controller.class);
+
     @Autowired
     private MatrixService matrixService;
 
     @Autowired
     private OAuthService oAuthService;
 
-//    @Value("${oauth.common.provisionKey}")
-//    private String oAuthProvisionKey;
     /**
      * 登录页面, 接收来自开发者应用请求的 clientId, 返回登录页面
      */
-    @RequestMapping(value = "login", method = {RequestMethod.GET, RequestMethod.POST})
-    public String oAuthLogin(@RequestParam("clientId") String clientId, Model model) {
-        if (!oAuthService.validAppKey(clientId)) {
-            setMessage(model, MessageTypeEnum.ERROR, "应用 APP Key 失效, 请联系你的应用管理员.");
+    @RequestMapping(value = "authorize", method = RequestMethod.GET)
+    public String oAuthLogin(@RequestParam(value = "client_id", required = false) String clientId, Model model) {
+        try {
+            if (isBlank(clientId) || !oAuthService.isValidClientId(clientId)) {
+                setMessage(model, MessageTypeEnum.ERROR, "应用标识(Client Id) 无效, 请联系您的应用开发者.");
+            }
+        } catch (IOException e) {
+            LOGGER.info("Kong 访问异常", e);
+            setMessage(model, MessageTypeEnum.ERROR, e.getMessage());
         }
-        return "oauth2/login";
+        return "oauth2/authorize";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "authorize", method = RequestMethod.POST)
     public String oAuthCertificate(@RequestParam("username") String username,
-        @RequestParam("password") String password, @RequestParam("clientId") String clientId,
+        @RequestParam("password") String password, @RequestParam("client_id") String client_id,
         @RequestParam(value = "scopes", required = false) String scopes,
         HttpServletResponse response, Model model) throws IOException {
-        ResultMessage<String> status = matrixService.login(username, password);
-        if (status.success) {
-            ResultMessage<UserInfo> userInfo = matrixService.getLoginUserInfo(status.result);
-            RestfulResponse redirectUrl = oAuthService.authorize(clientId, userInfo.result.getUserId(), scopes);
-            response.sendRedirect(redirectUrl.getMsg());
+        UserInfo loginUser = matrixService.login(username, password);
+        model.addAttribute("client_id", client_id);
+        model.addAttribute("scopes", scopes);
+        if (loginUser != null) {
+            model.addAttribute("loginUserId", loginUser.getUserId());
+            return "oauth2/approval";
         } else {
-            setMessage(model, MessageTypeEnum.ERROR, status.message);
-            model.addAttribute("client_id", clientId);
-            return "oauth2/login";
+            setMessage(model, MessageTypeEnum.ERROR, "用户登录失败, 请查证后重试.");
+            return "oauth2/authorize";
         }
-        return "oauth2/certificateFailed";
     }
 }

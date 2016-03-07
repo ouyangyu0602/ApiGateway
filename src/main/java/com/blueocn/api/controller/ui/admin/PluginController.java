@@ -1,6 +1,7 @@
 package com.blueocn.api.controller.ui.admin;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
+import com.blueocn.api.kong.KongConfig;
 import com.blueocn.api.kong.model.Api;
 import com.blueocn.api.kong.model.Plugin;
 import com.blueocn.api.service.ApiService;
@@ -34,6 +35,9 @@ public class PluginController extends AbstractUIController {
     @Autowired
     private PluginService pluginService;
 
+    @Autowired
+    private KongConfig kongConfig;
+
     @RequestMapping(value = "plugin/select", method = RequestMethod.GET)
     public String addPlugin(Model model) {
         List<Api> apis = apiService.queryAll(null);
@@ -54,6 +58,7 @@ public class PluginController extends AbstractUIController {
         if (existPlugin != null) {
             model.addAttribute("oAuth2", existPlugin);
         }
+        model.addAttribute("defaultProvisionKey", kongConfig.getProvisionKey());
         return "admin/plugin/oauth2";
     }
 
