@@ -86,6 +86,12 @@ public class ApiServiceImpl implements ApiService {
         }
     }
 
+    @Override
+    public boolean isApiNameExist(String apiName) {
+        Api api = query(apiName);
+        return api != null && api.getId() != null;
+    }
+
     /**
      * 查询 Kong 上面的 API 数量, 如果查询失败或者没有 API, 则会返回 null.
      *

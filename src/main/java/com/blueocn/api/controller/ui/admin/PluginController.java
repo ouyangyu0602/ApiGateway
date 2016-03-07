@@ -58,7 +58,6 @@ public class PluginController extends AbstractUIController {
         if (existPlugin != null) {
             model.addAttribute("oAuth2", existPlugin);
         }
-        model.addAttribute("defaultProvisionKey", kongConfig.getProvisionKey());
         return "admin/plugin/oauth2";
     }
 

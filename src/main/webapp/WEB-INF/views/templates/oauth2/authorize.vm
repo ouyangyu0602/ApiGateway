@@ -48,6 +48,7 @@
       <form accept-charset="UTF-8" action="${rc.contextPath}/oauth2/authorize" method="post">
         <div style="margin:0;padding:0;display:inline">
           <input type="hidden" name="client_id" value="$!request.getParameter("client_id")"> ## 这里用此法取地址栏参数
+          <input type="hidden" name="api_name" value="$!request.getParameter("api_name")">
           <input type="hidden" name="scopes" value="$!request.getParameter("scopes")">
         </div>
         <div class="auth-form-header">

@@ -1,0 +1,13 @@
+#set($layout = "/layout/blank.vm")
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <link href="${rc.contextPath}/assets/styles/framework.css" media="all" rel="stylesheet"/>
+  <link href="${rc.contextPath}/assets/styles/front-page.css" media="all" rel="stylesheet"/>
+  <link href="style.css" media="all" rel="stylesheet"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>用户登录 | OneAPM</title>
+  <link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/assets/favicon.ico"/>
+  <meta name="description" content="OneAPM（蓝海讯通）提供端到端APM应用性能管理软件及应用性能监控软件解决方案，OneAPM已经形成移动，浏览器，应用，基础设施，网络，数据库性能管理六大产品线，支持Java、.NET、PHP、Ruby、Python、Node.js、iOS、Android、HTML5等应用性能监控管理。">
+</head>

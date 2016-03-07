@@ -41,7 +41,16 @@ public interface ApiService {
 
     /**
      * 删除 API
+     *
      * @param apiId API ID
      */
     void delete(String apiId);
+
+    /**
+     * 判断某个 API 是否存在
+     *
+     * @param apiName API 名称
+     * @return 是否存在
+     */
+    boolean isApiNameExist(String apiName);
 }
