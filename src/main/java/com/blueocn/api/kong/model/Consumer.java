@@ -1,6 +1,5 @@
 package com.blueocn.api.kong.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
 /**
@@ -13,30 +12,18 @@ import lombok.*;
  */
 @Setter
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Consumer extends BaseModel {
     private static final long serialVersionUID = -3640559484596681040L;
 
-    @JSONField(name = "id")
     private String id;
 
-    @JSONField(name = "username")
     private String username;
 
-    @JSONField(name = "custom_id")
-    private String customId;
+    private String custom_id;
 
-    @JSONField(name = "created_at")
-    private Long createdAt;
+    private Long created_at;
 
-    @JSONField(name = "size")
     private Integer size;
 
-    @JSONField(name = "offset")
     private String offset;
-
-    @JSONField(serialize = false, deserialize = false)
-    private String errorMessage;
 }

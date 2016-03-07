@@ -1,12 +1,15 @@
 package com.blueocn.api.kong.client.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.blueocn.api.kong.client.ApiClient;
 import com.blueocn.api.kong.connector.ApiConnector;
 import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.support.utils.Asserts;
 import com.google.common.base.Preconditions;
+import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import retrofit2.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: ApiClientImpl
@@ -47,16 +51,31 @@ public class ApiClientImpl implements ApiClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        LOGGER.debug("API 保存失败 - {}", response.errorBody().string());
-        return Api.builder().errorMessage(response.errorBody().string()).build();
+        Api result = new Api();
+        result.setErrorMessage(response.errorBody().string());
+        LOGGER.debug("API 保存失败 - {}", result.getErrorMessage());
+        return result;
     }
 
     @Override
-    public Apis query(Api api) throws IOException {
-        Call<Apis> call = apiConnector.query(api == null ? null : api.toMap());
-        Response<Apis> response = call.execute();
+    public List<Api> query(Api api) throws IOException {
+        Call<ResponseBody> call = apiConnector.query(api == null ? null : api.toMap());
+        Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return response.body();
+            JSONObject object = JSON.parseObject(response.body().string());
+            JSONArray array = object.getJSONArray("data");
+            return JSON.parseArray(array.toJSONString(), Api.class);
+        }
+        return null;
+    }
+
+    @Override
+    public Integer totalSize(Api api) throws IOException {
+        Call<ResponseBody> call = apiConnector.query(api == null ? null : api.toMap());
+        Response<ResponseBody> response = call.execute();
+        if (response.isSuccess()) {
+            JSONObject object = JSON.parseObject(response.body().string());
+            return object.getInteger("total");
         }
         return null;
     }
@@ -68,7 +87,9 @@ public class ApiClientImpl implements ApiClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return Api.builder().errorMessage(response.errorBody().string()).build();
+        Api result = new Api();
+        result.setErrorMessage(response.errorBody().string());
+        return result;
     }
 
     @Override
@@ -80,7 +101,9 @@ public class ApiClientImpl implements ApiClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return Api.builder().errorMessage(response.errorBody().string()).build();
+        Api result = new Api();
+        result.setErrorMessage(response.errorBody().string());
+        return result;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.blueocn.api.kong.connector.consumers;
 
 import com.blueocn.api.kong.model.consumers.OAuth2;
-import com.blueocn.api.kong.model.consumers.OAuth2s;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -34,7 +34,7 @@ public interface OAuth2Connector {
      * @return 应用列表
      */
     @GET("/consumers/{consumerId}/oauth2")
-    Call<OAuth2s> query(@Path("consumerId") String consumerId, @QueryMap Map<String, Object> queryInfo);
+    Call<ResponseBody> query(@Path("consumerId") String consumerId, @QueryMap Map<String, Object> queryInfo);
 
     /**
      * 查询指定的应用信息
@@ -66,4 +66,10 @@ public interface OAuth2Connector {
      */
     @DELETE("/consumers/{consumerId}/oauth2/{oauth2Id}")
     Call<String> delete(@Path("consumerId") String consumerId, @Path("oauth2Id") String oauth2Id);
+
+    @POST("/oauth2/authorize")
+    Call<String> authorize(@Body Map<String, String> params, @Header("Host") String host);
+
+    @POST("/oauth2/token")
+    Call<String> token(@Header("Host") String host);
 }

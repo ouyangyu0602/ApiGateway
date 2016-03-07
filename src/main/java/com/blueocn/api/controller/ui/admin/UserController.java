@@ -63,9 +63,4 @@ public class UserController extends AbstractUIController {
         INSTANCE.logout(request.getSession());
         return "redirect:" + LOGIN_URI;
     }
-
-    @RequestMapping(value = "user/register", method = RequestMethod.GET)
-    public String register() {
-        return "admin/user/register"; // TODO User register ?
-    }
 }

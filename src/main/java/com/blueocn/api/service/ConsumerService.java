@@ -1,8 +1,9 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Consumer;
-import com.blueocn.api.kong.model.Consumers;
 import com.blueocn.api.response.RestfulResponse;
+
+import java.util.List;
 
 /**
  * Title: ConsumerService
@@ -26,14 +27,14 @@ public interface ConsumerService {
      *
      * @param consumer 开发者信息
      */
-    RestfulResponse<String> save(Consumer consumer);
+    RestfulResponse save(Consumer consumer);
 
     /**
      * 查询全部的开发者信息
      *
      * @param consumer 可选查询参数
      */
-    Consumers queryAll(Consumer consumer);
+    List<Consumer> queryAll(Consumer consumer);
 
     /**
      * 删除某个开发者

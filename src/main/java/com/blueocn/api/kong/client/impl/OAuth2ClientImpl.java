@@ -1,10 +1,13 @@
 package com.blueocn.api.kong.client.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.blueocn.api.kong.client.OAuth2Client;
 import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.connector.consumers.OAuth2Connector;
 import com.blueocn.api.kong.model.consumers.OAuth2;
-import com.blueocn.api.kong.model.consumers.OAuth2s;
+import okhttp3.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
@@ -12,6 +15,7 @@ import retrofit2.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: OAuth2ClientImpl
@@ -45,11 +49,13 @@ public class OAuth2ClientImpl implements OAuth2Client {
     }
 
     @Override
-    public OAuth2s query(String consumerId, OAuth2 oAuth2) throws IOException {
-        Call<OAuth2s> call = oAuth2Connector.query(consumerId, oAuth2 == null ? null : oAuth2.toMap());
-        Response<OAuth2s> response = call.execute();
+    public List<OAuth2> query(String consumerId, OAuth2 oAuth2) throws IOException {
+        Call<ResponseBody> call = oAuth2Connector.query(consumerId, oAuth2 == null ? null : oAuth2.toMap());
+        Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return response.body();
+            JSONObject object = JSON.parseObject(response.body().string());
+            JSONArray array = object.getJSONArray("data");
+            return JSON.parseArray(array.toJSONString(), OAuth2.class);
         }
         return null;
     }

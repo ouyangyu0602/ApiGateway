@@ -1,9 +1,9 @@
 package com.blueocn.api.kong.client;
 
 import com.blueocn.api.kong.model.Consumer;
-import com.blueocn.api.kong.model.Consumers;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: CustomerClient
@@ -27,7 +27,15 @@ public interface ConsumerClient {
      *
      * @throws IOException
      */
-    Consumers query(Consumer consumer) throws IOException;
+    List<Consumer> query(Consumer consumer) throws IOException;
+
+    /**
+     * 当前查询条件下的 API 个数
+     *
+     * @param consumer 查询参数
+     * @return API 总数, 对于总数大于100的情况有效
+     */
+    Integer totalSize(Consumer consumer) throws IOException;
 
     /**
      * 查一个

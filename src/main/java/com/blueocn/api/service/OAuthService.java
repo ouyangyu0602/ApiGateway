@@ -1,5 +1,7 @@
 package com.blueocn.api.service;
 
+import com.blueocn.api.response.RestfulResponse;
+
 /**
  * Title: OAuthService
  * Description: OAuth相关的认证服务, 主要与 Kong 交互
@@ -17,4 +19,12 @@ public interface OAuthService {
      * @return App Key 是否存在与 Kong 上
      */
     boolean validAppKey(String appKey);
+
+    /**
+     * Kong oAuth2 认证
+     * @param clientId 应用开发者App Key
+     * @param userId   用户ID
+     * @param scopes   认证资源
+     */
+    RestfulResponse authorize(String clientId, Long userId, String scopes);
 }

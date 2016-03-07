@@ -1,7 +1,6 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.configs.OAuth2Config;
 
 import java.util.List;
 
@@ -24,12 +23,12 @@ public interface PluginService {
      * 查询某个 API 的 OAuth2 插件信息
      * @param apiId API ID
      */
-    Plugin<OAuth2Config> queryOAuth2Plugin(String apiId);
+    Plugin queryOAuth2Plugin(String apiId);
 
     /**
      * 新建或者修改OAuth2 插件信息
      * @param apiId  API ID
      * @param plugin 插件信息
      */
-    Plugin<OAuth2Config> saveOAuth2Plugin(String apiId, Plugin<OAuth2Config> plugin);
+    Plugin saveOAuth2Plugin(String apiId, Plugin plugin);
 }

@@ -1,6 +1,5 @@
 package com.blueocn.api.kong.model.consumers;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.blueocn.api.kong.model.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +17,17 @@ import lombok.Setter;
 public class OAuth2 extends BaseModel {
     private static final long serialVersionUID = 2701274499207198826L;
 
-    @JSONField(name = "consumer_id")
-    private String consumerId;
+    private String consumer_id;
 
-    @JSONField(name = "id")
     private String id;
 
-    @JSONField(name = "name")
     private String name;
 
-    @JSONField(name = "client_id")
-    private String clientId;
+    private String client_id;
 
-    @JSONField(name = "client_secret")
-    private String clientSecret;
+    private String client_secret;
 
-    @JSONField(name = "redirect_uri")
-    private String redirectUri;
+    private String redirect_uri;
 
-    @JSONField(name = "created_at")
-    private Long createdAt;
+    private Long created_at;
 }

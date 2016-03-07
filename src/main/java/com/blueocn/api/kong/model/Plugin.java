@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Title: Plugin
@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class Plugin<T extends Serializable> extends BaseModel {
+public class Plugin extends BaseModel {
     private static final long serialVersionUID = 4845313060910857062L;
 
     @JSONField(name = "id")
@@ -25,30 +25,20 @@ public class Plugin<T extends Serializable> extends BaseModel {
     /**
      * 插件的名称
      */
-    @JSONField(name = "name")
     private String name;
 
     @JSONField(name = "api_id")
-    private String apiId;
+    private String api_id;
 
-    @JSONField(name = "consumer_id")
-    private String consumerId;
+    private String consumer_id;
 
-    @JSONField(name = "config")
-    private T config;
+    private Map<String, Object> config;
 
-    @JSONField(name = "enabled")
     private Boolean enabled;
 
-    @JSONField(name = "created_at")
-    private Long createdAt;
+    private Long created_at;
 
-    @JSONField(name = "size")
     private Integer size;
 
-    @JSONField(name = "offset")
     private String offset;
-
-    @JSONField(serialize = false, deserialize = false)
-    private String errorMessage;
 }

@@ -1,7 +1,7 @@
 package com.blueocn.api.kong.connector;
 
 import com.blueocn.api.kong.model.Consumer;
-import com.blueocn.api.kong.model.Consumers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -33,7 +33,7 @@ public interface ConsumerConnector {
      * @return 用户列表
      */
     @GET("/consumers")
-    Call<Consumers> query(@QueryMap Map<String, Object> queryMap);
+    Call<ResponseBody> query(@QueryMap Map<String, Object> queryMap);
 
     /**
      * 查询用户信息

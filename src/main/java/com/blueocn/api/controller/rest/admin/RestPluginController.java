@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.blueocn.api.controller.rest.AbstractResponseController;
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.configs.OAuth2Config;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +27,14 @@ public class RestPluginController extends AbstractResponseController {
     private PluginService pluginService;
 
     @RequestMapping(value = "api/{apiId}/plugin/oauth2", method = RequestMethod.POST)
-    public RestfulResponse<String> oAuth2Plugin(@PathVariable("apiId") String apiId, @RequestBody String queryStr) {
-        Plugin<OAuth2Config> plugin = JSON.parseObject(queryStr, new TypeReference<Plugin<OAuth2Config>>() {});
+    public RestfulResponse oAuth2Plugin(@PathVariable("apiId") String apiId, @RequestParam(value = "formData") String queryStr) {
+        Plugin plugin = JSON.parseObject(queryStr, new TypeReference<Plugin>() {});
         plugin.setName("oauth2");
-        Plugin<OAuth2Config> newPlugin = pluginService.saveOAuth2Plugin(apiId, plugin);
+        Plugin newPlugin = pluginService.saveOAuth2Plugin(apiId, plugin);
         String errorMessage = newPlugin == null ? "创建失败" : newPlugin.getErrorMessage();
         if (isNotBlank(errorMessage)) {
-            return new RestfulResponse<>(errorMessage);
+            return new RestfulResponse(errorMessage);
         }
-        return new RestfulResponse<>();
+        return new RestfulResponse();
     }
 }

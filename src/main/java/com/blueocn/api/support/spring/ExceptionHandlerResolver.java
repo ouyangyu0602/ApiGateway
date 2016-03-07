@@ -35,8 +35,7 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
             try {
                 LOGGER.warn("", ex);
                 PrintWriter writer = response.getWriter();
-                RestfulResponse restfulResponse = new RestfulResponse.Builder<String>()
-                    .setMsg(ex.getMessage()).setSuccess(false).build();
+                RestfulResponse restfulResponse = new RestfulResponse(ex.getMessage());
                 writer.write(JSON.toJSONString(restfulResponse));
                 writer.flush();
             } catch (IOException e) {

@@ -1,7 +1,11 @@
 package com.blueocn.api.kong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 /**
  * Title: KongConfig
@@ -14,17 +18,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class KongConfig {
 
-    /**
-     * Kong 连接地址
-     */
-    @Value("${kong.admin.address}")
-    private String kongAddress;
+    private static final Logger LOGGER = LoggerFactory.getLogger(KongConfig.class);
 
     /**
-     * Kong 内部管理 API 请求端口
+     * Kong 对应域名, 公网通过此域名访问 Kong
+     */
+    @Value("${kong.host}")
+    private String kongHost;
+
+    @Value("${kong.http.port}")
+    private String kongHttpPort;
+
+    @Value("${kong.https.port}")
+    private String kongHttpsPort;
+
+    @Value("${kong.admin.address}")
+    private String kongAdminAddress;
+
+    /**
+     * Kong 内部管理 API 请求端口, 本来该用Integer, 但是用它的话,
+     * 配置文件就必须指定值, 实际很多时候应该有缺省值, 所以这里改成 String
      */
     @Value("${kong.admin.port}")
-    private Integer kongAdminPort;
+    private String kongAdminPort;
 
     /**
      * Kong 调用超时时间
@@ -32,26 +48,65 @@ public class KongConfig {
     @Value("${kong.invoke.timeout}")
     private Integer kongInvokeTimeoutMillis;
 
-    private String getKongAddress() {
-        if (kongAddress != null) {
+    private String getKongHttpPort() {
+        if (kongHttpPort != null) {
+            if (isNumeric(kongHttpPort)) {
+                return kongHttpPort;
+            } else {
+                LOGGER.warn("Kong Http 访问端口 [{}] 配置错误, 使用缺省端口 [8000]", kongHttpPort);
+            }
+        }
+        return "8000";
+    }
+
+    private String getKongHttpsPort() {
+        if (kongHttpsPort != null) {
+            if (isNumeric(kongHttpsPort)) {
+                return kongHttpsPort;
+            } else {
+                LOGGER.warn("Kong Https 访问端口 [{}] 配置错误, 使用缺省端口 [8443]", kongHttpsPort);
+            }
+        }
+        return "8443";
+    }
+
+    private String getKongAdminAddress() {
+        if (kongAdminAddress != null) {
             // Kong 管理页面默认无 HTTPS, 实际使用时位于内网, 对外不公开, 所以使用 HTTP.
-            return kongAddress.startsWith("http") ? kongAddress : "http://" + kongAddress;
+            return kongAdminAddress.startsWith("http") ? kongAdminAddress : "http://" + kongAdminAddress;
         }
         return "http://127.0.0.1"; // 缺省配置 NOSONAR
     }
 
-    private Integer getKongAdminPort() {
+    private String getKongAdminPort() {
         if (kongAdminPort != null) {
-            return kongAdminPort;
+            if (isNumeric(kongAdminPort)) {
+                return kongAdminPort;
+            } else {
+                LOGGER.warn("Kong 的管理端口 [{}] 配置错误, 实际参数必须是数字, 所以使用缺省端口 [8001]", kongAdminPort);
+            }
         }
-        return 8001; // 缺省配置 NOSONAR
+        return "8001";
+    }
+
+    public String getKongHost() {
+        return kongHost == null ? "localhost" : kongHost;
+    }
+
+    public String getKongHttpAddress() {
+        return "http://" + getKongHost() + ":" + getKongHttpPort();
+    }
+
+    public String getKongHttpsAddress() {
+        return "https://" + getKongHost() + ":" + getKongHttpsPort();
     }
 
     /**
      * 获取 Kong 的 API 管理地址
+     * 不带 "/" 结尾, Retrofit2 调用问题, 相对路径.
      */
     public String getKongAdminUrl() {
-        return getKongAddress() + ":" + getKongAdminPort(); // 不带 / 结尾
+        return getKongAdminAddress() + ":" + getKongAdminPort();
     }
 
     public Integer getTimeoutMillis() {

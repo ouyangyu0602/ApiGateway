@@ -3,7 +3,6 @@ package com.blueocn.api.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.blueocn.api.kong.client.ConsumerClient;
 import com.blueocn.api.kong.model.Consumer;
-import com.blueocn.api.kong.model.Consumers;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ConsumerService;
 import com.google.common.base.Preconditions;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -45,7 +45,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    public RestfulResponse<String> save(Consumer consumer) {
+    public RestfulResponse save(Consumer consumer) {
         Preconditions.checkNotNull(consumer, "待保存的开发者信息不能为空");
         try {
             Consumer newConsumer;
@@ -55,17 +55,17 @@ public class ConsumerServiceImpl implements ConsumerService {
                 newConsumer = consumerClient.update(consumer);
             }
             if (newConsumer != null && isBlank(newConsumer.getErrorMessage())) {
-                return new RestfulResponse<>();
+                return new RestfulResponse();
             }
-            return new RestfulResponse<>(newConsumer == null ? "保存失败" : newConsumer.getErrorMessage());
+            return new RestfulResponse(newConsumer == null ? "保存失败" : newConsumer.getErrorMessage());
         } catch (IOException e) {
             LOGGER.info("", e);
-            return new RestfulResponse<>(e.getMessage());
+            return new RestfulResponse(e.getMessage());
         }
     }
 
     @Override
-    public Consumers queryAll(Consumer consumer) {
+    public List<Consumer> queryAll(Consumer consumer) {
         try {
             Consumer queryParam = consumer == null ? new Consumer() : consumer;
             queryParam.setSize(getConsumerAmount());
@@ -87,11 +87,9 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     private Integer getConsumerAmount() {
         try {
-            Consumer c = Consumer.builder().size(1).build();
-            Consumers s = consumerClient.query(c);
-            if (s != null) {
-                return s.getTotal();
-            }
+            Consumer c = new Consumer();
+            c.setSize(1);
+            return consumerClient.totalSize(c);
         } catch (IOException e) {
             LOGGER.info("", e);
         }

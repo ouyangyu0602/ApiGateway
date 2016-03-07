@@ -1,11 +1,12 @@
 package com.blueocn.api.kong.client.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.blueocn.api.kong.client.PluginClient;
 import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.connector.PluginConnector;
 import com.blueocn.api.kong.model.EnabledPlugins;
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.Plugins;
 import com.blueocn.api.support.utils.Asserts;
 import com.google.common.collect.Lists;
 import okhttp3.ResponseBody;
@@ -13,12 +14,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -31,9 +32,10 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @version 1.0.0
  * @since 2016-02-29 11:13
  */
-public abstract class AbstractPluginClient<T extends Serializable> implements PluginClient<T> {
+@Component
+public class PluginClientImpl implements PluginClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPluginClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginClientImpl.class);
 
     @Autowired
     private Connector connector;
@@ -46,29 +48,6 @@ public abstract class AbstractPluginClient<T extends Serializable> implements Pl
     }
 
     /**
-     * 将响应报文转换为List
-     *
-     * @param json 响应报文, JSON格式
-     * @return List 集合
-     */
-    protected abstract Plugins<T> jsonToList(String json);
-
-    /**
-     * 将响应报文转换为实际的包含泛型的插件配置对象
-     *
-     * @param json 响应报文, JSON格式
-     * @return 实际的配置对象
-     */
-    protected abstract Plugin<T> jsonToObject(String json); // NOSONAR
-
-    /**
-     * 获取插件名称, 用于查询
-     *
-     * @return 插件名称
-     */
-    protected abstract String getPluginName();
-
-    /**
      * 从插件 ID 获取它对应的 API ID
      *
      * @param pluginId 插件 ID
@@ -76,8 +55,8 @@ public abstract class AbstractPluginClient<T extends Serializable> implements Pl
      * @throws IOException
      */
     private String getApiIdByPluginId(String pluginId) throws IOException {
-        Plugin<T> existPlugin = queryOne(pluginId);
-        return existPlugin.getApiId();
+        Plugin existPlugin = queryOne(pluginId);
+        return existPlugin.getApi_id();
     }
 
     /**
@@ -96,66 +75,66 @@ public abstract class AbstractPluginClient<T extends Serializable> implements Pl
     }
 
     @Override
-    public Plugin<T> add(String apiId, Plugin plugin) throws IOException {
+    public Plugin add(String apiId, Plugin plugin) throws IOException {
         if (!isPluginEnabled(plugin.getName())) {
             throw new IllegalArgumentException(String.format("插件 %s 未启用, 请联系管理员或稍后重试.", plugin.getName()));
         }
         Call<ResponseBody> call = pluginConnector.add(apiId, plugin);
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return jsonToObject(response.body().string());
+            return JSON.parseObject(response.body().string(), Plugin.class);
         }
-        LOGGER.warn(response.errorBody().string());
-        Plugin<T> plugins = new Plugin<>();
+        Plugin plugins = new Plugin();
         plugins.setErrorMessage(response.errorBody().string());
+        LOGGER.warn(plugins.getErrorMessage());
         return plugins;
     }
 
     @Override
-    public Plugin<T> queryOne(String pluginId) throws IOException {
+    public Plugin queryOne(String pluginId) throws IOException {
         Call<ResponseBody> call = pluginConnector.queryOne(pluginId);
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return jsonToObject(response.body().string());
+            return JSON.parseObject(response.body().string(), Plugin.class);
         }
-        LOGGER.warn(response.errorBody().string());
-        Plugin<T> plugins = new Plugin<>();
+        Plugin plugins = new Plugin();
         plugins.setErrorMessage(response.errorBody().string());
+        LOGGER.warn(plugins.getErrorMessage());
         return plugins;
     }
 
     @Override
-    public Plugins<T> query(Plugin<T> plugin) throws IOException {
+    public List<Plugin> query(Plugin plugin) throws IOException {
         Call<ResponseBody> call = pluginConnector.query(plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return jsonToList(response.body().string());
+            return JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
         }
         LOGGER.warn(response.errorBody().string());
         return null;
     }
 
     @Override
-    public Plugins<T> querySpecificApi(String apiId, Plugin<T> plugin) throws IOException {
+    public List<Plugin> querySpecificApi(String apiId, Plugin plugin) throws IOException {
         Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin == null ? null : plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return jsonToList(response.body().string());
+            return JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
         }
         LOGGER.warn(response.errorBody().string());
         return null;
     }
 
     @Override
-    public Plugin<T> querySpecificApiAndPlugin(String apiId) throws IOException {
-        Plugin<T> plugin = new Plugin<>();
-        plugin.setName(getPluginName());
+    public Plugin querySpecificApiAndPlugin(String apiId, String pluginName) throws IOException {
+        Plugin plugin = new Plugin();
+        plugin.setName(pluginName);
         Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            Plugins<T> plugins = jsonToList(response.body().string());
-            if (CollectionUtils.isNotEmpty(plugins.getData())) {
-                return plugins.getData().get(0); // 算坑么 ?
+            List<Plugin> plugins = JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
+            if (CollectionUtils.isNotEmpty(plugins)) {
+                return plugins.get(0); // 算坑么 ?
             }
         } else {
             LOGGER.warn(response.errorBody().string());
@@ -164,19 +143,19 @@ public abstract class AbstractPluginClient<T extends Serializable> implements Pl
     }
 
     @Override
-    public Plugin<T> update(String pluginId, Plugin<T> plugin) throws IOException {
-        String apiId = plugin.getApiId();
+    public Plugin update(String pluginId, Plugin plugin) throws IOException {
+        String apiId = plugin.getApi_id();
         if (isBlank(apiId)) {
             apiId = getApiIdByPluginId(pluginId);
         }
         Call<ResponseBody> call = pluginConnector.update(pluginId, apiId, plugin);
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return jsonToObject(response.body().string());
+            return JSON.parseObject(response.body().string(), Plugin.class);
         }
-        LOGGER.warn(response.errorBody().string());
-        Plugin<T> plugins = new Plugin<>();
+        Plugin plugins = new Plugin();
         plugins.setErrorMessage(response.errorBody().string());
+        LOGGER.warn(plugins.getErrorMessage());
         return plugins;
     }
 

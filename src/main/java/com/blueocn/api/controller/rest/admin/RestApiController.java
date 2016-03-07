@@ -2,7 +2,6 @@ package com.blueocn.api.controller.rest.admin;
 
 import com.blueocn.api.controller.rest.AbstractResponseController;
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Title: RestApiController
@@ -27,18 +28,18 @@ public class RestApiController extends AbstractResponseController {
     private ApiService apiService;
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public RestfulResponse<String> save(Api api) {
+    public RestfulResponse save(Api api) {
         return apiService.save(api);
     }
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
-    public Apis queryApiList(Api api) {
+    public List<Api> queryApiList(Api api) {
         return apiService.queryAll(api);
     }
 
     @RequestMapping(value = "delete/{apiId}")
-    public RestfulResponse<String> delete(@PathVariable("apiId") String apiId) {
+    public RestfulResponse delete(@PathVariable("apiId") String apiId) {
         apiService.delete(apiId);
-        return new RestfulResponse<>();
+        return new RestfulResponse();
     }
 }

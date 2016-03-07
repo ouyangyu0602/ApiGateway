@@ -2,9 +2,7 @@ package com.blueocn.api.controller.ui.admin;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.configs.OAuth2Config;
 import com.blueocn.api.service.ApiService;
 import com.blueocn.api.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +36,9 @@ public class PluginController extends AbstractUIController {
 
     @RequestMapping(value = "plugin/select", method = RequestMethod.GET)
     public String addPlugin(Model model) {
-        Apis apis = apiService.queryAll(null);
-        List<Api> apiList = apis.getData();
-        if (isNotEmpty(apiList)) {
-            model.addAttribute("apiList", apiList);
+        List<Api> apis = apiService.queryAll(null);
+        if (isNotEmpty(apis)) {
+            model.addAttribute("apiList", apis);
         }
         List<String> pluginList = pluginService.queryEnabledPlugins();
         if (isNotEmpty(pluginList)) {
@@ -52,7 +49,7 @@ public class PluginController extends AbstractUIController {
 
     @RequestMapping(value = "api/{apiId}/plugin/oauth2", method = RequestMethod.GET)
     public String oAuth2Plugin(@PathVariable("apiId") String apiId, Model model) {
-        Plugin<OAuth2Config> existPlugin = pluginService.queryOAuth2Plugin(apiId);
+        Plugin existPlugin = pluginService.queryOAuth2Plugin(apiId);
         model.addAttribute("apiId", apiId);
         if (existPlugin != null) {
             model.addAttribute("oAuth2", existPlugin);

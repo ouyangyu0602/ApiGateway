@@ -1,12 +1,15 @@
 package com.blueocn.api.kong.client.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.blueocn.api.kong.client.ConsumerClient;
 import com.blueocn.api.kong.connector.Connector;
 import com.blueocn.api.kong.connector.ConsumerConnector;
 import com.blueocn.api.kong.model.Consumer;
-import com.blueocn.api.kong.model.Consumers;
 import com.blueocn.api.support.utils.Asserts;
 import com.google.common.base.Preconditions;
+import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import retrofit2.Response;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: CustomerClientImpl
@@ -47,15 +51,31 @@ public class ConsumerClientImpl implements ConsumerClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return Consumer.builder().errorMessage(response.errorBody().string()).build();
+        Consumer result = new Consumer();
+        result.setErrorMessage(response.errorBody().string());
+        LOGGER.warn("保存失败 {}", result.getErrorMessage());
+        return result;
     }
 
     @Override
-    public Consumers query(Consumer consumer) throws IOException {
-        Call<Consumers> call = consumerConnector.query(consumer == null ? null : consumer.toMap());
-        Response<Consumers> response = call.execute();
+    public List<Consumer> query(Consumer consumer) throws IOException {
+        Call<ResponseBody> call = consumerConnector.query(consumer == null ? null : consumer.toMap());
+        Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
-            return response.body();
+            JSONObject object = JSON.parseObject(response.body().string());
+            JSONArray array = object.getJSONArray("data");
+            return JSON.parseArray(array.toJSONString(), Consumer.class);
+        }
+        return null;
+    }
+
+    @Override
+    public Integer totalSize(Consumer consumer) throws IOException {
+        Call<ResponseBody> call = consumerConnector.query(consumer == null ? null : consumer.toMap());
+        Response<ResponseBody> response = call.execute();
+        if (response.isSuccess()) {
+            JSONObject object = JSON.parseObject(response.body().string());
+            return object.getInteger("total");
         }
         return null;
     }
@@ -67,7 +87,9 @@ public class ConsumerClientImpl implements ConsumerClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return Consumer.builder().errorMessage(response.errorBody().string()).build();
+        Consumer result = new Consumer();
+        result.setErrorMessage(response.errorBody().string());
+        return result;
     }
 
     @Override
@@ -78,7 +100,10 @@ public class ConsumerClientImpl implements ConsumerClient {
         if (response.isSuccess()) {
             return response.body();
         }
-        return Consumer.builder().errorMessage(response.errorBody().string()).build();
+        Consumer result = new Consumer();
+        result.setErrorMessage(response.errorBody().string());
+        LOGGER.warn("保存失败 {}", result.getErrorMessage());
+        return result;
     }
 
     @Override

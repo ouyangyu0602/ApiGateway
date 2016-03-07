@@ -42,3 +42,7 @@
   </div>
 </div>
 #end
+
+#macro( listToString $list )
+#set ( $arr = false )#if ( $list )#foreach ( $item in $list )#if( $item )#if ( !$arr )#set ( $arr = true )$item#else,$item#end#end#end#end
+#end

@@ -48,6 +48,7 @@
         <div class="panel-body">
           <form method="post" class="form-horizontal oauth-form" action="$!{rc.contextPath}/admin/api/$!{apiId}/plugin/oauth2">
             <input type="hidden" name="id" value="$!{oAuth2.id}">
+            <input type="hidden" name="apiId" value="$!{apiId}">
             <div class="form-group"><label class="col-sm-3 control-label">Token expiration</label>
               <div class="col-sm-9"><input type="text" name="config[tokenExpiration]" class="form-control" value="$!{oAuth2.config.tokenExpiration}">
                 <span class="help-block m-b-none data-token_expiration"></span>
@@ -55,7 +56,7 @@
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Scopes</label>
-              <div class="col-sm-9"><input type="text" name="config[scopes]" class="form-control" value="$!{oAuth2.config.scopes}">
+              <div class="col-sm-9"><input type="text" name="config[scopes]:stringToList" class="form-control" value="#listToString($!{oAuth2.config.scopes})">
                 <span class="help-block m-b-none data-scopes"></span>
               </div>
             </div>
@@ -70,37 +71,37 @@
               <div class="row col-sm-offset-1">
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[mandatoryScope]" #if ( $oAuth2.config.mandatoryScope ) checked #end> Mandatory scope
+                    <input class="i-checks" type="checkbox" name="config[mandatoryScope]" #if ( $oAuth2.config.mandatoryScope ) checked #end value="true"> Mandatory scope
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableImplicitGrant]" #if ( $oAuth2.config.enableImplicitGrant ) checked #end> Preserve host
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableImplicitGrant]" #if ( $oAuth2.config.enableImplicitGrant ) checked #end value="true"> Preserve host
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[hideCredentials]" #if ( $oAuth2.config.hideCredentials ) checked #end> Hide credentials
+                    <input class="i-checks" type="checkbox" name="config[hideCredentials]" #if ( $oAuth2.config.hideCredentials ) checked #end value="true"> Hide credentials
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enablePasswordGrant]" #if ( $oAuth2.config.enablePasswordGrant ) checked #end> Enable password grant
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enablePasswordGrant]" #if ( $oAuth2.config.enablePasswordGrant ) checked #end value="true"> Enable password grant
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[acceptHttpIfAlreadyTerminated]" #if ( $oAuth2.config.acceptHttpIfAlreadyTerminated ) checked #end> Accept http if already terminated
+                    <input class="i-checks" type="checkbox" name="config[acceptHttpIfAlreadyTerminated]" #if ( $oAuth2.config.acceptHttpIfAlreadyTerminated ) checked #end value="true"> Accept http if already terminated
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableClientCredentials]" #if ( $oAuth2.config.enableClientCredentials ) checked #end> Enable client credentials
+                    <input id="preserveHost" class="i-checks" type="checkbox" name="config[enableClientCredentials]" #if ( $oAuth2.config.enableClientCredentials ) checked #end value="true"> Enable client credentials
                   </label>
                 </div>
                 <div class="col-sm-6">
                   <label class="checkbox-inline">
-                    <input class="i-checks" type="checkbox" name="config[enableAuthorizationCode]" #if ( $oAuth2.config.enableAuthorizationCode ) checked #end> Enable authorization code
+                    <input class="i-checks" type="checkbox" name="config[enableAuthorizationCode]" #if ( $oAuth2.config.enableAuthorizationCode ) checked #end value="true"> Enable authorization code
                   </label>
                 </div>
               </div>
@@ -108,7 +109,7 @@
             <div class="hr-line-dashed"></div>
             <div class="form-group">
                 <div class="col-sm-8 col-sm-offset-3">
-                  <button class="btn btn-success save" type="button">
+                  <button class="btn btn-success save" type="submit">
                     <i class="fa fa-check"></i> 提交
                   </button>
                   <button class="btn btn-default" type="button" onclick="history.go(-1)">
@@ -136,11 +137,16 @@
     $("form.oauth-form").on("submit", function(event) {
       event.preventDefault();
       $("span.help-block").html("");
+      var formData = $("form.oauth-form").find('input').not('[value=""]').serializeJSON({
+        checkboxUncheckedValue: "false",
+        customTypes: {
+          stringToList: function(str) {
+            return str.split(",");
+          }
+        }
+      });
       $.ajax($(this).attr("action"), {
-        data: $("form.api-form").find('input').not('[value=""]').serializeJSON({
-          checkboxUncheckedValue: "false",
-          parseBooleans: true
-        }),
+        data: {formData: JSON.stringify(formData)},
         method: "post",
         success: function (data) {
           if (data["success"]) {

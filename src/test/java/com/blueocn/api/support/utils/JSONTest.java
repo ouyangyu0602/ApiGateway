@@ -15,9 +15,9 @@ public class JSONTest {
     public void testSerialize() throws Exception {
         Api api = new Api();
         api.setName("name");
-        api.setRequestHost("host");
-        api.setRequestPath("path");
-        api.setUpstreamUrl("url");
+        api.setRequest_host("host");
+        api.setRequest_path("path");
+        api.setUpstream_url("url");
         String json = JSON.toJSONString(api);
 
         Assert.assertTrue(json.contains("\"name\":\"name\""));
@@ -39,7 +39,7 @@ public class JSONTest {
         Plugin plugin = new Plugin();
         OAuth2Config oAuth2Config = new OAuth2Config();
         oAuth2Config.setScopes(new String[] {"a", "b", "c", "d"});
-        plugin.setConfig(oAuth2Config);
+        plugin.setConfig(oAuth2Config.toMap());
         plugin.setName("OAuth2");
         String json = JSON.toJSONString(plugin);
 

@@ -1,9 +1,9 @@
 package com.blueocn.api.kong.client;
 
 import com.blueocn.api.kong.model.consumers.OAuth2;
-import com.blueocn.api.kong.model.consumers.OAuth2s;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: OAuth2Client
@@ -29,7 +29,7 @@ public interface OAuth2Client {
      * @param consumerId 开发者 ID
      * @param oAuth2     查询参数
      */
-    OAuth2s query(String consumerId, OAuth2 oAuth2) throws IOException;
+    List<OAuth2> query(String consumerId, OAuth2 oAuth2) throws IOException;
 
     /**
      * 查询某个应用

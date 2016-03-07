@@ -1,7 +1,7 @@
 package com.blueocn.api.kong.connector;
 
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -33,7 +33,7 @@ public interface ApiConnector {
      * @return API 查询列表
      */
     @GET("/apis")
-    Call<Apis> query(@QueryMap Map<String, Object> queryInfo);
+    Call<ResponseBody> query(@QueryMap Map<String, Object> queryInfo);
 
     /**
      * 查询 API

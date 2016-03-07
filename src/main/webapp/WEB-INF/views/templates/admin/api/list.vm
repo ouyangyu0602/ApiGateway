@@ -98,7 +98,7 @@
         data: $("#" + setting["formId"]).serialize().replace(/[^&]+=\.?(?:&|$)/g, ''),
         method: "post",
         success: function(data) {
-          setting["data"] = data["data"];
+          setting["data"] = data;
           console.log(data);
           tableRender(setting);
         },
@@ -120,11 +120,11 @@
         data: setting["data"],
         columns: [
           { data : "name"},
-          { data : "requestHost"},
-          { data : "requestPath"},
-          { data : "upstreamUrl"},
-          { data : "preserveHost"},
-          { data : "stripRequestPath"},
+          { data : "request_host"},
+          { data : "request_path"},
+          { data : "upstream_url"},
+          { data : "preserve_host"},
+          { data : "strip_request_path"},
           { data : "id"}
         ],
         "columnDefs": [{

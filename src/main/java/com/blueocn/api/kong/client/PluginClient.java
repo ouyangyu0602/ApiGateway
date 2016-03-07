@@ -1,10 +1,8 @@
 package com.blueocn.api.kong.client;
 
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.Plugins;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +13,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 2016-02-29 17:31
  */
-public interface PluginClient<T extends Serializable> {
+public interface PluginClient {
 
     /**
      * 新增一个插件配置
@@ -25,7 +23,7 @@ public interface PluginClient<T extends Serializable> {
      * @return 成功创建的插件对象
      * @throws IOException
      */
-    Plugin<T> add(String apiId, Plugin plugin) throws IOException;
+    Plugin add(String apiId, Plugin plugin) throws IOException;
 
     /**
      * 查询某个配置信息
@@ -33,7 +31,7 @@ public interface PluginClient<T extends Serializable> {
      * @param pluginId 配置信息 ID
      * @throws IOException
      */
-    Plugin<T> queryOne(String pluginId) throws IOException;
+    Plugin queryOne(String pluginId) throws IOException;
 
     /**
      * 查询配置信息列表
@@ -41,7 +39,7 @@ public interface PluginClient<T extends Serializable> {
      * @param plugin 查询参数
      * @throws IOException
      */
-    Plugins<T> query(Plugin<T> plugin) throws IOException;
+    List<Plugin> query(Plugin plugin) throws IOException;
 
     /**
      * 查询某个具体API对应的插件配置
@@ -50,14 +48,14 @@ public interface PluginClient<T extends Serializable> {
      * @param plugin 插件查询参数
      * @return 配置列表
      */
-    Plugins<T> querySpecificApi(String apiId, Plugin<T> plugin) throws IOException;
+    List<Plugin> querySpecificApi(String apiId, Plugin plugin) throws IOException;
 
     /**
      * 查询某个具体的 API 对应的某个插件信息, 由最终的接口实现类定义插件是什么
      *
      * @param apiId API ID
      */
-    Plugin<T> querySpecificApiAndPlugin(String apiId) throws IOException;
+    Plugin querySpecificApiAndPlugin(String apiId, String pluginName) throws IOException;
 
     /**
      * 更新插件信息
@@ -66,7 +64,7 @@ public interface PluginClient<T extends Serializable> {
      * @param plugin   待更新的插件信息
      * @return 更新后的插件
      */
-    Plugin<T> update(String pluginId, Plugin<T> plugin) throws IOException;
+    Plugin update(String pluginId, Plugin plugin) throws IOException;
 
     /**
      * 删除插件信息

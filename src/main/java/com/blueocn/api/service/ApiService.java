@@ -1,8 +1,9 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
 import com.blueocn.api.response.RestfulResponse;
+
+import java.util.List;
 
 /**
  * Title: ApiService
@@ -28,7 +29,7 @@ public interface ApiService {
      * @param api 待保存的 API 实体
      * @return 存储结果
      */
-    RestfulResponse<String> save(Api api);
+    RestfulResponse save(Api api);
 
     /**
      * 查询全部符合查询条件的 API
@@ -36,7 +37,7 @@ public interface ApiService {
      * @param api 查询的API参数
      * @return 查询结果
      */
-    Apis queryAll(Api api);
+    List<Api> queryAll(Api api);
 
     /**
      * 删除 API

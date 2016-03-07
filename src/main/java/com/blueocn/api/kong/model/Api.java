@@ -1,6 +1,5 @@
 package com.blueocn.api.kong.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
 /**
@@ -13,42 +12,26 @@ import lombok.*;
  */
 @Setter
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Api extends BaseModel {
     private static final long serialVersionUID = 9177479561761205922L;
 
-    @JSONField(name = "id")
     private String id;
 
-    @JSONField(name = "name")
     private String name;
 
-    @JSONField(name = "request_host")
-    private String requestHost;
+    private String request_host;
 
-    @JSONField(name = "request_path")
-    private String requestPath;
+    private String request_path;
 
-    @JSONField(name = "strip_request_path")
-    private Boolean stripRequestPath;
+    private Boolean strip_request_path;
 
-    @JSONField(name = "preserve_host")
-    private Boolean preserveHost;
+    private Boolean preserve_host;
 
-    @JSONField(name = "upstream_url")
-    private String upstreamUrl;
+    private String upstream_url;
 
-    @JSONField(name = "created_at")
-    private Long createdAt;
+    private Long created_at;
 
-    @JSONField(name = "size")
     private Integer size;
 
-    @JSONField(name = "offset")
     private String offset;
-
-    @JSONField(serialize = false, deserialize = false)
-    private String errorMessage;
 }

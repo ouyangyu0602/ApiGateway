@@ -1,9 +1,9 @@
 package com.blueocn.api.kong.client;
 
 import com.blueocn.api.kong.model.Api;
-import com.blueocn.api.kong.model.Apis;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: ApiClient
@@ -27,7 +27,15 @@ public interface ApiClient {
      *
      * @throws IOException
      */
-    Apis query(Api api) throws IOException;
+    List<Api> query(Api api) throws IOException;
+
+    /**
+     * 当前查询条件下的 API 个数
+     *
+     * @param api 查询参数
+     * @return API 总数, 对于总数大于100的情况有效
+     */
+    Integer totalSize(Api api) throws IOException;
 
     /**
      * 查一个

@@ -2,7 +2,6 @@ package com.blueocn.api.service.impl;
 
 import com.blueocn.api.kong.client.PluginClient;
 import com.blueocn.api.kong.model.Plugin;
-import com.blueocn.api.kong.model.configs.OAuth2Config;
 import com.blueocn.api.service.PluginService;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -10,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,13 +27,8 @@ public class PluginServiceImpl implements PluginService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginServiceImpl.class);
 
-    @Qualifier("defaultPluginClient")
     @Autowired
-    private PluginClient<String> pluginClient;
-
-    @Qualifier("oAuth2PluginClient")
-    @Autowired
-    private PluginClient<OAuth2Config> oAuth2PluginClient;
+    private PluginClient pluginClient;
 
     @Override
     public List<String> queryEnabledPlugins() {
@@ -48,10 +41,10 @@ public class PluginServiceImpl implements PluginService {
     }
 
     @Override
-    public Plugin<OAuth2Config> queryOAuth2Plugin(String apiId) {
+    public Plugin queryOAuth2Plugin(String apiId) {
         try {
             Preconditions.checkNotNull(apiId, "API ID 不能为空");
-            return oAuth2PluginClient.querySpecificApiAndPlugin(apiId);
+            return pluginClient.querySpecificApiAndPlugin(apiId, "oauth2");
         } catch (IOException e) {
             LOGGER.info("", e);
             return null;
@@ -59,12 +52,12 @@ public class PluginServiceImpl implements PluginService {
     }
 
     @Override
-    public Plugin<OAuth2Config> saveOAuth2Plugin(String apiId, Plugin<OAuth2Config> plugin) {
+    public Plugin saveOAuth2Plugin(String apiId, Plugin plugin) {
         try {
             if (StringUtils.isBlank(plugin.getId())) {
-                return oAuth2PluginClient.add(apiId, plugin);
+                return pluginClient.add(apiId, plugin);
             } else {
-                return oAuth2PluginClient.update(plugin.getId(), plugin);
+                return pluginClient.update(plugin.getId(), plugin);
             }
         } catch (IOException e) {
             LOGGER.info("", e);

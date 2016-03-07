@@ -11,6 +11,7 @@
 #* @vtlvariable name="loginUser" type="com.blueocn.api.vo.UserVo" *#
 #* @vtlvariable name="parentMenu" type="java.lang.String" *#
 #* @vtlvariable name="menuName" type="java.lang.String" *#
+#* @vtlvariable name="display" type="org.apache.velocity.tools.generic.DisplayTool" *#
 
 #* File specificed variables *#
 #* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/layout.vm" *#

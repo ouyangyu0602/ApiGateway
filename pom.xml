@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency version configuration -->
-        <fastjson.version>1.2.4</fastjson.version>
+        <fastjson.version>1.2.8</fastjson.version>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.5</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
@@ -37,10 +37,29 @@
         <retrofit.version>2.0.0-beta4</retrofit.version> <!-- Waiting for final release version -->
     </properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>local-snapshots</id>
+            <uniqueVersion>false</uniqueVersion>
+            <url>http://10.128.6.39:8081/nexus/content/repositories/snapshots/</url>
+            <layout>default</layout>
+        </snapshotRepository>
+        <repository>
+            <id>local-releases</id>
+            <uniqueVersion>true</uniqueVersion>
+            <layout>default</layout>
+            <url>http://10.128.6.39:8081/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>local-central</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>http://10.128.6.39:8081/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>jcenter-release</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-release-local/</url>
         </repository>
     </repositories>
 
@@ -256,6 +275,23 @@
             <artifactId>lombok</artifactId>
             <version>1.16.6</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- User System SDK -->
+        <dependency>
+            <groupId>com.blueocn.matrix</groupId>
+            <artifactId>matrix_api</artifactId>
+            <version>3.1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.blueocn.matrix</groupId>
+            <artifactId>matrix_common</artifactId>
+            <version>3.1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>com.blueocn.matrix</groupId>
+            <artifactId>matrix_impl</artifactId>
+            <version>3.1.20</version>
         </dependency>
     </dependencies>
 
