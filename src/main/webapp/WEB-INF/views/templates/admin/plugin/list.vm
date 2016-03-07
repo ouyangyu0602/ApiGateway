@@ -1,0 +1,5 @@
+#set( $pageTitle = "插件列表" )
+#set( $parentMenu = "plugin" )
+#set( $menuName = "listPlugin" )
+
+#breadCrumb( "插件管理", "查找, 管理, 编辑 API 的插件配置")

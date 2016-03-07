@@ -1,6 +1,6 @@
 #set( $pageTitle = "OAuth2 插件配置" )
 #set( $parentMenu = "plugin" )
-#set( $menuName = "" )
+#set( $menuName = "editPlugin" )
 
 #set( $pageStyles = [
   "/assets/vendor/ladda/ladda-themeless.min.css",

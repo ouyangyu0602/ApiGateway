@@ -1,6 +1,6 @@
 #set( $pageTitle = "新增插件" )
 #set( $parentMenu = "plugin" )
-#set( $menuName = "selectApi" )
+#set( $menuName = "editPlugin" )
 
 #set( $pageStyles = [
   "/assets/vendor/select2/select2.css",

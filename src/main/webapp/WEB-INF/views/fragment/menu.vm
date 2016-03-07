@@ -38,7 +38,7 @@
       <li #activeMenu("plugin" $parentMenu)>
         <a href="#"><span class="nav-label">插件管理</span><span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
-          <li #activeMenu("selectApi" $menuName)><a href="${rc.contextPath}/admin/plugin/select">新增插件</a></li>
+          <li #activeMenu("editPlugin" $menuName)><a href="${rc.contextPath}/admin/plugin/select">编辑插件</a></li>
           <li #activeMenu("listPlugin" $menuName)><a href="${rc.contextPath}/admin/plugin/list">检索插件</a></li>
         </ul>
       </li>

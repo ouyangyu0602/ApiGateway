@@ -56,4 +56,10 @@ public class PluginController extends AbstractUIController {
         }
         return "admin/plugin/oauth2";
     }
+
+    @RequestMapping(value = "plugin/list", method = RequestMethod.GET)
+    public String listPlugin() {
+        // TODO 插件列表
+        return "admin/plugin/list";
+    }
 }
