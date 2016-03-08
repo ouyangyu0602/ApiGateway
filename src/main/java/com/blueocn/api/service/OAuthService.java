@@ -34,9 +34,12 @@ public interface OAuthService {
 
     /**
      * Kong oAuth2 认证
+     *
      * @param clientId 应用开发者App Key
+     * @param apiName  API 的英文标识名称, 非 ID
      * @param userId   用户ID
      * @param scopes   认证资源
      */
-    RestfulResponse authorize(String clientId, Long userId, String scopes);
+    RestfulResponse authorize(String clientId, String apiName, String userId, String scopes)
+        throws IOException;
 }

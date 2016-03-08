@@ -74,10 +74,4 @@ public interface OAuth2Connector {
      */
     @DELETE("/consumers/{consumerId}/oauth2/{oauth2Id}")
     Call<String> delete(@Path("consumerId") String consumerId, @Path("oauth2Id") String oauth2Id);
-
-    @POST("/oauth2/authorize")
-    Call<String> authorize(@Body Map<String, String> params, @Header("Host") String host);
-
-    @POST("/oauth2/token")
-    Call<String> token(@Header("Host") String host);
 }

@@ -68,14 +68,14 @@ public class OAuth2Controller extends AbstractUIController {
     public String oAuthCertificate(@RequestParam("username") String username,
         @RequestParam("password") String password, @RequestParam("client_id") String client_id,
         @RequestParam(value = "api_name", required = false) String api_name,
-        @RequestParam(value = "scopes", required = false) String scopes, Model model)
+        @RequestParam(value = "scope", required = false) String scope, Model model)
         throws IOException {
         UserInfo loginUser = matrixService.login(username, password);
         model.addAttribute("client_id", client_id);
-        model.addAttribute("scopes", scopes);
+        model.addAttribute("scope", scope);
         model.addAttribute("api_name", api_name);
         if (loginUser != null) {
-            model.addAttribute("loginUserId", loginUser.getUserId());
+            model.addAttribute("login_user_id", loginUser.getUserId());
             model.addAttribute("application", oAuthService.getOAuth2App(client_id));
             // 登录成功, 返回用户确认页面
             return "oauth2/approval";

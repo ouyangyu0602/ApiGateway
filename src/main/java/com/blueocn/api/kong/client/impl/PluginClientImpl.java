@@ -45,7 +45,7 @@ public class PluginClientImpl implements PluginClient {
 
     @PostConstruct
     public void init() { // NOSONAR
-        pluginConnector = connector.create(PluginConnector.class);
+        pluginConnector = connector.admin(PluginConnector.class);
     }
 
     /**

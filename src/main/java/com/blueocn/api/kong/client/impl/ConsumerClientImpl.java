@@ -41,7 +41,7 @@ public class ConsumerClientImpl implements ConsumerClient {
 
     @PostConstruct
     private void init() { // NOSONAR
-        consumerConnector = connector.create(ConsumerConnector.class);
+        consumerConnector = connector.admin(ConsumerConnector.class);
     }
 
     @Override

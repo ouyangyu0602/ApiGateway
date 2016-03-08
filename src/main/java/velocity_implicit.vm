@@ -24,5 +24,6 @@
 #* @vtlvariable name="apiId" type="java.lang.String" file="../webapp/WEB-INF/views/templates/admin/plugin/oauth2.vm" *#
 #* @vtlvariable name="oAuth2" type="com.blueocn.api.kong.model.Plugin<com.blueocn.api.kong.model.configs.OAuth2Config>" file="../webapp/WEB-INF/views/templates/admin/plugin/oauth2.vm" *#
 #* @vtlvariable name="defaultProvisionKey" type="java.lang.String" file="../webapp/WEB-INF/views/templates/admin/plugin/oauth2.vm" *#
+#* @vtlvariable name="application" type="com.blueocn.api.kong.model.consumers.OAuth2" file="../webapp/WEB-INF/views/templates/oauth2/approval.vm" *#
 
 #* Define macros *#

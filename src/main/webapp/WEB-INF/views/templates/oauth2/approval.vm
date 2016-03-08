@@ -7,7 +7,58 @@
   <link href="${rc.contextPath}/assets/styles/front-page.css" media="all" rel="stylesheet"/>
   <link href="style.css" media="all" rel="stylesheet"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>用户登录 | OneAPM</title>
+  <title>$!{application.name}应用授权确认} | OneAPM</title>
   <link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/assets/favicon.ico"/>
-  <meta name="description" content="OneAPM（蓝海讯通）提供端到端APM应用性能管理软件及应用性能监控软件解决方案，OneAPM已经形成移动，浏览器，应用，基础设施，网络，数据库性能管理六大产品线，支持Java、.NET、PHP、Ruby、Python、Node.js、iOS、Android、HTML5等应用性能监控管理。">
+  <meta name="description"
+        content="OneAPM（蓝海讯通）提供端到端APM应用性能管理软件及应用性能监控软件解决方案，OneAPM已经形成移动，浏览器，应用，基础设施，网络，数据库性能管理六大产品线，支持Java、.NET、PHP、Ruby、Python、Node.js、iOS、Android、HTML5等应用性能监控管理。">
 </head>
+
+<body class="logged_out env-production macintosh session-authentication">
+<div role="main" class="main-content">
+  <div class="setup-wrapper">
+    <div class="setup-header">
+      <h1>应用授权认证</h1>
+      <p class="lead">
+        $!{application.name} 应用希望连接您的 OneAPM 帐号
+      </p>
+    </div>
+    <div class="setup-main">
+      <h3 class="permission-title">权限列表</h3>
+      <div class="oauth-permissions">
+        <li class="oauth-user-permissions oauth-permissions-details js-details-container full open">
+          <svg aria-hidden="true" class="octicon octicon-person" height="32" role="img"
+               version="1.1" viewBox="0 0 8 16" width="16">
+            <path d="M7 6H1c-0.55 0-1 0.45-1 1v5h2v3c0 0.55 0.45 1 1 1h2c0.55 0 1-0.45 1-1V12h2V7c0-0.55-0.45-1-1-1z m0 5h-1V9h-1v6H3V9h-1v2H1V7h6v4z m0-8C7 1.34 5.66 0 4 0S1 1.34 1 3s1.34 3 3 3 3-1.34 3-3zM4 5c-1.11 0-2-0.89-2-2S2.89 1 4 1s2 0.89 2 2-0.89 2-2 2z"></path>
+          </svg>
+          <div class="permission-summary">
+            <strong class="permission-title">个人用户数据</strong>
+            <small class="access-details">
+              <span class="full-access">完全访问</span>
+            </small>
+          </div>
+
+          <div class="content">
+            <div class="permission-help">
+              <p>当你确认授权后此应用能 <strong>读取并访问</strong>以下这些关于你的用户信息: </p>
+              <ul>
+                <li>私人Email地址</li>
+                <li>个人账户信息</li>
+                <li>团队信息</li>
+              </ul>
+            </div>
+          </div> <!-- content -->
+        </li> <!-- details-container -->
+      </div>
+      <!-- </textarea> --><!-- '"` -->
+      <form accept-charset="UTF-8" action="${rc.contextPath}/oauth2/approval" method="post">
+        <input name="client_id" type="hidden" value="$!{client_id}">
+        <input name="scope" type="hidden" value="$!{scope}">
+        <input name="api_name" type="hidden" value="$!{api_name}">
+        <input name="login_user_id" type="hidden" value="$!{loginUserId}">
+        <button type="submit" class="btn btn-primary">确认授权</button>
+      </form>
+    </div>
+  </div>  <!-- /.setup-wrapper -->
+</div>
+</body>
+</html>

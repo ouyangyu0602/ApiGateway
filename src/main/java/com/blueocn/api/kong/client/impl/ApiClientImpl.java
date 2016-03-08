@@ -41,7 +41,7 @@ public class ApiClientImpl implements ApiClient {
 
     @PostConstruct
     private void init() { // NOSONAR
-        apiConnector = connector.create(ApiConnector.class);
+        apiConnector = connector.admin(ApiConnector.class);
     }
 
     @Override

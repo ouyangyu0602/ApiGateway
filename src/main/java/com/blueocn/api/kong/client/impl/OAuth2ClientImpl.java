@@ -5,10 +5,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.blueocn.api.kong.client.OAuth2Client;
 import com.blueocn.api.kong.connector.Connector;
+import com.blueocn.api.kong.connector.FrontConnector;
 import com.blueocn.api.kong.connector.consumers.OAuth2Connector;
 import com.blueocn.api.kong.model.consumers.OAuth2;
+import com.blueocn.api.response.RestfulResponse;
 import com.google.common.collect.Lists;
 import okhttp3.ResponseBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
@@ -17,6 +21,7 @@ import retrofit2.Response;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Title: OAuth2ClientImpl
@@ -29,14 +34,19 @@ import java.util.List;
 @Component
 public class OAuth2ClientImpl implements OAuth2Client {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2ClientImpl.class);
+
     @Autowired
     private Connector connector;
 
     private OAuth2Connector oAuth2Connector;
 
+    private FrontConnector frontConnector;
+
     @PostConstruct
     private void init() {
-        oAuth2Connector = connector.create(OAuth2Connector.class);
+        oAuth2Connector = connector.admin(OAuth2Connector.class);
+        frontConnector = connector.front(FrontConnector.class);
     }
 
     @Override
@@ -96,5 +106,23 @@ public class OAuth2ClientImpl implements OAuth2Client {
     @Override
     public void delete(String consumerId, String oauth2Id) throws IOException {
         oAuth2Connector.delete(consumerId, oauth2Id).execute();
+    }
+
+    @Override
+    public RestfulResponse authorize(Map<String, String> params, String host) {
+        Call<ResponseBody> call = frontConnector.authorize(params, host);
+        try {
+            Response<ResponseBody> response = call.execute();
+            if (response.isSuccess()) {
+                JSONObject object = JSON.parseObject(response.body().string());
+                RestfulResponse restfulResponse = new RestfulResponse();
+                restfulResponse.setCode(object.getString("redirect_uri"));
+                return restfulResponse;
+            }
+            return new RestfulResponse(response.errorBody().string());
+        } catch (IOException e) {
+            LOGGER.info("", e);
+            return new RestfulResponse(e.getMessage());
+        }
     }
 }

@@ -1,9 +1,11 @@
 package com.blueocn.api.kong.client;
 
 import com.blueocn.api.kong.model.consumers.OAuth2;
+import com.blueocn.api.response.RestfulResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Title: OAuth2Client
@@ -62,4 +64,13 @@ public interface OAuth2Client {
      * @param oauth2Id   应用 ID
      */
     void delete(String consumerId, String oauth2Id) throws IOException;
+
+    /**
+     * 认证应用授权
+     *
+     * @param params 授权信息参数
+     * @param host   授权 API Host
+     * @return 请求结果
+     */
+    RestfulResponse authorize(Map<String, String> params, String host);
 }

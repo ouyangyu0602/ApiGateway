@@ -22,7 +22,9 @@ public class Connector {
     @Autowired
     private KongConfig config;
 
-    private Retrofit retrofit;
+    private Retrofit kongAdmin;
+
+    private Retrofit kongFront;
 
     /**
      * HTTP 请求接口 Retrofit 适配器
@@ -32,13 +34,21 @@ public class Connector {
      */
     @PostConstruct
     private void init() { // NOSONAR
-        retrofit = new Retrofit.Builder()
+        kongAdmin = new Retrofit.Builder()
             .baseUrl(config.getKongAdminUrl())
+            .addConverterFactory(FastjsonConverterFactory.create())
+            .build();
+        kongFront = new Retrofit.Builder()
+            .baseUrl(config.getKongHttpsAddress())
             .addConverterFactory(FastjsonConverterFactory.create())
             .build();
     }
 
-    public <T> T create(final Class<T> service) {
-        return retrofit.create(service);
+    public <T> T admin(final Class<T> service) {
+        return kongAdmin.create(service);
+    }
+
+    public <T> T front(final Class<T> service) {
+        return kongFront.create(service);
     }
 }
