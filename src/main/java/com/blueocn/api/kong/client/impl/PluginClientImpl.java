@@ -150,7 +150,7 @@ public class PluginClientImpl implements PluginClient {
         if (isBlank(apiId)) {
             apiId = getApiIdByPluginId(pluginId);
         }
-        Call<ResponseBody> call = pluginConnector.update(pluginId, apiId, plugin);
+        Call<ResponseBody> call = pluginConnector.update(apiId, pluginId, plugin);
         Response<ResponseBody> response = call.execute();
         if (response.isSuccess()) {
             return JSON.parseObject(response.body().string(), Plugin.class);

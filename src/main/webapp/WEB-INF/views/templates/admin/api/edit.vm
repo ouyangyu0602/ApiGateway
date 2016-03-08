@@ -64,19 +64,19 @@
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Request Host</label>
-              <div class="col-sm-9"><input type="text" name="requestHost" class="form-control" value="$!{api.request_host}">
+              <div class="col-sm-9"><input type="text" name="request_host" class="form-control" value="$!{api.request_host}">
                 <span class="help-block m-b-none data-request_host"></span>
               </div>
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Request Path</label>
-              <div class="col-sm-9"><input type="text" name="requestPath" class="form-control" value="$!{api.request_path}">
+              <div class="col-sm-9"><input type="text" name="request_path" class="form-control" value="$!{api.request_path}">
                 <span class="help-block m-b-none data-request_path"></span>
               </div>
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Upstream Url</label>
-              <div class="col-sm-9"><input type="text" name="upstreamUrl" class="form-control" value="$!{api.upstream_url}">
+              <div class="col-sm-9"><input type="text" name="upstream_url" class="form-control" value="$!{api.upstream_url}">
                 <span class="help-block m-b-none data-upstream_url"></span></div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -86,12 +86,12 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <label class="checkbox-inline">
-                      <input class="i-checks" type="checkbox" value="true" name="stripRequestPath" #if ( $api.strip_request_path ) checked #end> Strip request path
+                      <input class="i-checks" type="checkbox" value="true" name="strip_request_path" #if ( $api.strip_request_path ) checked #end> Strip request path
                     </label>
                   </div>
                   <div class="col-sm-6">
                     <label class="checkbox-inline">
-                      <input class="i-checks" type="checkbox" value="true" name="preserveHost" #if ( $api.preserve_host ) checked #end> Preserve host
+                      <input class="i-checks" type="checkbox" value="true" name="preserve_host" #if ( $api.preserve_host ) checked #end> Preserve host
                     </label>
                   </div>
                 </div>
@@ -146,7 +146,9 @@
       $("span.help-block").html("");
       e.preventDefault();
       $.ajax($(this).attr("action"), {
-        data: $("form.api-form").find('input').not('[value=""]').serializeJSON({
+        data: $("form.api-form").find(':input').filter(function() {
+          return $.trim(this.value).length > 0
+        }).serializeJSON({
           checkboxUncheckedValue: "false",
           parseBooleans: true
         }),

@@ -54,7 +54,7 @@
         <input name="client_id" type="hidden" value="$!{client_id}">
         <input name="scope" type="hidden" value="$!{scope}">
         <input name="api_name" type="hidden" value="$!{api_name}">
-        <input name="login_user_id" type="hidden" value="$!{loginUserId}">
+        <input name="login_user_id" type="hidden" value="$!{login_user_id}">
         <button type="submit" class="btn btn-primary">确认授权</button>
       </form>
     </div>

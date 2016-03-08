@@ -137,7 +137,9 @@
     $("form.oauth-form").on("submit", function(event) {
       event.preventDefault();
       $("span.help-block").html("");
-      var formData = $("form.oauth-form").find('input').not('[value=""]').serializeJSON({
+      var formData = $("form.oauth-form").find(':input').filter(function () {
+        return $.trim(this.value).length > 0
+      }).serializeJSON({
         checkboxUncheckedValue: "false",
         customTypes: {
           stringToList: function(str) {
@@ -145,6 +147,7 @@
           }
         }
       });
+      console.log(formData);
       $.ajax($(this).attr("action"), {
         data: {formData: JSON.stringify(formData)},
         method: "post",
