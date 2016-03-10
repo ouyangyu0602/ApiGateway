@@ -4,6 +4,7 @@ import com.blueocn.api.kong.model.consumers.OAuth2;
 import com.blueocn.api.response.RestfulResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Title: OAuthService
@@ -42,4 +43,26 @@ public interface OAuthService {
      */
     RestfulResponse authorize(String clientId, String apiName, String userId, String scopes)
         throws IOException;
+
+    /**
+     * 通过应用 ID 查询OAuth2应用信息
+     *
+     * @param id 应用ID
+     */
+    OAuth2 queryOne(String id);
+
+    /**
+     * 保存开发者 oAuth2 应用信息
+     *
+     * @param consumerId 开发者ID
+     * @param oAuth2     应用信息
+     */
+    RestfulResponse save(String consumerId, OAuth2 oAuth2);
+
+    /**
+     * 查询复合查询参数的开发者的所有 OAuth 插件信息
+     *
+     * @param oAuth2 应用信息
+     */
+    List<OAuth2> queryAll(OAuth2 oAuth2);
 }

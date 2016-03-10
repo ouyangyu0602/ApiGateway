@@ -125,4 +125,15 @@ public class OAuth2ClientImpl implements OAuth2Client {
             return new RestfulResponse(e.getMessage());
         }
     }
+
+    @Override
+    public Integer totalSize(OAuth2 oAuth) throws IOException {
+        Call<ResponseBody> call = oAuth2Connector.rawQuery(oAuth == null ? null : oAuth.toMap());
+        Response<ResponseBody> response = call.execute();
+        if (response.isSuccess()) {
+            JSONObject object = JSON.parseObject(response.body().string());
+            return object.getInteger("total");
+        }
+        return null;
+    }
 }

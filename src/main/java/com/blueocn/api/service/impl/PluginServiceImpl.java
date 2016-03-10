@@ -2,10 +2,11 @@ package com.blueocn.api.service.impl;
 
 import com.blueocn.api.kong.client.PluginClient;
 import com.blueocn.api.kong.model.Plugin;
+import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.PluginService;
+import com.blueocn.api.support.utils.Asserts;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Title: PluginServiceImpl
@@ -52,16 +55,22 @@ public class PluginServiceImpl implements PluginService {
     }
 
     @Override
-    public Plugin saveOAuth2Plugin(String apiId, Plugin plugin) {
+    public RestfulResponse saveOAuth2Plugin(String apiId, Plugin plugin) {
+        Asserts.checkNotBlank(apiId, "待保存插件对应的 API ID 不能为空.");
+        Plugin newPlugin;
         try {
-            if (StringUtils.isBlank(plugin.getId())) {
-                return pluginClient.add(apiId, plugin);
+            if (isBlank(plugin.getId())) {
+                newPlugin = pluginClient.add(apiId, plugin);
             } else {
-                return pluginClient.update(plugin.getId(), plugin);
+                newPlugin = pluginClient.update(plugin.getId(), plugin);
             }
         } catch (IOException e) {
             LOGGER.info("", e);
-            return null;
+            return new RestfulResponse(e.getMessage());
         }
+        if (newPlugin != null) {
+            return new RestfulResponse(newPlugin.getErrorMessage());
+        }
+        return new RestfulResponse("插件信息保存失败");
     }
 }

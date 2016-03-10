@@ -1,6 +1,7 @@
 package com.blueocn.api.service;
 
 import com.blueocn.api.kong.model.Plugin;
+import com.blueocn.api.response.RestfulResponse;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface PluginService {
      * @param apiId  API ID
      * @param plugin 插件信息
      */
-    Plugin saveOAuth2Plugin(String apiId, Plugin plugin);
+    RestfulResponse saveOAuth2Plugin(String apiId, Plugin plugin);
 }

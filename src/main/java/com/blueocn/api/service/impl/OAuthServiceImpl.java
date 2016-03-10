@@ -8,7 +8,10 @@ import com.blueocn.api.kong.model.consumers.OAuth2;
 import com.blueocn.api.response.RestfulResponse;
 import com.blueocn.api.service.OAuthService;
 import com.blueocn.api.support.utils.Asserts;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Title: OAuthServiceImpl
@@ -65,8 +69,8 @@ public class OAuthServiceImpl implements OAuthService {
     }
 
     @Override
-    public RestfulResponse authorize(String clientId, String apiName, String userId,
-        String scope) throws IOException {
+    public RestfulResponse authorize(String clientId, String apiName, String userId, String scope)
+        throws IOException {
         String provision_key = queryProvisionKey(apiName);
         Map<String, String> params = Maps.newHashMapWithExpectedSize(5);
         params.put("client_id", clientId);
@@ -77,8 +81,77 @@ public class OAuthServiceImpl implements OAuthService {
         return oAuth2Client.authorize(params, config.getKongHost());
     }
 
+    @Override
+    public OAuth2 queryOne(String id) {
+        if (StringUtils.isNotBlank(id)) {
+            OAuth2 param = new OAuth2();
+            param.setId(id);
+            try {
+                List<OAuth2> oAuth2s = oAuth2Client.query(param);
+                if (oAuth2s != null && oAuth2s.size() == 1) {
+                    return oAuth2s.get(0);
+                }
+            } catch (IOException e) {
+                LOGGER.warn("", e);
+            }
+        } else {
+            LOGGER.info("查询 ID 为空, 请校验查询参数.");
+        }
+        return null;
+    }
+
+    @Override
+    public RestfulResponse save(String consumerId, OAuth2 oAuth2) {
+        Preconditions.checkNotNull(oAuth2, "保存应用信息不能为空.");
+        Asserts.checkNotBlank(consumerId, "应用对应的开发者信息不能为空.");
+        OAuth2 newOAuth2;
+        try {
+            if (isBlank(oAuth2.getId())) {
+                newOAuth2 = oAuth2Client.add(consumerId, oAuth2);
+            } else {
+                newOAuth2 = oAuth2Client.update(consumerId, oAuth2.getId(), oAuth2);
+            }
+        } catch (IOException e) {
+            LOGGER.warn("", e);
+            return new RestfulResponse(e.getMessage());
+        }
+        if (newOAuth2 != null && isBlank(newOAuth2.getErrorMessage())) {
+            return new RestfulResponse(newOAuth2.getErrorMessage());
+        }
+        return new RestfulResponse("应用保存失败");
+    }
+
+    @Override
+    public List<OAuth2> queryAll(OAuth2 oAuth2) {
+        OAuth2 queryOAuth = oAuth2 == null ? new OAuth2() : oAuth2;
+        queryOAuth.setSize(getOAuth2Amount(oAuth2));
+        try {
+            return oAuth2Client.query(oAuth2);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * 查询所有应用的数量
+     *
+     * @param oAuth2 查询参数
+     */
+    private Integer getOAuth2Amount(OAuth2 oAuth2) {
+        try {
+            OAuth2 oAuth = oAuth2 == null ? new OAuth2() : oAuth2;
+            oAuth.setSize(1);
+            return oAuth2Client.totalSize(oAuth);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return null;
+    }
+
     /**
      * 从 API的名称获取它对应的 oAuth2 的provision_key
+     *
      * @param apiName API ID 或者 API Name
      * @return provision_key
      */

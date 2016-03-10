@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * Title: 请求结果响应实体
  * Description: 简单消息响应实体, 基于它扩展自己的属性
@@ -29,9 +31,10 @@ public class RestfulResponse implements Serializable {
     }
 
     public RestfulResponse(String msg) {
-        if (msg != null) {
+        if (isBlank(msg)) {
             this.success = false;
             this.msg = msg;
         }
+        this.success = true;
     }
 }

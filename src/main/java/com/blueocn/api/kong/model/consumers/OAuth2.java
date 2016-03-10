@@ -30,4 +30,6 @@ public class OAuth2 extends BaseModel {
     private String redirect_uri;
 
     private Long created_at;
+
+    private Integer size;
 }

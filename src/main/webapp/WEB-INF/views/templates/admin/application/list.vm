@@ -1,0 +1,3 @@
+#set( $pageTitle = "应用列表" )
+#set( $parentMenu = "application" )
+#set( $menuName = "listApplication" )

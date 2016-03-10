@@ -42,6 +42,13 @@
           <li #activeMenu("listPlugin" $menuName)><a href="${rc.contextPath}/admin/plugin/list">检索插件</a></li>
         </ul>
       </li>
+      <li #activeMenu("application" $parentMenu)>
+        <a href="#"><span class="nav-label">应用管理</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+          <li #activeMenu("editApplication" $menuName)><a href="${rc.contextPath}/admin/application/add">新增应用</a></li>
+          <li #activeMenu("listApplication" $menuName)><a href="${rc.contextPath}/admin/application/list">应用列表</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </aside>

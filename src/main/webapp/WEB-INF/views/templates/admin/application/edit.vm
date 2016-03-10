@@ -1,0 +1,152 @@
+#if( $application )
+  #set( $pageTitle = "应用修改" )
+#else
+  #set( $pageTitle = "应用创建" )
+#end
+#set( $parentMenu = "application" )
+#set( $menuName = "editApplication" )
+
+#set( $pageStyles = [
+  "/assets/vendor/select2/select2.css",
+  "/assets/vendor/select2/select2-bootstrap.css",
+  "/assets/vendor/ladda/ladda-themeless.min.css",
+  "/assets/vendor/sweetalert/sweet-alert.css"
+] )
+
+#breadCrumb( "应用管理", "新增或者编辑应用信息, 部分信息存储于 Kong 上.")
+
+<div class="content animate-panel">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="hpanel">
+        #parse("/fragment/message.vm")
+        <div class="panel-heading">
+          <div class="panel-tools">
+            <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+            <a class="closebox"><i class="fa fa-times"></i></a>
+          </div>
+          API 信息
+        </div>
+        <div class="panel-body">
+          <form method="post" class="form-horizontal application-form" action="${rc.contextPath}/admin/application/save">
+            <input type="hidden" name="id" value="$!{application.id}">
+            <div class="form-group"><label class="col-sm-3 control-label">开发者列表</label>
+              <div class="col-sm-9">
+                #if( $consumers )
+                <select class="consumerId form-control" name="consumerId">
+                  <option></option>
+                  #foreach( ${consumer} in ${consumers} )
+                  <option value="$!{consumer.id}" #if($application.consumer_id)selected#end>$!{consumer.username}</option>
+                  #end
+                </select>
+                #else
+                  找不到开发者信息, 请刷新页面重试, 或者添加开发者.
+                #end
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">应用名称</label>
+              <div class="col-sm-9"><input type="text" name="name" class="form-control" value="$!{application.name}">
+                <span class="help-block m-b-none data-name"></span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Client Id</label>
+              <div class="col-sm-9"><input type="text" name="client_id" class="form-control" value="$!{application.client_id}">
+                <span class="help-block m-b-none data-client_id"></span></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Client Secret</label>
+              <div class="col-sm-9"><input type="text" name="client_id" class="form-control" value="$!{application.client_secret}">
+                <span class="help-block m-b-none data-client_secret"></span></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group"><label class="col-sm-3 control-label">Redirect Uri</label>
+              <div class="col-sm-9"><input type="text" name="client_id" class="form-control" value="$!{application.redirect_uri}">
+                <span class="help-block m-b-none data-redirect_uri"></span></div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-8 col-sm-offset-2">
+                <button class="ladda-button btn btn-success" type="submit" data-style="expand-right">
+                  <span class="ladda-label"><i class="fa fa-check"></i> 保存</span>
+                  <span class="ladda-spinner"></span></button>
+                <button class="btn btn-default" type="button" onclick="history.go(-1)">
+                  <i class="fa fa-times"></i> 取消</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="${rc.contextPath}/assets/vendor/ladda/spin.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/ladda/ladda.jquery.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/sweetalert/sweet-alert.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/jquery.serializejson.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/select2/select2.min.js"></script>
+<script src="${rc.contextPath}/assets/vendor/select2/select2_locale_zh-CN.js"></script>
+<script type="text/javascript">
+  Ladda.bind('.ladda-button', {
+    callback: function (instance) {
+      var progress = 0;
+      var interval = setInterval(function () {
+        progress = Math.min(progress + Math.random() * 0.1, 1);
+        instance.setProgress(progress);
+
+        if (progress === 1) {
+          instance.stop();
+          clearInterval(interval);
+        }
+      }, 200);
+    }
+  });
+
+  function showErrorMessage(error) {
+    for (var key in error) {
+      $(".data-" + key).html(error[key]);
+    }
+  }
+
+  $(document).ready(function () {
+    $(".consumerId").select2({
+      placeholder: "请选择你想操作的开发者",
+      allowClear: true
+    });
+
+    $("form.application-form").on("submit", function (e) {
+      $("span.help-block").html("");
+      e.preventDefault();
+      $.ajax($(this).attr("action"), {
+        data: $("form.application-form").find(':input').filter(function () {
+          return $.trim(this.value).length > 0
+        }).serializeJSON({
+          checkboxUncheckedValue: "false",
+          parseBooleans: true
+        }), // 奇迹, 这代码竟然兼容 Select2, 吓死宝宝了
+        method: "post",
+        success: function (data) {
+          if (data["success"]) {
+            swal({
+              title: "保存成功 !",
+              type: "success"
+            }, function () {
+              location.href = "${rc.contextPath}/admin/application/list";
+            });
+          } else {
+            console.log(data["msg"]);
+            var error = JSON.parse(data["msg"]);
+            showErrorMessage(error);
+            swal({
+              title: "保存失败 !",
+              text: "请检查页面重新输入 !",
+              type: "warning"
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

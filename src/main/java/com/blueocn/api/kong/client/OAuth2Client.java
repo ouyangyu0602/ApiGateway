@@ -28,7 +28,7 @@ public interface OAuth2Client {
     /**
      * 查询一堆
      *
-     * @param oAuth2     查询参数
+     * @param oAuth2 查询参数
      */
     List<OAuth2> query(OAuth2 oAuth2) throws IOException;
 
@@ -73,4 +73,11 @@ public interface OAuth2Client {
      * @return 请求结果
      */
     RestfulResponse authorize(Map<String, String> params, String host);
+
+    /**
+     * 判断基于此种查询条件的应用数量
+     *
+     * @param oAuth 应用查询条件数据
+     */
+    Integer totalSize(OAuth2 oAuth) throws IOException;
 }
