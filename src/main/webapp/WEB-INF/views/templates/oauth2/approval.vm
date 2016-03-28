@@ -49,12 +49,13 @@
           </div> <!-- content -->
         </li> <!-- details-container -->
       </div>
-      <!-- </textarea> --><!-- '"` -->
       <form accept-charset="UTF-8" action="${rc.contextPath}/oauth2/approval" method="post">
         <input name="client_id" type="hidden" value="$!{client_id}">
         <input name="scope" type="hidden" value="$!{scope}">
         <input name="api_name" type="hidden" value="$!{api_name}">
         <input name="login_user_id" type="hidden" value="$!{login_user_id}">
+        <input name="state" type="hidden" value="$!{state}">
+        <input name="redirect_uri" type="hidden" value="$!{redirect_uri}">
         <button type="submit" class="btn btn-primary">确认授权</button>
       </form>
     </div>

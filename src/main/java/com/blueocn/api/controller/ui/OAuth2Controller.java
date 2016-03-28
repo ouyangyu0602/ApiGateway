@@ -4,7 +4,6 @@ import com.blueocn.api.enums.MessageTypeEnum;
 import com.blueocn.api.service.ApiService;
 import com.blueocn.api.service.MatrixService;
 import com.blueocn.api.service.OAuthService;
-import com.blueocn.user.entity.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Title: OAuth2Controller
@@ -46,19 +46,23 @@ public class OAuth2Controller extends AbstractUIController {
      */
     @RequestMapping(value = "authorize", method = RequestMethod.GET)
     public String oAuthLogin(@RequestParam(value = "client_id", required = false) String clientId,
-        @RequestParam(value = "api_name", required = false) String api_name, Model model) {
+        @RequestParam(value = "apiName", required = false) String apiName,
+        @RequestParam(value = "state", required = false) String state,
+        @RequestParam(value = "redirect_uri", required = false) String redirectUri, Model model) {
         try {
             if (isBlank(clientId)) {
                 setMessage(model, MessageTypeEnum.ERROR, "Client Id (client_id) 不能为空");
-            } else if (isBlank(api_name)) {
-                setMessage(model, MessageTypeEnum.ERROR, "Api Name (api_name) 不能为空");
+            } else if (isBlank(apiName)) {
+                setMessage(model, MessageTypeEnum.ERROR, "Api Name (apiName) 不能为空");
             } else if (!oAuthService.isValidClientId(clientId)) {
                 setMessage(model, MessageTypeEnum.ERROR, "Client Id (client_id) 参数无效, 请联系您的应用开发者.");
-            } else if (!apiService.isApiNameExist(api_name)) {
-                setMessage(model, MessageTypeEnum.ERROR, "Api Name (api_name) 参数无效, 请联系您的应用开发者.");
+            } else if (!apiService.isApiNameExist(apiName)) {
+                setMessage(model, MessageTypeEnum.ERROR, "Api Name (apiName) 参数无效, 请联系您的应用开发者.");
+            } else if (!oAuthService.isValidRedirectUri(clientId, redirectUri)) {
+                setMessage(model, MessageTypeEnum.ERROR, "跳转地址不合法, 请联系您的应用开发者.");
             }
         } catch (IOException e) {
-            LOGGER.info("Kong 访问异常", e);
+            LOGGER.info("认证服务异常, 请刷新重试.", e);
             setMessage(model, MessageTypeEnum.ERROR, e.getMessage());
         }
         return "oauth2/authorize";
@@ -66,17 +70,22 @@ public class OAuth2Controller extends AbstractUIController {
 
     @RequestMapping(value = "authorize", method = RequestMethod.POST)
     public String oAuthCertificate(@RequestParam("username") String username,
-        @RequestParam("password") String password, @RequestParam("client_id") String client_id,
-        @RequestParam(value = "api_name", required = false) String api_name,
-        @RequestParam(value = "scope", required = false) String scope, Model model)
+        @RequestParam("password") String password, @RequestParam("client_id") String clientId,
+        @RequestParam(value = "apiName", required = false) String apiName,
+        @RequestParam(value = "scope", required = false) String scope,
+        @RequestParam(value = "state", required = false) String state,
+        @RequestParam(value = "redirect_uri") String redirectUri, Model model)
         throws IOException {
-        UserInfo loginUser = matrixService.login(username, password);
-        model.addAttribute("client_id", client_id);
+        String userId = matrixService.login(username, password);
+        model.addAttribute("client_id", clientId);
         model.addAttribute("scope", scope);
-        model.addAttribute("api_name", api_name);
-        if (loginUser != null) {
-            model.addAttribute("login_user_id", loginUser.getUserId());
-            model.addAttribute("application", oAuthService.getOAuth2App(client_id));
+        model.addAttribute("api_name", apiName);
+        model.addAttribute("state", state);
+        model.addAttribute("api_name", apiName);
+        model.addAttribute("redirect_uri", redirectUri);
+        if (isNotBlank(userId)) {
+            model.addAttribute("login_user_id", userId);
+            model.addAttribute("application", oAuthService.getOAuth2App(clientId));
             // 登录成功, 返回用户确认页面
             return "oauth2/approval";
         } else {

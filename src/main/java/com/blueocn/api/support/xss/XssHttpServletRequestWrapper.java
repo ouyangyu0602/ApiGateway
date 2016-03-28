@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
  * @version 1.0.0
  * @since 2015-12-15 16:38
  */
-public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
+class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     private static final List<Pattern> PATTERNS = new CopyOnWriteArrayList<>();
 
-    public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
+    XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
     }
 

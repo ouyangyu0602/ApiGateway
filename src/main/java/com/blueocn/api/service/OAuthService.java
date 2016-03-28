@@ -25,6 +25,16 @@ public interface OAuthService {
     boolean isValidClientId(String clientId) throws IOException;
 
     /**
+     * 校验开发者传点的 Client Id 对应的应用在 Kong 存储的跳转地址
+     * 与开发者传递的地址是否一致
+     *
+     * @param clientId    应用 ID
+     * @param redirectUri 跳转地址
+     * @return
+     */
+    boolean isValidRedirectUri(String clientId, String redirectUri) throws IOException;
+
+    /**
      * 通过 Client Id 查询具体应用信息
      *
      * @param clientId kong 中存储名的应用标识 {@code client_id}

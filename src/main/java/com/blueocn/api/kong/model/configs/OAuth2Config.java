@@ -1,6 +1,7 @@
 package com.blueocn.api.kong.model.configs;
 
 import com.blueocn.api.kong.model.BaseModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OAuth2Config extends BaseModel {
     private static final long serialVersionUID = -2469455037787198356L;
 

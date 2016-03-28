@@ -50,6 +50,8 @@
           <input type="hidden" name="client_id" value="$!request.getParameter("client_id")"> ## 这里用此法取地址栏参数
           <input type="hidden" name="api_name" value="$!request.getParameter("api_name")">
           <input type="hidden" name="scope" value="$!request.getParameter("scope")">
+          <input type="hidden" name="state" value="$!request.getParameter("state")">
+          <input type="hidden" name="redirect_uri" value="$!request.getParameter("redirect_uri")">
         </div>
         <div class="auth-form-header">
           <h1>OneAPM 用户登录</h1>
@@ -72,7 +74,7 @@
                  value="登录"/>
         </div>
       </form>
-      <p class="create-account-callout">新 OneAPM 用户？<a href="https://user.oneapm.com/account/register.do" target="_blank">注册账户</a>.</p>
+      <p class="create-account-callout">新 OneAPM 用户？<a href="http://user.oneapm.com/pages/v2/signup" target="_blank">注册账户</a>.</p>
     </div>
   </div>
   <div class="modal-backdrop"></div>

@@ -23,7 +23,6 @@ import static com.blueocn.api.support.Constants.SYSTEM_CONF_PROPERTIES;
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com.blueocn.api.support.config.WebConfig")
     }
 )
-@Import({DruidConfig.class, MyBatisConfig.class, RedisConfig.class})
 public class ApiSystemConfig { // NOSONAR
 
     @Bean

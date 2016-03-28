@@ -11,7 +11,6 @@
 #* @vtlvariable name="loginUser" type="com.blueocn.api.vo.UserVo" *#
 #* @vtlvariable name="parentMenu" type="java.lang.String" *#
 #* @vtlvariable name="menuName" type="java.lang.String" *#
-#* @vtlvariable name="display" type="org.apache.velocity.tools.generic.DisplayTool" *#
 
 #* File specificed variables *#
 #* @vtlvariable name="screen_content" type="java.lang.Object" file="../webapp/WEB-INF/views/layout/layout.vm" *#
@@ -27,5 +26,6 @@
 #* @vtlvariable name="application" type="com.blueocn.api.kong.model.consumers.OAuth2" file="../webapp/WEB-INF/views/templates/oauth2/approval.vm" *#
 #* @vtlvariable name="application" type="com.blueocn.api.kong.model.consumers.OAuth2" file="../webapp/WEB-INF/views/templates/admin/application/edit.vm" *#
 #* @vtlvariable name="consumers" type="java.util.List<com.blueocn.api.kong.model.Consumer>" file="../webapp/WEB-INF/views/templates/admin/application/edit.vm" *#
+#* @vtlvariable name="consumers" type="java.util.List<com.blueocn.api.kong.model.Consumer>" file="../webapp/WEB-INF/views/templates/admin/application/list.vm" *#
 
 #* Define macros *#

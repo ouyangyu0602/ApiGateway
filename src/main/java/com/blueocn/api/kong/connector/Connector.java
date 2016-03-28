@@ -4,7 +4,7 @@ import com.blueocn.api.kong.KongConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
-import retrofit2.converter.fastjson.FastjsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.annotation.PostConstruct;
 
@@ -36,11 +36,11 @@ public class Connector {
     private void init() { // NOSONAR
         kongAdmin = new Retrofit.Builder()
             .baseUrl(config.getKongAdminUrl())
-            .addConverterFactory(FastjsonConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create())
             .build();
         kongFront = new Retrofit.Builder()
             .baseUrl(config.getKongHttpsAddress())
-            .addConverterFactory(FastjsonConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create())
             .build();
     }
 

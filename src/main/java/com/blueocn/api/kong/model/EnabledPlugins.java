@@ -1,6 +1,6 @@
 package com.blueocn.api.kong.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +17,9 @@ import java.util.List;
  */
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EnabledPlugins implements Serializable {
     private static final long serialVersionUID = -2383652413092210923L;
 
-    @JSONField(name = "enabled_plugins")
-    private List<String> enabledPlugins;
+    private List<String> enabled_plugins;
 }

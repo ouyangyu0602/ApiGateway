@@ -62,7 +62,7 @@
             </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group"><label class="col-sm-3 control-label">Redirect Uri</label>
-              <div class="col-sm-9"><input type="text" name="client_id" class="form-control" value="$!{application.redirect_uri}">
+              <div class="col-sm-9"><input type="text" name="redirect_uri" class="form-control" value="$!{application.redirect_uri}">
                 <span class="help-block m-b-none data-redirect_uri"></span></div>
             </div>
             <div class="hr-line-dashed"></div>

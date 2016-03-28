@@ -80,11 +80,11 @@ public class DateUtils {
      * 方法描述：获取当前时间的
      */
     public static Date now() {
-        return new Date(SystemClock.now());
+        return new Date(System.currentTimeMillis());
     }
 
     public static Long currentTimeMillis() {
-        return SystemClock.now();
+        return System.currentTimeMillis();
     }
 
     /**

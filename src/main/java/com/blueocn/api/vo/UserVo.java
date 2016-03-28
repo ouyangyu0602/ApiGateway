@@ -3,7 +3,6 @@
  */
 package com.blueocn.api.vo;
 
-import com.blueocn.api.enums.UserTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +25,5 @@ public class UserVo implements Serializable {
 
     private String userIdentity;
 
-    private String userEmail;
-
     private String userPassword;
-
-    private String userPasswordConfirm;
-
-    private UserTypeEnum userType;
 }

@@ -53,7 +53,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public OAuth2 add(String consumerId, OAuth2 oAuth2) throws IOException {
         Call<OAuth2> call = oAuth2Connector.add(consumerId, oAuth2);
         Response<OAuth2> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         return null;
@@ -63,7 +63,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public List<OAuth2> query(OAuth2 oAuth2) throws IOException {
         Call<ResponseBody> call = oAuth2Connector.rawQuery(oAuth2 == null ? null : oAuth2.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             JSONArray array = object.getJSONArray("data");
             return JSON.parseArray(array.toJSONString(), OAuth2.class);
@@ -75,7 +75,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public List<OAuth2> query(String consumerId, OAuth2 oAuth2) throws IOException {
         Call<ResponseBody> call = oAuth2Connector.query(consumerId, oAuth2 == null ? null : oAuth2.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             JSONArray array = object.getJSONArray("data");
             return JSON.parseArray(array.toJSONString(), OAuth2.class);
@@ -87,7 +87,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public OAuth2 queryOne(String consumerId, String oauth2Id) throws IOException {
         Call<OAuth2> call = oAuth2Connector.queryOne(consumerId, oauth2Id);
         Response<OAuth2> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         return null;
@@ -97,7 +97,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public OAuth2 update(String consumerId, String oauth2Id, OAuth2 oAuth2) throws IOException {
         Call<OAuth2> call = oAuth2Connector.update(consumerId, oauth2Id, oAuth2);
         Response<OAuth2> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         return null;
@@ -113,7 +113,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
         Call<ResponseBody> call = frontConnector.authorize(params, host);
         try {
             Response<ResponseBody> response = call.execute();
-            if (response.isSuccess()) {
+            if (response.isSuccessful()) {
                 JSONObject object = JSON.parseObject(response.body().string());
                 RestfulResponse restfulResponse = new RestfulResponse();
                 restfulResponse.setCode(object.getString("redirect_uri"));
@@ -130,7 +130,7 @@ public class OAuth2ClientImpl implements OAuth2Client {
     public Integer totalSize(OAuth2 oAuth) throws IOException {
         Call<ResponseBody> call = oAuth2Connector.rawQuery(oAuth == null ? null : oAuth.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             return object.getInteger("total");
         }

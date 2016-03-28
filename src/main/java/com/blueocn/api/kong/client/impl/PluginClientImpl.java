@@ -82,7 +82,7 @@ public class PluginClientImpl implements PluginClient {
         }
         Call<ResponseBody> call = pluginConnector.add(apiId, plugin);
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return JSON.parseObject(response.body().string(), Plugin.class);
         }
         Plugin plugins = new Plugin();
@@ -95,7 +95,7 @@ public class PluginClientImpl implements PluginClient {
     public Plugin queryOne(String pluginId) throws IOException {
         Call<ResponseBody> call = pluginConnector.queryOne(pluginId);
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return JSON.parseObject(response.body().string(), Plugin.class);
         }
         Plugin plugins = new Plugin();
@@ -108,7 +108,7 @@ public class PluginClientImpl implements PluginClient {
     public List<Plugin> query(Plugin plugin) throws IOException {
         Call<ResponseBody> call = pluginConnector.query(plugin.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
         }
         LOGGER.warn(response.errorBody().string());
@@ -119,7 +119,7 @@ public class PluginClientImpl implements PluginClient {
     public List<Plugin> querySpecificApi(String apiId, Plugin plugin) throws IOException {
         Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin == null ? null : plugin.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
         }
         LOGGER.warn(response.errorBody().string());
@@ -132,7 +132,7 @@ public class PluginClientImpl implements PluginClient {
         plugin.setName(pluginName);
         Call<ResponseBody> call = pluginConnector.querySpecificApi(apiId, plugin.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             List<Plugin> plugins = JSON.parseArray(object.getString("data"), Plugin.class); // 直接硬编码 ...
             if (CollectionUtils.isNotEmpty(plugins)) {
@@ -152,7 +152,7 @@ public class PluginClientImpl implements PluginClient {
         }
         Call<ResponseBody> call = pluginConnector.update(apiId, pluginId, plugin);
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return JSON.parseObject(response.body().string(), Plugin.class);
         }
         Plugin plugins = new Plugin();
@@ -176,8 +176,8 @@ public class PluginClientImpl implements PluginClient {
     public List<String> enabledPlugins() throws IOException {
         Call<EnabledPlugins> call = pluginConnector.queryEnabled();
         Response<EnabledPlugins> response = call.execute();
-        if (response.isSuccess()) {
-            return response.body().getEnabledPlugins();
+        if (response.isSuccessful()) {
+            return response.body().getEnabled_plugins();
         }
         LOGGER.warn(response.errorBody().string());
         return Lists.newArrayList();

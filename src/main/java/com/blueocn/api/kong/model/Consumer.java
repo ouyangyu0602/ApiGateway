@@ -1,6 +1,8 @@
 package com.blueocn.api.kong.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Title: Customer
@@ -23,7 +25,9 @@ public class Consumer extends BaseModel {
 
     private Long created_at;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer size;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String offset;
 }

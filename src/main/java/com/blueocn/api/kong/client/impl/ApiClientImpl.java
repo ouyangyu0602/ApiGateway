@@ -48,7 +48,7 @@ public class ApiClientImpl implements ApiClient {
     public Api add(Api api) throws IOException {
         Call<Api> call = apiConnector.add(api);
         Response<Api> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Api result = new Api();
@@ -61,7 +61,7 @@ public class ApiClientImpl implements ApiClient {
     public List<Api> query(Api api) throws IOException {
         Call<ResponseBody> call = apiConnector.query(api == null ? null : api.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             JSONArray array = object.getJSONArray("data");
             return JSON.parseArray(array.toJSONString(), Api.class);
@@ -73,7 +73,7 @@ public class ApiClientImpl implements ApiClient {
     public Integer totalSize(Api api) throws IOException {
         Call<ResponseBody> call = apiConnector.query(api == null ? null : api.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             return object.getInteger("total");
         }
@@ -84,7 +84,7 @@ public class ApiClientImpl implements ApiClient {
     public Api queryOne(String apiId) throws IOException {
         Call<Api> call = apiConnector.queryOne(apiId);
         Response<Api> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Api result = new Api();
@@ -98,7 +98,7 @@ public class ApiClientImpl implements ApiClient {
         Asserts.checkNotBlank(api.getId(), "API ID 不能为空");
         Call<Api> call = apiConnector.update(api.getId(), api);
         Response<Api> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Api result = new Api();

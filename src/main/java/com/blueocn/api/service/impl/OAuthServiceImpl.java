@@ -11,7 +11,6 @@ import com.blueocn.api.support.utils.Asserts;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * Title: OAuthServiceImpl
@@ -37,6 +38,8 @@ public class OAuthServiceImpl implements OAuthService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthServiceImpl.class);
 
+    private static final Pattern URI_PATTERN = Pattern.compile("http[s]?://[^/]+");
+
     @Autowired
     private OAuth2Client oAuth2Client;
 
@@ -49,6 +52,19 @@ public class OAuthServiceImpl implements OAuthService {
     @Override
     public boolean isValidClientId(String clientId) throws IOException {
         return getOAuth2App(clientId) != null;
+    }
+
+    @Override
+    public boolean isValidRedirectUri(String clientId, String redirectUri) throws IOException {
+        OAuth2 oAuth2App = getOAuth2App(clientId);
+        if (oAuth2App != null && isNotBlank(oAuth2App.getRedirect_uri())) {
+            Matcher save = URI_PATTERN.matcher(oAuth2App.getRedirect_uri());
+            Matcher pass = URI_PATTERN.matcher(redirectUri);
+            if (save.find() && pass.find()) {
+                return endsWithIgnoreCase(save.group(), pass.group());
+            }
+        }
+        return false;
     }
 
     @Override
@@ -83,7 +99,7 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Override
     public OAuth2 queryOne(String id) {
-        if (StringUtils.isNotBlank(id)) {
+        if (isNotBlank(id)) {
             OAuth2 param = new OAuth2();
             param.setId(id);
             try {

@@ -1,5 +1,6 @@
 package com.blueocn.api.kong.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 /**
@@ -12,6 +13,7 @@ import lombok.*;
  */
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Api extends BaseModel {
     private static final long serialVersionUID = 9177479561761205922L;
 

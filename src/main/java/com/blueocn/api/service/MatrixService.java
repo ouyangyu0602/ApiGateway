@@ -1,7 +1,5 @@
 package com.blueocn.api.service;
 
-import com.blueocn.user.entity.UserInfo;
-
 /**
  * Title: MatrixService
  * Description:
@@ -19,5 +17,5 @@ public interface MatrixService {
      * @param password 密码
      * @return 登录成功的话返回用户 ID, 登录失败的话返回空
      */
-    UserInfo login(String account, String password);
+    String login(String account, String password);
 }

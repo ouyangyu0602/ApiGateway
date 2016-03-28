@@ -48,7 +48,7 @@ public class ConsumerClientImpl implements ConsumerClient {
     public Consumer add(Consumer consumer) throws IOException {
         Call<Consumer> call = consumerConnector.add(consumer);
         Response<Consumer> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Consumer result = new Consumer();
@@ -61,7 +61,7 @@ public class ConsumerClientImpl implements ConsumerClient {
     public List<Consumer> query(Consumer consumer) throws IOException {
         Call<ResponseBody> call = consumerConnector.query(consumer == null ? null : consumer.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             JSONArray array = object.getJSONArray("data");
             return JSON.parseArray(array.toJSONString(), Consumer.class);
@@ -73,7 +73,7 @@ public class ConsumerClientImpl implements ConsumerClient {
     public Integer totalSize(Consumer consumer) throws IOException {
         Call<ResponseBody> call = consumerConnector.query(consumer == null ? null : consumer.toMap());
         Response<ResponseBody> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             JSONObject object = JSON.parseObject(response.body().string());
             return object.getInteger("total");
         }
@@ -84,7 +84,7 @@ public class ConsumerClientImpl implements ConsumerClient {
     public Consumer queryOne(String consumerId) throws IOException {
         Call<Consumer> call = consumerConnector.queryOne(consumerId);
         Response<Consumer> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Consumer result = new Consumer();
@@ -97,7 +97,7 @@ public class ConsumerClientImpl implements ConsumerClient {
         Preconditions.checkNotNull(consumer, "用户信息");
         Call<Consumer> call = consumerConnector.update(consumer.getId(), consumer);
         Response<Consumer> response = call.execute();
-        if (response.isSuccess()) {
+        if (response.isSuccessful()) {
             return response.body();
         }
         Consumer result = new Consumer();

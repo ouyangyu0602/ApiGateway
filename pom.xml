@@ -19,42 +19,42 @@
         <fastjson.version>1.2.8</fastjson.version>
         <junit.version>4.11</junit.version>
         <slf4j.version>1.7.5</slf4j.version>
-        <log4j.version>1.2.16</log4j.version>
-        <dbutils.version>1.6</dbutils.version>
-        <druid.version>1.0.14</druid.version>
-        <mysql.version>5.1.29</mysql.version>
-        <springframework.version>4.1.8.RELEASE</springframework.version>
-        <jackson.version>2.6.3</jackson.version>
+        <springframework.version>4.2.5.RELEASE</springframework.version>
+        <jackson.version>2.7.3</jackson.version>
         <mybatis.version>3.3.0</mybatis.version>
         <mybatis-spring.version>1.2.3</mybatis-spring.version>
         <common-lang3.version>3.3.2</common-lang3.version>
         <guava.version>18.0</guava.version>
         <mockito.version>1.10.8</mockito.version>
-        <spring-data-redis.version>1.5.0.RELEASE</spring-data-redis.version>
-        <spring-security-web.version>4.0.3.RELEASE</spring-security-web.version>
         <jedis.version>2.8.0</jedis.version>
-        <okhttp.version>3.0.1</okhttp.version>
-        <retrofit.version>2.0.0-beta4</retrofit.version> <!-- Waiting for final release version -->
+        <okhttp.version>3.2.0</okhttp.version>
+        <retrofit.version>2.0.0</retrofit.version>
+        <logback.version>1.1.6</logback.version>
     </properties>
+
+    <scm>
+        <developerConnection>scm:git:git@git.oneapm.me:platform/apigateway.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
             <id>local-snapshots</id>
             <uniqueVersion>false</uniqueVersion>
-            <url>http://10.128.6.39:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://nexus.oneapm.me:8081/nexus/content/repositories/snapshots/</url>
             <layout>default</layout>
         </snapshotRepository>
         <repository>
             <id>local-releases</id>
             <uniqueVersion>true</uniqueVersion>
             <layout>default</layout>
-            <url>http://10.128.6.39:8081/nexus/content/repositories/releases/</url>
+            <url>http://nexus.oneapm.me:8081/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
     <repositories>
         <repository>
             <id>local-central</id>
-            <url>http://10.128.6.39:8081/nexus/content/groups/public/</url>
+            <url>http://nexus.oneapm.me:8081/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>jcenter-release</id>
@@ -87,6 +87,16 @@
             <artifactId>adapter-java8</artifactId>
             <version>${retrofit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-jackson</artifactId>
+            <version>${retrofit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
+        </dependency>
 
         <!-- Test Unit  -->
         <dependency>
@@ -115,32 +125,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>mockwebserver</artifactId>
-            <version>${okhttp.version}</version>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit-mock</artifactId>
+            <version>${retrofit.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Database -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>${mybatis-spring.version}</version>
         </dependency>
 
         <!-- JSON XML -->
@@ -167,24 +155,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        <!-- smile (binary JSON). Other artifacts in this group do other formats. -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-smile</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <!-- JAX-RS provider -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <!-- Support for JAX-B annotations as additional configuration -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
 
         <!-- Log -->
         <dependency>
@@ -193,14 +163,14 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+            <version>${logback.version}</version>
         </dependency>
 
         <!-- Spring Framework -->
@@ -223,16 +193,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${springframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${spring-security-web.version}</version>
         </dependency>
 
         <!-- Frontend Template -->
@@ -258,40 +218,11 @@
             <version>2.0</version>
         </dependency>
 
-        <!-- Redis -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>${spring-data-redis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.6</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- User System SDK -->
-        <dependency>
-            <groupId>com.blueocn.matrix</groupId>
-            <artifactId>matrix_api</artifactId>
-            <version>3.1.20</version>
-        </dependency>
-        <dependency>
-            <groupId>com.blueocn.matrix</groupId>
-            <artifactId>matrix_common</artifactId>
-            <version>3.1.20</version>
-        </dependency>
-        <dependency>
-            <groupId>com.blueocn.matrix</groupId>
-            <artifactId>matrix_impl</artifactId>
-            <version>3.1.20</version>
         </dependency>
     </dependencies>
 

@@ -28,14 +28,8 @@ public interface Constants { // NOSONAR
     // 登录页URI
     String LOGIN_URI = "/admin/user/login";
 
-    // 模板标题定义符
-    String PAGE_TITLE = "pageTitle";
-
     // 请求跳转头
     String X_FORWARDED_FOR_HEADER = "x-forwarded-for";
-
-    // 密码和盐值拼接字符串
-    String SALT_SPIT_CHAR = "(^_^)";
 
     String ACTIVE_PROFILE_NAME =
         System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "");
