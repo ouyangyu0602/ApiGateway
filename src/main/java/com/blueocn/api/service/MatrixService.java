@@ -1,5 +1,7 @@
 package com.blueocn.api.service;
 
+import com.blueocn.api.vo.UserVo;
+
 /**
  * Title: MatrixService
  * Description:
@@ -17,5 +19,5 @@ public interface MatrixService {
      * @param password 密码
      * @return 登录成功的话返回用户 ID, 登录失败的话返回空
      */
-    String login(String account, String password);
+    UserVo login(String account, String password);
 }

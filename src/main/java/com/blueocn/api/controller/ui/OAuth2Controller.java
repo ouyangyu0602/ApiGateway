@@ -4,6 +4,7 @@ import com.blueocn.api.enums.MessageTypeEnum;
 import com.blueocn.api.service.ApiService;
 import com.blueocn.api.service.MatrixService;
 import com.blueocn.api.service.OAuthService;
+import com.blueocn.api.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Title: OAuth2Controller
@@ -76,15 +76,15 @@ public class OAuth2Controller extends AbstractUIController {
         @RequestParam(value = "state", required = false) String state,
         @RequestParam(value = "redirect_uri") String redirectUri, Model model)
         throws IOException {
-        String userId = matrixService.login(username, password);
+        UserVo userVo = matrixService.login(username, password);
         model.addAttribute("client_id", clientId);
         model.addAttribute("scope", scope);
         model.addAttribute("api_name", apiName);
         model.addAttribute("state", state);
         model.addAttribute("api_name", apiName);
         model.addAttribute("redirect_uri", redirectUri);
-        if (isNotBlank(userId)) {
-            model.addAttribute("login_user_id", userId);
+        if (userVo != null) {
+            model.addAttribute("login_user_id", userVo.getUserId());
             model.addAttribute("application", oAuthService.getOAuth2App(clientId));
             // 登录成功, 返回用户确认页面
             return "oauth2/approval";

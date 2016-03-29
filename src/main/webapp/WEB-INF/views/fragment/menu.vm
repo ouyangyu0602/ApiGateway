@@ -3,7 +3,7 @@
   <div id="navigation">
     <div class="profile-picture">
       <div class="stats-label text-color">
-        <span class="font-extra-bold font-uppercase">$!{loginUser.userName}</span> ## TODO 用户名定义
+        <span class="font-extra-bold font-uppercase">$!{loginUser.name}</span> ## TODO 用户名定义
         <div class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown">
             <small class="text-muted">操作 <b class="caret"></b></small>

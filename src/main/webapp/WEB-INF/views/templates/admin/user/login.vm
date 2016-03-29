@@ -12,14 +12,14 @@
         <div class="panel-body">
           <form action="${rc.contextPath}/admin/user/login" id="loginForm" method="post">
             <div class="form-group">
-              <label class="control-label" for="userIdentity">用户名</label>
+              <label class="control-label" for="username">用户名</label>
               <input type="text" placeholder="你的登录名" title="请输入你的用户名"
-                     required="" value="" name="userIdentity" id="userIdentity" class="form-control">
+                     required="" value="" name="username" id="username" class="form-control">
             </div>
             <div class="form-group">
-              <label class="control-label" for="userPassword">密码</label>
+              <label class="control-label" for="password">密码</label>
               <input type="password" title="请输入您的密码" placeholder="******"
-                     required="" value="" name="userPassword" id="userPassword" class="form-control">
+                     required="" value="" name="password" id="password" class="form-control">
             </div>
             <div class="checkbox">
               <input type="checkbox" class="i-checks" checked>

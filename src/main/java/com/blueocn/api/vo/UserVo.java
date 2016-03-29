@@ -19,11 +19,18 @@ import java.io.Serializable;
 @Setter
 @Getter
 public class UserVo implements Serializable {
+
     private static final long serialVersionUID = 2252192347249740853L;
 
-    private String userName;
+    private long userId;
 
-    private String userIdentity;
+    private String name;
 
-    private String userPassword;
+    private String telephone;
+
+    private String companyName;
+
+    private String email;
+
+    private String coming;
 }

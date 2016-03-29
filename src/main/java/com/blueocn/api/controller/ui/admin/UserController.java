@@ -1,10 +1,11 @@
 package com.blueocn.api.controller.ui.admin;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
+import com.blueocn.api.service.MatrixService;
 import com.blueocn.api.vo.UserVo;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,11 +33,11 @@ import static com.blueocn.api.support.utils.Asserts.checkNotBlank;
 public class UserController extends AbstractUIController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @Value("${admin.username}")
-    private String username;
+    @Value("${admin.list}")
+    private String[] userList;
 
-    @Value("${admin.password}")
-    private String password;
+    @Autowired
+    private MatrixService matrixService;
 
     @RequestMapping(value = "user/login", method = RequestMethod.GET)
     public String login(Model model) { // NOSONAR
@@ -44,15 +45,20 @@ public class UserController extends AbstractUIController {
     }
 
     @RequestMapping(value = "user/login", method = RequestMethod.POST)
-    public String login(UserVo userVo, HttpServletRequest request, Model model) {
+    public String login(String username, String password, HttpServletRequest request, Model model) {
         try {
-            checkNotBlank(userVo.getUserIdentity(), "用户登录名不能为空");
-            checkNotBlank(userVo.getUserPassword(), "用户密码不能为空");
+            checkNotBlank(username, "用户登录名不能为空");
+            checkNotBlank(password, "用户密码不能为空");
 
-            UserVo existUser = getUserVo(userVo.getUserIdentity(), userVo.getUserPassword());
-            if (existUser != null) {
-                INSTANCE.login(existUser, request.getSession());
-                return "redirect:/admin/index";
+            if (adminUser(username)) {
+                UserVo existUser = matrixService.login(username, password);
+                if (existUser != null) {
+                    INSTANCE.login(existUser, request.getSession());
+                    return "redirect:/admin/index";
+                }
+                setMessage(model, ERROR, "用户名或者密码不正确.");
+            } else {
+                setMessage(model, ERROR, "不属于管理员用户.");
             }
         } catch (Exception e) {
             LOGGER.warn("", e);
@@ -61,21 +67,18 @@ public class UserController extends AbstractUIController {
         return login(model);
     }
 
-    private UserVo getUserVo(String userIdentity, String userPassword) {
-        if (StringUtils.equals(username, userIdentity) &&
-            StringUtils.equals(password, userPassword)) {
-            UserVo userVo = new UserVo();
-            userVo.setUserIdentity(username);
-            userVo.setUserName(username);
-            userVo.setUserPassword(password);
-            return userVo;
-        }
-        return null;
-    }
-
     @RequestMapping(value = "user/logout")
     public String logout(HttpServletRequest request) {
         INSTANCE.logout(request.getSession());
         return "redirect:" + LOGIN_URI;
+    }
+
+    private boolean adminUser(String username) {
+        for (String user : userList) {
+            if (username.equalsIgnoreCase(user)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

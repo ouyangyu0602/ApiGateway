@@ -75,4 +75,11 @@ public interface OAuthService {
      * @param oAuth2 应用信息
      */
     List<OAuth2> queryAll(OAuth2 oAuth2);
+
+    /**
+     * 删除应用
+     *
+     * @param id 应用ID
+     */
+    void delete(String id);
 }

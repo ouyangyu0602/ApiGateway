@@ -149,6 +149,18 @@ public class OAuthServiceImpl implements OAuthService {
         return Lists.newArrayList();
     }
 
+    @Override
+    public void delete(String id) {
+        OAuth2 oAuth2 = queryOne(id);
+        try {
+            if (oAuth2 != null) {
+                oAuth2Client.delete(oAuth2.getConsumer_id(), oAuth2.getId());
+            }
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+    }
+
     /**
      * 查询所有应用的数量
      *
