@@ -73,4 +73,27 @@ public class PluginServiceImpl implements PluginService {
         }
         return new RestfulResponse("插件信息保存失败");
     }
+
+    @Override
+    public List<Plugin> queryAll(Plugin plugin) {
+        Plugin queryPlugin = plugin == null ? new Plugin() : plugin;
+        queryPlugin.setSize(getPluginAmount(queryPlugin));
+        try {
+            return pluginClient.query(queryPlugin);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return Lists.newArrayList();
+    }
+
+    private Integer getPluginAmount(Plugin plugin) {
+        try {
+            Plugin queryPlugin = plugin == null ? new Plugin() : plugin;
+            queryPlugin.setSize(1);
+            return pluginClient.totalSize(queryPlugin);
+        } catch (IOException e) {
+            LOGGER.info("", e);
+        }
+        return null;
+    }
 }

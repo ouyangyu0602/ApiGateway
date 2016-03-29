@@ -1,6 +1,7 @@
 package com.blueocn.api.kong.client.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.blueocn.api.kong.client.PluginClient;
@@ -109,7 +110,9 @@ public class PluginClientImpl implements PluginClient {
         Call<ResponseBody> call = pluginConnector.query(plugin.toMap());
         Response<ResponseBody> response = call.execute();
         if (response.isSuccessful()) {
-            return JSON.parseObject(response.body().string(), new TypeReference<List<Plugin>>() {});
+            JSONObject object = JSON.parseObject(response.body().string());
+            JSONArray array = object.getJSONArray("data");
+            return JSON.parseArray(array.toJSONString(), Plugin.class);
         }
         LOGGER.warn(response.errorBody().string());
         return null;
@@ -181,5 +184,16 @@ public class PluginClientImpl implements PluginClient {
         }
         LOGGER.warn(response.errorBody().string());
         return Lists.newArrayList();
+    }
+
+    @Override
+    public Integer totalSize(Plugin plugin) throws IOException {
+        Call<ResponseBody> call = pluginConnector.query(plugin == null ? null : plugin.toMap());
+        Response<ResponseBody> response = call.execute();
+        if (response.isSuccessful()) {
+            JSONObject object = JSON.parseObject(response.body().string());
+            return object.getInteger("total");
+        }
+        return null;
     }
 }

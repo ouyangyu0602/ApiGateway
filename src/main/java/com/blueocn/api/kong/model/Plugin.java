@@ -1,6 +1,5 @@
 package com.blueocn.api.kong.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +20,6 @@ import java.util.Map;
 public class Plugin extends BaseModel {
     private static final long serialVersionUID = 4845313060910857062L;
 
-    @JSONField(name = "id")
     private String id;
 
     /**

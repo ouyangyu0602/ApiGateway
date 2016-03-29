@@ -9,6 +9,8 @@ import com.blueocn.api.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Title: RestPluginController
  * Description:
@@ -29,5 +31,10 @@ public class RestPluginController extends AbstractResponseController {
         Plugin plugin = JSON.parseObject(queryStr, new TypeReference<Plugin>() {});
         plugin.setName("oauth2");
         return pluginService.saveOAuth2Plugin(apiId, plugin);
+    }
+
+    @RequestMapping(value = "plugin/list", method = RequestMethod.POST)
+    public List<Plugin> listPlugin(Plugin plugin) {
+        return pluginService.queryAll(plugin);
     }
 }

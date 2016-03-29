@@ -32,4 +32,11 @@ public interface PluginService {
      * @param plugin 插件信息
      */
     RestfulResponse saveOAuth2Plugin(String apiId, Plugin plugin);
+
+    /**
+     *
+     * @param plugin
+     * @return
+     */
+    List<Plugin> queryAll(Plugin plugin);
 }

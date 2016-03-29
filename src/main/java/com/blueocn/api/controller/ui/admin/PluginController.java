@@ -1,10 +1,11 @@
 package com.blueocn.api.controller.ui.admin;
 
 import com.blueocn.api.controller.ui.AbstractUIController;
-import com.blueocn.api.kong.KongConfig;
 import com.blueocn.api.kong.model.Api;
+import com.blueocn.api.kong.model.Consumer;
 import com.blueocn.api.kong.model.Plugin;
 import com.blueocn.api.service.ApiService;
+import com.blueocn.api.service.ConsumerService;
 import com.blueocn.api.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class PluginController extends AbstractUIController {
     private PluginService pluginService;
 
     @Autowired
-    private KongConfig kongConfig;
+    private ConsumerService consumerService;
 
     @RequestMapping(value = "plugin/select", method = RequestMethod.GET)
     public String addPlugin(Model model) {
@@ -62,8 +63,19 @@ public class PluginController extends AbstractUIController {
     }
 
     @RequestMapping(value = "plugin/list", method = RequestMethod.GET)
-    public String listPlugin() {
-        // TODO 插件列表
+    public String listPlugin(Model model) {
+        List<Api> apis = apiService.queryAll(null);
+        if (isNotEmpty(apis)) {
+            model.addAttribute("apiList", apis);
+        }
+        List<String> pluginList = pluginService.queryEnabledPlugins();
+        if (isNotEmpty(pluginList)) {
+            model.addAttribute("pluginList", pluginList);
+        }
+        List<Consumer> consumerList = consumerService.queryAll(null);
+        if (isNotEmpty(consumerList)) {
+            model.addAttribute("consumerList", consumerList);
+        }
         return "admin/plugin/list";
     }
 }

@@ -87,4 +87,12 @@ public interface PluginClient {
      * @return API的名称集合, @NotNull
      */
     List<String> enabledPlugins() throws IOException;
+
+    /**
+     * 查询按照当前查询参数的插件个数
+     *
+     * @param plugin 查询参数
+     * @return 个数
+     */
+    Integer totalSize(Plugin plugin) throws IOException;
 }

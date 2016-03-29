@@ -9,11 +9,12 @@ import lombok.Setter;
  * Description: Kong Customer 请求信息实体, 参见
  *
  * @author Yufan
- * @version 1.0.0
+ * @version 1.0.0z
  * @since 2016-02-16 13:20
  */
 @Setter
 @Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Consumer extends BaseModel {
     private static final long serialVersionUID = -3640559484596681040L;
 
@@ -25,9 +26,7 @@ public class Consumer extends BaseModel {
 
     private Long created_at;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer size;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String offset;
 }

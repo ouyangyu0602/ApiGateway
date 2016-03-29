@@ -106,7 +106,7 @@
         data: setting["data"],
         columns: [
           {data: "username"},
-          {data: "custom_id"},
+          {data: "custom_id", defaultContent: "未设置"},
           {data: "created_at"},
           {data: "id"}
         ],

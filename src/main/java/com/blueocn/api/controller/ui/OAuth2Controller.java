@@ -46,7 +46,7 @@ public class OAuth2Controller extends AbstractUIController {
      */
     @RequestMapping(value = "authorize", method = RequestMethod.GET)
     public String oAuthLogin(@RequestParam(value = "client_id", required = false) String clientId,
-        @RequestParam(value = "apiName", required = false) String apiName,
+        @RequestParam(value = "api_name", required = false) String apiName,
         @RequestParam(value = "state", required = false) String state,
         @RequestParam(value = "redirect_uri", required = false) String redirectUri, Model model) {
         try {
@@ -71,7 +71,7 @@ public class OAuth2Controller extends AbstractUIController {
     @RequestMapping(value = "authorize", method = RequestMethod.POST)
     public String oAuthCertificate(@RequestParam("username") String username,
         @RequestParam("password") String password, @RequestParam("client_id") String clientId,
-        @RequestParam(value = "apiName", required = false) String apiName,
+        @RequestParam(value = "api_name", required = false) String apiName,
         @RequestParam(value = "scope", required = false) String scope,
         @RequestParam(value = "state", required = false) String state,
         @RequestParam(value = "redirect_uri") String redirectUri, Model model)
